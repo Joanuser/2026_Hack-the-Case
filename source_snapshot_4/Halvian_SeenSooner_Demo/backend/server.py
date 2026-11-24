@@ -56,7 +56,9 @@ ALLOWED_ORIGINS.update(o.strip().rstrip("/") for o in os.getenv("SEENSOONER_EXTR
 # Optional folder of built frontends (see build-web.sh). When it exists, this server also
 # serves the landing page at / and the apps at /patient/, /nurse/, /display/, /oversight/.
 WEB_ROOT = Path(os.getenv("SEENSOONER_WEB_ROOT", str(DEMO_ROOT / "web-dist"))).resolve()
-WEB_APPS = {"patient", "nurse", "display", "oversight"}
+WEB_APPS = {"patient", "nurse", "display", "oversight", "tablet"}
+# The check-in tablet runs the patient app in kiosk mode at /tablet/.
+WEB_ALIASES = {"tablet": "patient"}
 
 PROJECT_LWBS_TARGET = {
     "baselineRatePct": 4.0,
@@ -936,6 +938,8 @@ class ApiHandler(BaseHTTPRequestHandler):
             self.send_header("Content-Length", "0")
             self.end_headers()
             return True
+        if parts and parts[0] in WEB_ALIASES:
+            parts = [WEB_ALIASES[parts[0]], *parts[1:]]
         target = (WEB_ROOT.joinpath(*parts) if parts else WEB_ROOT).resolve()
         if target != WEB_ROOT and WEB_ROOT not in target.parents:
             return False
@@ -1015,7 +1019,9 @@ class ApiHandler(BaseHTTPRequestHandler):
                     return
                 with STORE.lock:
                     now = STORE.now()
-                    p["contacts"].append({"kind": "location_exit", "label": "Location check", "note": "Patient reported left" if body.get("left") else "Patient confirmed still present", "at": iso(now)})
+                    via_tablet = body.get("via") == "tablet"
+                    note = ("Patient scanned slip at check-in tablet: leaving" if via_tablet else "Patient reported left") if body.get("left") else "Patient confirmed still present"
+                    p["contacts"].append({"kind": "location_exit", "label": "Check-in tablet" if via_tablet else "Location check", "note": note, "at": iso(now)})
                     if body.get("left"):
                         p["status"] = "left"
                         p["departureAt"] = iso(now)

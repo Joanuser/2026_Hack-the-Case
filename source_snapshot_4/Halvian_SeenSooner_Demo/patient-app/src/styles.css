@@ -128,6 +128,17 @@ h1:focus { outline: none; }
 .cover-btn { width: 100%; height: 52px; border: 0; border-radius: 999px; background: #fff; color: var(--purple); font-size: 15px; font-weight: 600; }
 .cover-btn:hover { background: #f4f0ff; }
 .cover-foot { margin: 0; font-size: 11px; color: rgba(255, 255, 255, 0.68); }
+.cover-leave { border: 0; background: none; color: #fff; font-size: 14px; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; padding: 6px; opacity: 0.9; }
+
+/* ---------- tablet slip ---------- */
+.slip-card { align-items: center; justify-content: center; text-align: center; gap: 12px; }
+.slip-title { margin: 0; font-size: 26px; font-weight: 700; color: #262130; }
+.slip-qr { width: 200px; height: 200px; border-radius: 12px; background: #fff; padding: 8px; box-shadow: 0 1px 4px rgba(38, 33, 48, 0.12); display: flex; align-items: center; justify-content: center; }
+.slip-qr img { width: 100%; height: 100%; image-rendering: pixelated; }
+.slip-qr-placeholder { width: 100%; height: 100%; background: #f1ecf9; border-radius: 8px; }
+.slip-note { margin: 0; font-size: 15px; font-weight: 600; color: #262130; max-width: 320px; }
+.slip-sub { margin: 0 0 6px; font-size: 12px; color: var(--muted, #6b6477); }
+
 
 /* ---------- scan ---------- */
 .scan-main { padding-top: 12px; }

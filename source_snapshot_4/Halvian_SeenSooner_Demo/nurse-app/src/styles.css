@@ -250,3 +250,8 @@ p, h1, h2 { margin: 0; }
   .add-btn { padding: 0 10px; }
 }
 @media (prefers-reduced-motion: reduce) { .sk, .conn.warn .dot, .toast { animation: none; } }
+
+/* accessibility needs badges in queue rows */
+.need-badges { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 3px; }
+.need-badge { padding: 2px 7px; border-radius: 10px; background: var(--amber-bg); color: var(--amber); font-size: 9px; font-weight: 700; white-space: nowrap; }
+.need-badge.lang { background: var(--purple-tint); color: var(--purple-ink); }

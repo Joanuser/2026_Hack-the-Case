@@ -13,12 +13,15 @@ import { Review, emptySummary, toSymptoms, type SummaryState } from './screens/R
 import { Waiting } from './screens/Waiting';
 import { SymptomUpdate } from './screens/SymptomUpdate';
 import { Details } from './screens/Details';
+import { Slip } from './screens/Slip';
+import { LeaveScan } from './screens/LeaveScan';
+import { IS_TABLET } from './lib/device';
 import { dobToIso, emptyInfo, emptySymptoms, validateInfo, validateSymptoms, type InfoForm, type SymptomForm } from './lib/validation';
 import { DRAFT_KEY, LANG_KEY, SESSION_KEY, readJson, writeJson, type PatientSession } from './lib/storage';
 import { getPosition } from './lib/geo';
 
-type Route = 'cover' | 'scan' | 'language' | 'info' | 'symptoms' | 'review' | 'waiting' | 'details' | 'update';
-const ROUTES: Route[] = ['cover', 'scan', 'language', 'info', 'symptoms', 'review', 'waiting', 'details', 'update'];
+type Route = 'cover' | 'scan' | 'language' | 'info' | 'symptoms' | 'review' | 'waiting' | 'details' | 'update' | 'slip' | 'leave';
+const ROUTES: Route[] = ['cover', 'scan', 'language', 'info', 'symptoms', 'review', 'waiting', 'details', 'update', 'slip', 'leave'];
 const PRE_SUBMIT: Route[] = ['cover', 'scan', 'language', 'info', 'symptoms', 'review'];
 
 interface Draft {
@@ -44,6 +47,10 @@ function initialLang(): Lang {
   return STRINGS[nav] ? nav : 'en';
 }
 
+// Demo flow: Start goes straight to the personal-information page (no QR scan or
+// language step). The site code defaults to the first configured code.
+const DEFAULT_SITE = String(import.meta.env.VITE_SITE_CODES || 'ED-MAIN').split(',')[0].trim().toUpperCase() || 'ED-MAIN';
+
 export default function App() {
   const [lang, setLangState] = useState<Lang>(initialLang);
   const [route, setRoute] = useState<Route>(readRoute);
@@ -52,7 +59,7 @@ export default function App() {
     const saved = readJson<Partial<Draft>>(sessionStorage, DRAFT_KEY, {});
     const d = { ...emptyDraft, ...saved, locationAuthorization: saved.locationAuthorization ?? null };
     const urlSite = parseSiteCode(new URLSearchParams(window.location.search).get('site') || '');
-    return urlSite ? { ...d, siteCode: urlSite } : d;
+    return { ...d, siteCode: urlSite || d.siteCode || DEFAULT_SITE };
   });
   const [session, setSession] = useState<PatientSession | null>(() => {
     const saved = readJson<PatientSession | null>(localStorage, SESSION_KEY, null);
@@ -87,9 +94,13 @@ export default function App() {
   // ----- route guards -----
   const sessionClosed = lastStatus && ['left', 'completed'].includes(lastStatus.status);
   let effective: Route = route;
-  if (session && PRE_SUBMIT.includes(route) && !sessionClosed) effective = 'waiting';
+  if (IS_TABLET && route === 'leave') effective = 'leave';
+  else if (!IS_TABLET && ['slip', 'leave'].includes(route)) effective = session ? 'waiting' : 'cover';
+  else if (IS_TABLET && session && route !== 'slip') effective = 'slip';
+  else if (IS_TABLET && !session && route === 'slip') effective = 'cover';
+  else if (session && PRE_SUBMIT.includes(route) && !sessionClosed) effective = 'waiting';
   else if (!session && ['waiting', 'details', 'update'].includes(route)) effective = 'cover';
-  else if (!session && ['language', 'info', 'symptoms', 'review'].includes(route) && !draft.siteCode) effective = 'scan';
+  else if (!session && ['scan', 'language'].includes(route)) effective = 'info';
   else if (route === 'symptoms' && Object.keys(validateInfo(draft.info, t)).length) effective = 'info';
   else if (route === 'review') {
     if (Object.keys(validateInfo(draft.info, t)).length) effective = 'info';
@@ -124,7 +135,7 @@ export default function App() {
     });
     setSession({ id: res.id, token: res.accessToken, waitingNumber: res.waitingNumber, locationAuthorization: draft.locationAuthorization });
     setLastStatus(res.status);
-    go('waiting', true);
+    go(IS_TABLET ? 'slip' : 'waiting', true);
   };
 
   const newCheckIn = () => {
@@ -141,7 +152,13 @@ export default function App() {
   let screen: React.ReactNode = null;
   switch (effective) {
     case 'cover':
-      screen = <Cover onStart={() => go('scan')} />;
+      screen = <Cover onStart={() => { setDraft((d) => ({ ...d, siteCode: d.siteCode || DEFAULT_SITE })); go('info'); }} onLeave={IS_TABLET ? () => go('leave') : undefined} />;
+      break;
+    case 'slip':
+      screen = session && <Slip session={session} onDone={newCheckIn} />;
+      break;
+    case 'leave':
+      screen = <LeaveScan onExit={() => go('cover', true)} />;
       break;
     case 'scan':
       screen = (
@@ -157,7 +174,7 @@ export default function App() {
       screen = <Language onBack={() => go('scan')} onNext={() => go('info')} />;
       break;
     case 'info':
-      screen = <Info value={draft.info} onChange={(info) => setDraft((d) => ({ ...d, info }))} onBack={() => go('language')} onNext={() => go('symptoms')} />;
+      screen = <Info value={draft.info} onChange={(info) => setDraft((d) => ({ ...d, info }))} onBack={() => go('cover')} onNext={() => go('symptoms')} />;
       break;
     case 'symptoms':
       screen = <Symptoms value={draft.symptoms} onChange={(symptoms) => setDraft((d) => ({ ...d, symptoms }))} onBack={() => go('info')} onNext={() => go('review')} />;

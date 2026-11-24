@@ -212,7 +212,7 @@ export interface SeenSoonerApi {
   getCheckIn(id: string, token: string): Promise<PatientStatusView>;
   updateSymptoms(id: string, token: string, body: { symptoms: Symptoms; summary?: SymptomSummary; note?: string }): Promise<PatientStatusView>;
   updateInsurance(id: string, token: string, insurance: string): Promise<PatientStatusView>;
-  reportLocationExit(id: string, token: string, left: boolean): Promise<PatientStatusView>;
+  reportLocationExit(id: string, token: string, left: boolean, via?: 'phone' | 'tablet'): Promise<PatientStatusView>;
   // staff (nurse dashboard)
   listPatients(): Promise<StaffPatientList>;
   createStaffPatient(req: StaffCreatePatientRequest): Promise<StaffPatient>;

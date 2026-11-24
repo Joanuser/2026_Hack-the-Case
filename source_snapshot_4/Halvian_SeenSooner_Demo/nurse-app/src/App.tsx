@@ -7,12 +7,23 @@ import { FilterPopover } from './components/FilterPopover';
 import { FollowUpPanel, PatientPanel, type RunAction } from './components/Panels';
 import { AddPatientModal } from './components/AddPatientModal';
 import {
-  DEFAULT_FILTERS, DEFAULT_SORT, FOLLOW_UP_LABEL, PRIORITY, SOURCE_LABEL, STATUS_LABEL, WAIT_RANGE_LABEL,
+  ACCESS_LABEL, DEFAULT_FILTERS, DEFAULT_SORT, FOLLOW_UP_LABEL, PRIORITY, SOURCE_LABEL, STATUS_LABEL, WAIT_RANGE_LABEL,
   age, ago, applyFilters, inView, languageName, lastStaffContact, sortList, waitMinutes,
   type Filters, type Sort, type SortKey, type View,
 } from './lib/model';
 
 const LONG_WAIT = 60;
+
+/** Every patient's preferred language, plus any accessibility needs, as badges under the name. */
+function NeedBadges({ p }: { p: StaffPatient }) {
+  const needs = p.accessibilityNeeds ?? [];
+  return (
+    <span className="need-badges">
+      {p.language && <span className="need-badge lang" title="Preferred language">{languageName(p.language)}</span>}
+      {needs.map((a) => <span key={a} className="need-badge">{ACCESS_LABEL[a] || a}</span>)}
+    </span>
+  );
+}
 const BACKEND_LABEL = import.meta.env.VITE_BACKEND_LABEL || 'SeenSooner API';
 
 interface Toast { id: number; kind: 'info' | 'ok' | 'alert' | 'error'; text: string; patientId?: string | null }
@@ -187,7 +198,7 @@ export default function App() {
 
   const followCols: Column<StaffPatient>[] = [
     numberCol,
-    { key: 'patient', label: 'PATIENT', sortKey: 'patient', width: compact ? 'minmax(140px,1.4fr)' : 'minmax(180px,2.2fr)', render: (p) => (<div className="stack"><span className="name">{p.legalName}</span><span className="meta">{SOURCE_LABEL[p.source]} · {languageName(p.language)}</span></div>) },
+    { key: 'patient', label: 'PATIENT', sortKey: 'patient', width: compact ? 'minmax(140px,1.4fr)' : 'minmax(180px,2.2fr)', render: (p) => (<div className="stack"><span className="name">{p.legalName}</span><span className="meta">{SOURCE_LABEL[p.source]}</span><NeedBadges p={p} /></div>) },
     waitCol,
     { key: 'loc', label: 'LOCATION', sortKey: 'location', width: compact ? 'minmax(90px,1fr)' : 'minmax(110px,1.3fr)', render: (p) => (p.location ? <div className="stack"><span className="name sm">{p.location.zone}</span><span className="meta">{p.location.seat}</span></div> : <span className="meta">Not recorded</span>) },
     { key: 'contact', label: 'LAST CONTACT', sortKey: 'contact', width: compact ? 'minmax(110px,1.1fr)' : 'minmax(140px,1.5fr)', render: (p) => { const c = lastStaffContact(p); return c ? <div className="stack"><span className="contact">{c.label}</span><span className="meta">{ago(c.at, now)}</span></div> : <div className="stack"><span className="contact">No staff update</span><span className="meta">Since arrival</span></div>; } },
@@ -201,7 +212,7 @@ export default function App() {
   const queueCols: Column<StaffPatient>[] = [
     { key: 'rank', label: '#', sortKey: 'rank', width: '34px', render: (p) => <span className="rank">{rows.indexOf(p) + 1}</span> },
     numberCol,
-    { key: 'patient', label: 'PATIENT', sortKey: 'patient', width: 'minmax(150px,1.3fr)', render: (p) => { const a = age(p.dateOfBirth, now); return (<div className="stack"><span className="name">{p.legalName}</span><span className="meta">{a !== null ? `Age ${a} · ` : ''}{languageName(p.language)} · {SOURCE_LABEL[p.source].replace(' check-in', '')}</span></div>); } },
+    { key: 'patient', label: 'PATIENT', sortKey: 'patient', width: 'minmax(150px,1.3fr)', render: (p) => { const a = age(p.dateOfBirth, now); return (<div className="stack"><span className="name">{p.legalName}</span><span className="meta">{a !== null ? `Age ${a} · ` : ''}{SOURCE_LABEL[p.source].replace(' check-in', '')}</span><NeedBadges p={p} /></div>); } },
     { key: 'concern', label: 'REPORTED CONCERN', sortKey: 'concern', width: 'minmax(180px,2fr)', render: concern },
     waitCol,
     view === 'completed'

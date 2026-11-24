@@ -1,6 +1,6 @@
 import { useApp } from '../context';
 
-export function Cover({ onStart }: { onStart: () => void }) {
+export function Cover({ onStart, onLeave }: { onStart: () => void; onLeave?: () => void }) {
   const { t } = useApp();
   return (
     <div className="cover">
@@ -13,6 +13,11 @@ export function Cover({ onStart }: { onStart: () => void }) {
         <button type="button" className="cover-btn" onClick={onStart}>
           {t.startCheckIn}
         </button>
+        {onLeave && (
+          <button type="button" className="cover-leave" onClick={onLeave}>
+            {t.leavingScanSlip}
+          </button>
+        )}
       </div>
       <p className="cover-foot">{t.emergencyDepartment}</p>
     </div>
