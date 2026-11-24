@@ -222,7 +222,7 @@ export default function App() {
 
   return (
     <Ctx.Provider value={ctx}>
-      <div className="device">{screen}</div>
+      <div className={IS_TABLET ? 'device tablet' : 'device'}>{screen}</div>
       {sheet && (
         <Modal labelledBy="lang-sheet-title" onClose={() => setSheet(false)} className="lang-sheet">
           <div className="sheet-head">

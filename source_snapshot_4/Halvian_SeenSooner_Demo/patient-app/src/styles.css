@@ -41,6 +41,24 @@ h1:focus { outline: none; }
   .p-screen, .cover { width: 390px; min-height: 0; height: min(844px, calc(100dvh - 48px)); border-radius: 30px; overflow: hidden; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.09); }
 }
 
+/* ---------- tablet (kiosk) frame ----------
+   Same screens as the phone, scaled up 1.3x to fill a portrait tablet (iPad ~768-834 px wide).
+   On a real tablet it fills the screen; on a desktop it is shown as a 768x1024 tablet frame. */
+.device.tablet { align-items: center; padding: 0; }
+.device.tablet .p-screen, .device.tablet .cover {
+  zoom: 1.3; width: calc(100vw / 1.3); height: calc(100dvh / 1.3); min-height: 0;
+  border-radius: 0; box-shadow: none; overflow: hidden;
+}
+.device.tablet .p-main { padding-left: 32px; padding-right: 32px; }
+@media (min-width: 1100px) {
+  /* Desktop preview: a 3:4 portrait tablet frame that always fits the window. */
+  .device.tablet { padding: 24px 0; }
+  .device.tablet .p-screen, .device.tablet .cover {
+    zoom: 1; height: min(1024px, calc(100dvh - 48px)); width: calc(min(1024px, calc(100dvh - 48px)) * 0.75);
+    border-radius: 22px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.09);
+  }
+}
+
 /* ---------- header ---------- */
 .p-header { height: 56px; flex: none; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; background: #fff; border-bottom: 1px solid var(--border); }
 .p-brand { display: flex; align-items: center; gap: 8px; }
