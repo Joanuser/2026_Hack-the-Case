@@ -5,7 +5,7 @@ import { ACCESS_LABEL, PRIORITY, SOURCE_LABEL, STATUS_LABEL, age, ago, languageN
 
 export type RunAction = (label: string, fn: () => Promise<unknown>) => Promise<boolean>;
 
-const SHORT_SOURCE: Record<StaffPatient['source'], string> = { mobile: 'Mobile check-in', ipad: 'iPad check-in', front_desk: 'Front desk', staff_assisted: 'Staff-assisted', walk_in: 'Walk-in' };
+const SHORT_SOURCE: Record<StaffPatient['source'], string> = { mobile: 'Mobile check-in', ipad: 'Tablet check-in', front_desk: 'Front desk', staff_assisted: 'Staff-assisted', walk_in: 'Walk-in' };
 
 const CHECKLIST = [
   'Confirm the patient is still present.',

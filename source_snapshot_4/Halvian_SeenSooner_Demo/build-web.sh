@@ -22,7 +22,7 @@ build_app() {
 
 VITE_SITE_CODES=ED-MAIN build_app patient-app patient
 VITE_STAFF_API_TOKEN="${SEENSOONER_STAFF_TOKEN:-demo-staff-token}" \
-VITE_STAFF_NAME="Demo triage nurse" VITE_BACKEND_LABEL="Hosted W2 API" build_app nurse-app nurse
+VITE_STAFF_NAME="Demo ED staff" VITE_BACKEND_LABEL="Hosted W2 API" build_app nurse-app nurse
 VITE_DEPARTMENT_NAME="Treatment-room waiting queue" build_app display-app display
 build_app oversight-dashboard oversight
 

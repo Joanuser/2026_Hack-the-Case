@@ -7,7 +7,7 @@ type Source = StaffCreatePatientRequest['source'];
 
 const empty = { source: 'front_desk' as Source, legalName: '', dateOfBirth: '', language: 'en', zone: '', seat: '', mainConcern: '', pain: '', insurance: '', phone: '' };
 
-/** Registers a patient who did not use the phone flow (front desk, iPad, staff-assisted, walk-in). */
+/** Registers a patient who did not use the phone flow (front desk, tablet, staff-assisted, walk-in). */
 export function AddPatientModal({ onClose, onCreated }: { onClose: () => void; onCreated: (p: StaffPatient) => void }) {
   const [f, setF] = useState(empty);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -61,7 +61,7 @@ export function AddPatientModal({ onClose, onCreated }: { onClose: () => void; o
         <div className="modal-head">
           <div>
             <h2 id="add-title">Add in-person check-in</h2>
-            <p className="muted">For patients checking in at the front desk, on the iPad, or with staff help. They receive a waiting number and appear on the waiting-room display.</p>
+            <p className="muted">For patients checking in at the front desk, on the tablet, or with staff help. They receive a waiting number and appear on the waiting-room display.</p>
           </div>
           <button type="button" className="icon-btn" onClick={onClose} aria-label="Close"><Close /></button>
         </div>
@@ -69,7 +69,7 @@ export function AddPatientModal({ onClose, onCreated }: { onClose: () => void; o
           <label className="lbl">Check-in method
             <select className="inp" value={f.source} onChange={(e) => set('source', e.target.value)}>
               <option value="front_desk">Front desk check-in</option>
-              <option value="ipad">iPad check-in</option>
+              <option value="ipad">Tablet check-in</option>
               <option value="staff_assisted">Staff-assisted</option>
               <option value="walk_in">Walk-in registration</option>
             </select>

@@ -367,3 +367,27 @@ h1:focus { outline: none; }
 .cover-brand { line-height: 1; }
 .size-pill .a-pair { transform: translateY(-2px); }
 .cover-brand { position: relative; top: -2px; }
+
+/* ---------- Printed slip ---------- */
+.slip-number .number-value { white-space: nowrap; font-size: clamp(56px, 20vw, 84px); }
+.slip-printing { display: inline-flex; align-items: center; gap: 8px; margin: 0 0 4px; padding: 8px 12px; border-radius: 10px; background: #efeafb; color: #4b3a8c; font-size: 13px; font-weight: 600; }
+.slip-reprint { font-size: 13px; }
+.slip-print { display: none; }
+@media print {
+  @page { size: 80mm auto; margin: 4mm; }
+  body * { visibility: hidden !important; }
+  .slip-print, .slip-print * { visibility: visible !important; }
+  .slip-print { display: block !important; position: absolute; left: 0; top: 0; width: 72mm; text-align: center; color: #000; font-family: Arial, sans-serif; }
+  .sp-head { font-size: 11pt; font-weight: 700; margin: 0 0 4mm; }
+  .sp-label { font-size: 9pt; letter-spacing: 0.08em; text-transform: uppercase; margin: 0; }
+  .sp-num { font-size: 40pt; font-weight: 700; margin: 1mm 0 3mm; }
+  .sp-note { font-size: 9pt; margin: 0 0 3mm; }
+  .sp-time { font-size: 8pt; margin: 0; }
+}
+
+/* /tablet opened on a phone-sized touch screen: no scale-up, compact header like the phone */
+@media (max-width: 600px) and (pointer: coarse) {
+  .device.tablet .p-screen, .device.tablet .cover { zoom: 1; width: 100vw; height: 100dvh; }
+  .device.tablet .p-main { padding-left: 20px; padding-right: 20px; }
+  .device.tablet .p-brand .wordmark { display: none; }
+}

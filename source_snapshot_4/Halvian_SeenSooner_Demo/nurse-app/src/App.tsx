@@ -45,7 +45,7 @@ const NEED_LABEL = { symptoms_worse: 'Symptoms are worse', question: 'Question a
 const VIEW_COPY: Record<View, { title: string; sub: string; listTitle: string; purpose: [string, string] }> = {
   assessment: {
     title: 'Assessment queue',
-    sub: 'All check-ins waiting for nurse assessment — mobile, iPad, front desk and staff-assisted. Symptom changes rise to the top.',
+    sub: 'All check-ins waiting for nurse assessment — phone, tablet, front desk and staff-assisted. Symptom changes rise to the top.',
     listTitle: 'Patients waiting for nurse assessment',
     purpose: ['HOW THIS LIST WORKS', 'AI summaries only organize what patients said. Triage priority is always set by a nurse.'],
   },
@@ -191,7 +191,7 @@ export default function App() {
       const fu = base.filter((p) => p.followUpStatus && p.followUpStatus !== 'checked');
       return [
         ['NEED IN-PERSON UPDATE', fu.length, 'patients'],
-        [`W2 ${LONG_WAIT}+ MIN`, fu.filter((p) => p.careDue).length, 'care reminders'],
+        [`${LONG_WAIT}-MIN CHECK DUE`, fu.filter((p) => p.careDue).length, 'front desk'],
         ['NO STAFF CONTACT', fu.filter((p) => !lastStaffContact(p)).length, 'since arrival'],
       ];
     }
@@ -304,8 +304,8 @@ export default function App() {
         <button type="button" className="add-btn" onClick={() => setAdding(true)} data-testid="add-patient"><Plus size={16} /> Add in-person check-in</button>
         <ConnectionChip connection={live.connection} lastSyncedAt={live.lastSyncedAt} error={live.error} now={Date.now()} />
         <div className="profile">
-          <span className="avatar">RN</span>
-          <div className="stack"><span className="name sm">{import.meta.env.VITE_STAFF_NAME || 'Triage nurse'}</span><span className="meta">Emergency department</span></div>
+          <span className="avatar">ED</span>
+          <div className="stack"><span className="name sm">{import.meta.env.VITE_STAFF_NAME || 'Demo ED staff'}</span><span className="meta">Emergency department</span></div>
         </div>
       </header>
 

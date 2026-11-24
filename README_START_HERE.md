@@ -31,7 +31,7 @@ Stop with `./stop-all.sh`.
 ## URLs
 
 - Patient App: <http://127.0.0.1:5173/>
-- Nurse Dashboard: <http://127.0.0.1:5174/>
+- Staff Dashboard (nurses + front desk): <http://127.0.0.1:5174/>
 - Waiting Room Display: <http://127.0.0.1:5175/>
 - AI Oversight Dashboard: <http://127.0.0.1:5176/>
 - Python API: <http://127.0.0.1:8000/api/health>
