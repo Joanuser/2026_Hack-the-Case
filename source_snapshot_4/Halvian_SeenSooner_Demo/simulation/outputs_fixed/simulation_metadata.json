@@ -1,0 +1,16 @@
+{
+  "synthetic_only": true,
+  "paired_random_seed": 20261122,
+  "primary_replicates": 30,
+  "sensitivity_replicates": 15,
+  "primary_parameter_case": "neutral",
+  "primary_day_scenario": "NORMAL_WEEKDAY",
+  "w2_definition": "room_entered_at - triage_completed_at",
+  "room_called_is_not_w2_endpoint": true,
+  "models_retrained": false,
+  "clinical_priority": "ESI ascending, then longest waiting within same ESI",
+  "room_type_changed_by_simulation": false,
+  "returned_patient_queue_rule": "nurse reassessment required; new queue timestamp is reassessment confirmation",
+  "room_demand_mix_warning": "Room demand shares are explicit simulation assumptions; the 200-person fixture is coverage data, not an observed daily mix.",
+  "lwbs_warning": "4% is a separate censored reference cohort. No W2-to-LWBS causal effect is estimated."
+}

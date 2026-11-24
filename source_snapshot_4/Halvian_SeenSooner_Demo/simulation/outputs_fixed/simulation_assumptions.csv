@@ -1,0 +1,122 @@
+parameter,value,classification,source,use_or_note
+annual_ed_visits,85000,PDF fact,Healthcare AI Hack the Case p.1,Defines 233 average visits/day
+room_capacity,"{""REGULAR_ED"": 32, ""FAST_TRACK"": 8, ""RESUSCITATION_TRAUMA"": 4, ""BEHAVIORAL_HEALTH"": 4}",PDF fact,PDF p.1,Four fixed room pools
+waiting_room_seats,40,PDF fact,PDF p.1,Overflow diagnostic only
+nurses_by_shift_total,"{""Day"": 14, ""Evening"": 14, ""Night"": 9}",PDF fact,PDF p.2,Combined triage and bedside nurses; not treated as bedside-only capacity
+weekday_peaks,morning and evening,PDF fact,PDF p.1,Exact peak hours are an assumption below
+monday_busiest,true,PDF fact,PDF p.1,Magnitude not supplied
+winter_volume_multiplier,1.20,PDF fact,PDF p.1,Applied to 233 average daily visits
+baseline_lwbs,0.04,PDF fact / retained reference,PDF p.2 and repaired 85k data,Kept separate from W2 causal claims
+normal_day_volume,233,Derived synthetic setup,85000 / 365,Not an observed day
+monday_peak_volume,256,Simulation assumption,233 x 1.10,PDF says busiest but gives no multiplier
+weekend_volume,210,Simulation assumption,233 x 0.90,PDF gives no weekend multiplier
+peak_hour_definition,07:00-10:59 and 16:00-20:59,Simulation assumption,Operational definition,PDF gives no exact hours
+fixture_rescheduling,200 profiles resampled/re-timed,Synthetic reference,encounters_200_w2_scenario.csv,Original 200 rows span multiple dates
+historical_synthetic_w2_median,33.8,Synthetic reference,annual_85000_w2_model_ready.csv,Not forced as DES output
+mobile_access,"{""Commercial"": 0.92, ""Medicaid_CHIP"": 0.82, ""Medicare"": 0.78, ""Uninsured"": 0.7, ""Other_Unspecified"": 0.85}",Simulation assumption,No phone/mobile field in source,"Does not affect priority, response flag, or intervention eligibility"
+lwbs_censoring,exactly 4% per simulated day,Simulation assumption,Retains separate baseline,No completed W2 is created for these rows
+no_response_return_checks,10/20/30 minutes; 45%/35%/20%,Simulation assumption,Team 30-minute recall rule,Return timing distribution not in PDF
+returned_patient_queue_priority,nurse reassessment required; queue time resets to reassessment confirmation,Safety-conservative simulation rule,User instruction,No automatic restoration of original rank; ESI remains nurse-confirmed
+room_state_model,Available/Occupied only,Team rule,User request,Turnover is included in occupied duration
+queue_priority,"ESI ascending, then triage time ascending",Team rule,User request,Clinical priority before wait time
+nurse_override,preserved conceptually,Team rule,User request,Simulation does not override ESI or room type
+conservative.no_response_rate,0.04,Simulation assumption,No direct PDF value,Sensitivity parameter
+conservative.return_within_30m_probability,0.9,Simulation assumption,No direct PDF value,Sensitivity parameter
+conservative.baseline_no_response_hold_min,3.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+conservative.intervention_reassignment_min,1.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+conservative.baseline_coordination_delay_min,1.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+conservative.intervention_coordination_delay_min,0.5,Simulation assumption,No direct PDF value,Sensitivity parameter
+conservative.turnover_minutes,5.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+conservative.regular_service_mean_min,120.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+conservative.fast_track_service_mean_min,60.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+conservative.trauma_service_mean_min,180.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+conservative.behavioral_service_mean_min,180.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+conservative.returned_nurse_reassessment_min,4.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+conservative.common_access_delay_median_min,12.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+conservative.common_access_delay_sigma,0.35,Simulation assumption,No direct PDF value,Sensitivity parameter
+conservative.regular_room_share,0.64,Simulation assumption,No direct PDF value,Sensitivity parameter
+conservative.fast_track_room_share,0.27,Simulation assumption,No direct PDF value,Sensitivity parameter
+conservative.trauma_room_share,0.05,Simulation assumption,No direct PDF value,Sensitivity parameter
+conservative.behavioral_room_share,0.04,Simulation assumption,No direct PDF value,Sensitivity parameter
+conservative.admitted_boarding_hold_min,210.0,Simulation assumption,PDF p.2/p.3 anchored,Sensitivity parameter
+conservative.service_lognormal_sigma,0.35,Simulation assumption,No direct PDF value,Sensitivity parameter
+neutral.no_response_rate,0.08,Simulation assumption,No direct PDF value,Sensitivity parameter
+neutral.return_within_30m_probability,0.85,Simulation assumption,No direct PDF value,Sensitivity parameter
+neutral.baseline_no_response_hold_min,5.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+neutral.intervention_reassignment_min,1.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+neutral.baseline_coordination_delay_min,2.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+neutral.intervention_coordination_delay_min,0.5,Simulation assumption,No direct PDF value,Sensitivity parameter
+neutral.turnover_minutes,8.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+neutral.regular_service_mean_min,150.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+neutral.fast_track_service_mean_min,75.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+neutral.trauma_service_mean_min,210.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+neutral.behavioral_service_mean_min,240.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+neutral.returned_nurse_reassessment_min,5.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+neutral.common_access_delay_median_min,22.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+neutral.common_access_delay_sigma,0.45,Simulation assumption,No direct PDF value,Sensitivity parameter
+neutral.regular_room_share,0.62,Simulation assumption,No direct PDF value,Sensitivity parameter
+neutral.fast_track_room_share,0.27,Simulation assumption,No direct PDF value,Sensitivity parameter
+neutral.trauma_room_share,0.06,Simulation assumption,No direct PDF value,Sensitivity parameter
+neutral.behavioral_room_share,0.05,Simulation assumption,No direct PDF value,Sensitivity parameter
+neutral.admitted_boarding_hold_min,210.0,Simulation assumption,PDF p.2/p.3 anchored,Sensitivity parameter
+neutral.service_lognormal_sigma,0.35,Simulation assumption,No direct PDF value,Sensitivity parameter
+high_pressure.no_response_rate,0.12,Simulation assumption,No direct PDF value,Sensitivity parameter
+high_pressure.return_within_30m_probability,0.8,Simulation assumption,No direct PDF value,Sensitivity parameter
+high_pressure.baseline_no_response_hold_min,8.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+high_pressure.intervention_reassignment_min,2.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+high_pressure.baseline_coordination_delay_min,3.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+high_pressure.intervention_coordination_delay_min,0.75,Simulation assumption,No direct PDF value,Sensitivity parameter
+high_pressure.turnover_minutes,12.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+high_pressure.regular_service_mean_min,180.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+high_pressure.fast_track_service_mean_min,90.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+high_pressure.trauma_service_mean_min,240.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+high_pressure.behavioral_service_mean_min,300.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+high_pressure.returned_nurse_reassessment_min,8.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+high_pressure.common_access_delay_median_min,32.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+high_pressure.common_access_delay_sigma,0.55,Simulation assumption,No direct PDF value,Sensitivity parameter
+high_pressure.regular_room_share,0.57,Simulation assumption,No direct PDF value,Sensitivity parameter
+high_pressure.fast_track_room_share,0.26,Simulation assumption,No direct PDF value,Sensitivity parameter
+high_pressure.trauma_room_share,0.07,Simulation assumption,No direct PDF value,Sensitivity parameter
+high_pressure.behavioral_room_share,0.1,Simulation assumption,No direct PDF value,Sensitivity parameter
+high_pressure.admitted_boarding_hold_min,210.0,Simulation assumption,PDF p.2/p.3 anchored,Sensitivity parameter
+high_pressure.service_lognormal_sigma,0.35,Simulation assumption,No direct PDF value,Sensitivity parameter
+immediate_skip.no_response_rate,0.08,Simulation assumption,No direct PDF value,Sensitivity parameter
+immediate_skip.return_within_30m_probability,0.85,Simulation assumption,No direct PDF value,Sensitivity parameter
+immediate_skip.baseline_no_response_hold_min,1.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+immediate_skip.intervention_reassignment_min,1.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+immediate_skip.baseline_coordination_delay_min,2.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+immediate_skip.intervention_coordination_delay_min,0.5,Simulation assumption,No direct PDF value,Sensitivity parameter
+immediate_skip.turnover_minutes,8.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+immediate_skip.regular_service_mean_min,150.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+immediate_skip.fast_track_service_mean_min,75.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+immediate_skip.trauma_service_mean_min,210.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+immediate_skip.behavioral_service_mean_min,240.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+immediate_skip.returned_nurse_reassessment_min,5.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+immediate_skip.common_access_delay_median_min,22.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+immediate_skip.common_access_delay_sigma,0.45,Simulation assumption,No direct PDF value,Sensitivity parameter
+immediate_skip.regular_room_share,0.62,Simulation assumption,No direct PDF value,Sensitivity parameter
+immediate_skip.fast_track_room_share,0.27,Simulation assumption,No direct PDF value,Sensitivity parameter
+immediate_skip.trauma_room_share,0.06,Simulation assumption,No direct PDF value,Sensitivity parameter
+immediate_skip.behavioral_room_share,0.05,Simulation assumption,No direct PDF value,Sensitivity parameter
+immediate_skip.admitted_boarding_hold_min,210.0,Simulation assumption,PDF p.2/p.3 anchored,Sensitivity parameter
+immediate_skip.service_lognormal_sigma,0.35,Simulation assumption,No direct PDF value,Sensitivity parameter
+equal_process_null.no_response_rate,0.08,Simulation assumption,No direct PDF value,Sensitivity parameter
+equal_process_null.return_within_30m_probability,0.85,Simulation assumption,No direct PDF value,Sensitivity parameter
+equal_process_null.baseline_no_response_hold_min,1.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+equal_process_null.intervention_reassignment_min,1.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+equal_process_null.baseline_coordination_delay_min,0.5,Simulation assumption,No direct PDF value,Sensitivity parameter
+equal_process_null.intervention_coordination_delay_min,0.5,Simulation assumption,No direct PDF value,Sensitivity parameter
+equal_process_null.turnover_minutes,8.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+equal_process_null.regular_service_mean_min,150.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+equal_process_null.fast_track_service_mean_min,75.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+equal_process_null.trauma_service_mean_min,210.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+equal_process_null.behavioral_service_mean_min,240.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+equal_process_null.returned_nurse_reassessment_min,5.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+equal_process_null.common_access_delay_median_min,22.0,Simulation assumption,No direct PDF value,Sensitivity parameter
+equal_process_null.common_access_delay_sigma,0.45,Simulation assumption,No direct PDF value,Sensitivity parameter
+equal_process_null.regular_room_share,0.62,Simulation assumption,No direct PDF value,Sensitivity parameter
+equal_process_null.fast_track_room_share,0.27,Simulation assumption,No direct PDF value,Sensitivity parameter
+equal_process_null.trauma_room_share,0.06,Simulation assumption,No direct PDF value,Sensitivity parameter
+equal_process_null.behavioral_room_share,0.05,Simulation assumption,No direct PDF value,Sensitivity parameter
+equal_process_null.admitted_boarding_hold_min,210.0,Simulation assumption,PDF p.2/p.3 anchored,Sensitivity parameter
+equal_process_null.service_lognormal_sigma,0.35,Simulation assumption,No direct PDF value,Sensitivity parameter

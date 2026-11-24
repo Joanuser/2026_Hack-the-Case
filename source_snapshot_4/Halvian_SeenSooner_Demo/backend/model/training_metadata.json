@@ -1,0 +1,36 @@
+{
+  "synthetic_only": true,
+  "split_type": "chronological 70% train / 10% calibration / 20% final test",
+  "train_cutoff": "2026-09-14 19:08:38.300000",
+  "calibration_cutoff": "2026-10-22 23:05:28.400000",
+  "feature_columns": [
+    "esi",
+    "triage_weekday",
+    "triage_shift",
+    "triage_winter",
+    "triage_hour",
+    "arrivals_prev_60m_at_triage"
+  ],
+  "future_outcome_columns_excluded": [
+    "room_called_at",
+    "room_entered_at",
+    "provider_first_seen_at",
+    "departure_at",
+    "w2_actual_minutes",
+    "baseline_lwbs"
+  ],
+  "excluded_from_model_inputs": [
+    "insurance",
+    "race_synthetic",
+    "hispanic_latino_synthetic"
+  ],
+  "remaining_w2_method": "At elapsed=0: calibration residuals. After waiting begins: ESI-stratified calibration analogs conditioned on observed W2 > elapsed and matched on base total-W2 prediction.",
+  "remaining_w2_selection_bias_warning": "Calibration uses patients with observed room entry. LWBS censoring can bias the conditional remaining-time distribution. This is a simplified prototype, not a survival model.",
+  "lwbs_model_scope": "Static offline post-triage risk analysis; not updated from elapsed waiting time.",
+  "clinical_warning": "Prototype only. ESI and clinical priority always remain clinician-controlled.",
+  "python_version": "3.14.7",
+  "pandas_version": "2.3.3",
+  "numpy_version": "2.5.5",
+  "scikit_learn_version": "1.9.1",
+  "data_sha256": "f23103049aac8523709f73e9115e46d212c6530a97e15bbef5b0146e06c1583b"
+}

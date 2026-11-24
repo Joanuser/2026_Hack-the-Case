@@ -1,0 +1,344 @@
+[
+  {
+    "siteCode": "HALVIAN-DEMO",
+    "language": "en",
+    "legalName": "Alex Morgan",
+    "dateOfBirth": "1967-02-02",
+    "phone": "555-0101",
+    "insurance": "Commercial",
+    "insuranceDeferred": false,
+    "accessibilityNeeds": [],
+    "symptoms": {
+      "mainConcern": "Chest pressure",
+      "onset": "About 20 minutes ago",
+      "otherSymptoms": "Shortness of breath",
+      "painLevel": 5
+    },
+    "summary": {
+      "draft": "Chest pressure; onset: about 20 minutes ago; other symptoms: shortness of breath.",
+      "text": "Chest pressure; onset: about 20 minutes ago; other symptoms: shortness of breath.",
+      "editedByPatient": false
+    },
+    "geo": null
+  },
+  {
+    "siteCode": "HALVIAN-DEMO",
+    "language": "es",
+    "legalName": "Blair Carter",
+    "dateOfBirth": "1974-03-03",
+    "phone": "555-0102",
+    "insurance": "Medicaid/CHIP",
+    "insuranceDeferred": false,
+    "accessibilityNeeds": [
+      "acc_interpreter"
+    ],
+    "symptoms": {
+      "mainConcern": "Abdominal pain",
+      "onset": "This morning",
+      "otherSymptoms": "Nausea",
+      "painLevel": 6
+    },
+    "summary": {
+      "draft": "Abdominal pain; onset: this morning; other symptoms: nausea.",
+      "text": "Abdominal pain; onset: this morning; other symptoms: nausea.",
+      "editedByPatient": false
+    },
+    "geo": null
+  },
+  {
+    "siteCode": "HALVIAN-DEMO",
+    "language": "en",
+    "legalName": "Cameron Brooks",
+    "dateOfBirth": "1981-04-04",
+    "phone": "555-0103",
+    "insurance": "Medicare",
+    "insuranceDeferred": false,
+    "accessibilityNeeds": [],
+    "symptoms": {
+      "mainConcern": "Twisted ankle",
+      "onset": "About 1 hour ago",
+      "otherSymptoms": "Swelling",
+      "painLevel": 6
+    },
+    "summary": {
+      "draft": "Twisted ankle; onset: about 1 hour ago; other symptoms: swelling.",
+      "text": "Twisted ankle; onset: about 1 hour ago; other symptoms: swelling.",
+      "editedByPatient": false
+    },
+    "geo": null
+  },
+  {
+    "siteCode": "HALVIAN-DEMO",
+    "language": "zh",
+    "legalName": "Dakota Reed",
+    "dateOfBirth": "1988-05-05",
+    "phone": "555-0104",
+    "insurance": "Commercial",
+    "insuranceDeferred": false,
+    "accessibilityNeeds": [
+      "acc_interpreter"
+    ],
+    "symptoms": {
+      "mainConcern": "Fever and cough",
+      "onset": "Two days ago",
+      "otherSymptoms": "Sore throat",
+      "painLevel": 3
+    },
+    "summary": {
+      "draft": "Fever and cough; onset: two days ago; other symptoms: sore throat.",
+      "text": "Fever and cough; onset: two days ago; other symptoms: sore throat.",
+      "editedByPatient": false
+    },
+    "geo": null
+  },
+  {
+    "siteCode": "HALVIAN-DEMO",
+    "language": "en",
+    "legalName": "Emery Chen",
+    "dateOfBirth": "1995-06-06",
+    "phone": "555-0105",
+    "insurance": "Medicaid/CHIP",
+    "insuranceDeferred": false,
+    "accessibilityNeeds": [],
+    "symptoms": {
+      "mainConcern": "Headache",
+      "onset": "Yesterday",
+      "otherSymptoms": "Light sensitivity",
+      "painLevel": 4
+    },
+    "summary": {
+      "draft": "Headache; onset: yesterday; other symptoms: light sensitivity.",
+      "text": "Headache; onset: yesterday; other symptoms: light sensitivity.",
+      "editedByPatient": false
+    },
+    "geo": null
+  },
+  {
+    "siteCode": "HALVIAN-DEMO",
+    "language": "es",
+    "legalName": "Finley Rivera",
+    "dateOfBirth": "2002-07-07",
+    "phone": "555-0106",
+    "insurance": "Medicaid/CHIP",
+    "insuranceDeferred": false,
+    "accessibilityNeeds": [
+      "acc_interpreter"
+    ],
+    "symptoms": {
+      "mainConcern": "Dizziness",
+      "onset": "This morning",
+      "otherSymptoms": "Weakness",
+      "painLevel": 3
+    },
+    "summary": {
+      "draft": "Dizziness; onset: this morning; other symptoms: weakness.",
+      "text": "Dizziness; onset: this morning; other symptoms: weakness.",
+      "editedByPatient": false
+    },
+    "geo": null
+  },
+  {
+    "siteCode": "HALVIAN-DEMO",
+    "language": "en",
+    "legalName": "Gray Patel",
+    "dateOfBirth": "1964-08-08",
+    "phone": "555-0107",
+    "insurance": "Commercial",
+    "insuranceDeferred": false,
+    "accessibilityNeeds": [],
+    "symptoms": {
+      "mainConcern": "Back pain",
+      "onset": "Three days ago",
+      "otherSymptoms": "Pain with movement",
+      "painLevel": 5
+    },
+    "summary": {
+      "draft": "Back pain; onset: three days ago; other symptoms: pain with movement.",
+      "text": "Back pain; onset: three days ago; other symptoms: pain with movement.",
+      "editedByPatient": false
+    },
+    "geo": null
+  },
+  {
+    "siteCode": "HALVIAN-DEMO",
+    "language": "ar",
+    "legalName": "Harper Lewis",
+    "dateOfBirth": "1971-09-09",
+    "phone": "555-0108",
+    "insurance": "Medicare",
+    "insuranceDeferred": false,
+    "accessibilityNeeds": [
+      "acc_interpreter"
+    ],
+    "symptoms": {
+      "mainConcern": "Wheezing",
+      "onset": "About 30 minutes ago",
+      "otherSymptoms": "Cough",
+      "painLevel": 6
+    },
+    "summary": {
+      "draft": "Wheezing; onset: about 30 minutes ago; other symptoms: cough.",
+      "text": "Wheezing; onset: about 30 minutes ago; other symptoms: cough.",
+      "editedByPatient": false
+    },
+    "geo": null
+  },
+  {
+    "siteCode": "HALVIAN-DEMO",
+    "language": "en",
+    "legalName": "Indigo Martinez",
+    "dateOfBirth": "1978-10-10",
+    "phone": "555-0109",
+    "insurance": "Uninsured",
+    "insuranceDeferred": false,
+    "accessibilityNeeds": [],
+    "symptoms": {
+      "mainConcern": "Rash",
+      "onset": "This afternoon",
+      "otherSymptoms": "Itching",
+      "painLevel": 2
+    },
+    "summary": {
+      "draft": "Rash; onset: this afternoon; other symptoms: itching.",
+      "text": "Rash; onset: this afternoon; other symptoms: itching.",
+      "editedByPatient": false
+    },
+    "geo": null
+  },
+  {
+    "siteCode": "HALVIAN-DEMO",
+    "language": "en",
+    "legalName": "Jordan Kim",
+    "dateOfBirth": "1985-11-11",
+    "phone": "555-0110",
+    "insurance": "Medicaid/CHIP",
+    "insuranceDeferred": false,
+    "accessibilityNeeds": [],
+    "symptoms": {
+      "mainConcern": "Hand laceration",
+      "onset": "About 45 minutes ago",
+      "otherSymptoms": "Bleeding controlled",
+      "painLevel": 4
+    },
+    "summary": {
+      "draft": "Hand laceration; onset: about 45 minutes ago; other symptoms: bleeding controlled.",
+      "text": "Hand laceration; onset: about 45 minutes ago; other symptoms: bleeding controlled.",
+      "editedByPatient": false
+    },
+    "geo": null
+  },
+  {
+    "siteCode": "HALVIAN-DEMO",
+    "language": "zh",
+    "legalName": "Kai Thompson",
+    "dateOfBirth": "1992-12-12",
+    "phone": "555-0111",
+    "insurance": "Commercial",
+    "insuranceDeferred": false,
+    "accessibilityNeeds": [
+      "acc_interpreter"
+    ],
+    "symptoms": {
+      "mainConcern": "Abdominal discomfort",
+      "onset": "Last night",
+      "otherSymptoms": "Vomiting",
+      "painLevel": 5
+    },
+    "summary": {
+      "draft": "Abdominal discomfort; onset: last night; other symptoms: vomiting.",
+      "text": "Abdominal discomfort; onset: last night; other symptoms: vomiting.",
+      "editedByPatient": false
+    },
+    "geo": null
+  },
+  {
+    "siteCode": "HALVIAN-DEMO",
+    "language": "en",
+    "legalName": "Logan Davis",
+    "dateOfBirth": "1999-01-13",
+    "phone": "555-0112",
+    "insurance": "Medicaid/CHIP",
+    "insuranceDeferred": false,
+    "accessibilityNeeds": [],
+    "symptoms": {
+      "mainConcern": "Migraine symptoms",
+      "onset": "This morning",
+      "otherSymptoms": "Nausea",
+      "painLevel": 7
+    },
+    "summary": {
+      "draft": "Migraine symptoms; onset: this morning; other symptoms: nausea.",
+      "text": "Migraine symptoms; onset: this morning; other symptoms: nausea.",
+      "editedByPatient": false
+    },
+    "geo": null
+  },
+  {
+    "siteCode": "HALVIAN-DEMO",
+    "language": "es",
+    "legalName": "Morgan Ellis",
+    "dateOfBirth": "1961-02-14",
+    "phone": "555-0113",
+    "insurance": "Commercial",
+    "insuranceDeferred": false,
+    "accessibilityNeeds": [
+      "acc_interpreter"
+    ],
+    "symptoms": {
+      "mainConcern": "Knee pain",
+      "onset": "Yesterday",
+      "otherSymptoms": "Difficulty walking",
+      "painLevel": 5
+    },
+    "summary": {
+      "draft": "Knee pain; onset: yesterday; other symptoms: difficulty walking.",
+      "text": "Knee pain; onset: yesterday; other symptoms: difficulty walking.",
+      "editedByPatient": false
+    },
+    "geo": null
+  },
+  {
+    "siteCode": "HALVIAN-DEMO",
+    "language": "en",
+    "legalName": "Nova Bennett",
+    "dateOfBirth": "1968-03-15",
+    "phone": "555-0114",
+    "insurance": "Medicaid/CHIP",
+    "insuranceDeferred": false,
+    "accessibilityNeeds": [],
+    "symptoms": {
+      "mainConcern": "Shortness of breath",
+      "onset": "About 15 minutes ago",
+      "otherSymptoms": "Chest tightness",
+      "painLevel": 7
+    },
+    "summary": {
+      "draft": "Shortness of breath; onset: about 15 minutes ago; other symptoms: chest tightness.",
+      "text": "Shortness of breath; onset: about 15 minutes ago; other symptoms: chest tightness.",
+      "editedByPatient": false
+    },
+    "geo": null
+  },
+  {
+    "siteCode": "HALVIAN-DEMO",
+    "language": "en",
+    "legalName": "Oakley Turner",
+    "dateOfBirth": "1975-04-16",
+    "phone": "555-0115",
+    "insurance": "Medicare",
+    "insuranceDeferred": false,
+    "accessibilityNeeds": [],
+    "symptoms": {
+      "mainConcern": "Sore throat",
+      "onset": "Two days ago",
+      "otherSymptoms": "Fever",
+      "painLevel": 2
+    },
+    "summary": {
+      "draft": "Sore throat; onset: two days ago; other symptoms: fever.",
+      "text": "Sore throat; onset: two days ago; other symptoms: fever.",
+      "editedByPatient": false
+    },
+    "geo": null
+  }
+]

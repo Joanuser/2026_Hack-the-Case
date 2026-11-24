@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "projectionType": "HYPOTHETICAL_SCENARIO_PROJECTION_NOT_OBSERVED_HOSPITAL_OUTCOME",
+  "title": "Neutral Smart Routing + LWBS Prevention scenario",
+  "totalVisits": 85000,
+  "historicallyRoomedVisits": 81600,
+  "historicalLwbsCount": 3400,
+  "wDefinition": "Triage completed to entry into the appropriate treatment room",
+  "wCohort": "Historically roomed patients only; historical LWBS cases are not assigned a projected W",
+  "baseline": { "meanWMin": 34.86678860294117, "medianWMin": 33.81666666666667, "p90WMin": 55.266666666666666, "lwbsRatePct": 4 },
+  "combined": { "meanWMin": 31.752617034313722, "medianWMin": 30.825, "p90WMin": 49.905, "lwbsRatePct": 3.2 },
+  "reductions": { "meanWMin": 3.114171568627448, "meanWPct": 8.931627182793523, "medianWMin": 2.9916666666666707, "p90WMin": 5.361666666666665, "lwbsPp": 0.8 },
+  "assumptions": {
+    "routingAvoidableWFraction": 0.1,
+    "outreachLwbsRetentionFraction": 0.2,
+    "routingDirectLwbsPreventionFraction": 0,
+    "routingEligibleEsi": [3, 4, 5]
+  },
+  "status": {
+    "realInterventionEffect": "NOT_IDENTIFIABLE",
+    "clinicalSafety": "NOT_VERIFIED",
+    "capacityValidation": "NOT_A_VALIDATED_CAPACITY_CONSTRAINED_SIMULATION"
+  },
+  "fourArms": [
+    { "arm": "Baseline", "meanWMin": 34.87, "lwbsRatePct": 4 },
+    { "arm": "Routing only", "meanWMin": 31.75, "lwbsRatePct": 4 },
+    { "arm": "Outreach only", "meanWMin": 34.87, "lwbsRatePct": 3.2 },
+    { "arm": "Combined", "meanWMin": 31.75, "lwbsRatePct": 3.2 }
+  ]
+}

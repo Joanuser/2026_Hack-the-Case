@@ -1,0 +1,254 @@
+[
+  {
+    "source": "ipad",
+    "language": "es",
+    "legalName": "Parker Nguyen",
+    "dateOfBirth": "1982-05-17",
+    "insurance": "Commercial",
+    "accessibilityNeeds": [
+      "acc_interpreter"
+    ],
+    "location": {
+      "zone": "Zone B",
+      "seat": "Seat 16"
+    },
+    "symptoms": {
+      "mainConcern": "Fall with wrist pain",
+      "onset": "About 2 hours ago",
+      "otherSymptoms": "Swelling",
+      "painLevel": 5
+    }
+  },
+  {
+    "source": "front_desk",
+    "language": "en",
+    "legalName": "Quinn Foster",
+    "dateOfBirth": "1989-06-18",
+    "insurance": "Medicaid/CHIP",
+    "accessibilityNeeds": [],
+    "location": {
+      "zone": "Zone B",
+      "seat": "Seat 17"
+    },
+    "symptoms": {
+      "mainConcern": "Panic symptoms",
+      "onset": "About 1 hour ago",
+      "otherSymptoms": "Rapid breathing",
+      "painLevel": 4
+    }
+  },
+  {
+    "source": "staff_assisted",
+    "language": "zh",
+    "legalName": "Riley Adams",
+    "dateOfBirth": "1996-07-19",
+    "insurance": "Uninsured",
+    "accessibilityNeeds": [
+      "acc_interpreter"
+    ],
+    "location": null,
+    "symptoms": {
+      "mainConcern": "Flu-like symptoms",
+      "onset": "Yesterday",
+      "otherSymptoms": "Body aches",
+      "painLevel": 3
+    }
+  },
+  {
+    "source": "walk_in",
+    "language": "en",
+    "legalName": "Sage Wilson",
+    "dateOfBirth": "2003-08-20",
+    "insurance": "Medicare",
+    "accessibilityNeeds": [],
+    "location": {
+      "zone": "Zone B",
+      "seat": "Seat 18"
+    },
+    "symptoms": {
+      "mainConcern": "Back strain",
+      "onset": "This morning",
+      "otherSymptoms": "Muscle spasms",
+      "painLevel": 4
+    }
+  },
+  {
+    "source": "front_desk",
+    "language": "en",
+    "legalName": "Taylor Brooks",
+    "dateOfBirth": "1965-09-21",
+    "insurance": "Medicaid/CHIP",
+    "accessibilityNeeds": [],
+    "location": {
+      "zone": "Zone B",
+      "seat": "Seat 19"
+    },
+    "symptoms": {
+      "mainConcern": "Ear pain",
+      "onset": "Since last night",
+      "otherSymptoms": "Reduced hearing",
+      "painLevel": 3
+    }
+  },
+  {
+    "source": "staff_assisted",
+    "language": "es",
+    "legalName": "Uma Shah",
+    "dateOfBirth": "1972-10-22",
+    "insurance": "Commercial",
+    "accessibilityNeeds": [
+      "acc_interpreter"
+    ],
+    "location": {
+      "zone": "Zone B",
+      "seat": "Seat 20"
+    },
+    "symptoms": {
+      "mainConcern": "Abdominal pain",
+      "onset": "About 2 hours ago",
+      "otherSymptoms": "Cramping",
+      "painLevel": 6
+    }
+  },
+  {
+    "source": "walk_in",
+    "language": "en",
+    "legalName": "Val Lee",
+    "dateOfBirth": "1979-11-23",
+    "insurance": "Commercial",
+    "accessibilityNeeds": [],
+    "location": null,
+    "symptoms": {
+      "mainConcern": "Sudden weakness",
+      "onset": "About 10 minutes ago",
+      "otherSymptoms": "Speech difficulty",
+      "painLevel": 8
+    }
+  },
+  {
+    "source": "ipad",
+    "language": "zh",
+    "legalName": "Wren Cooper",
+    "dateOfBirth": "1986-12-24",
+    "insurance": "Medicaid/CHIP",
+    "accessibilityNeeds": [
+      "acc_interpreter"
+    ],
+    "location": null,
+    "symptoms": {
+      "mainConcern": "Cut finger",
+      "onset": "About 30 minutes ago",
+      "otherSymptoms": "Bleeding stopped",
+      "painLevel": 3
+    }
+  },
+  {
+    "source": "front_desk",
+    "language": "en",
+    "legalName": "Xander Hill",
+    "dateOfBirth": "1993-01-25",
+    "insurance": "Medicare",
+    "accessibilityNeeds": [],
+    "location": null,
+    "symptoms": {
+      "mainConcern": "Anxiety and agitation",
+      "onset": "This afternoon",
+      "otherSymptoms": "Difficulty sleeping",
+      "painLevel": 2
+    }
+  },
+  {
+    "source": "staff_assisted",
+    "language": "ar",
+    "legalName": "Yael Morris",
+    "dateOfBirth": "2000-02-01",
+    "insurance": "Commercial",
+    "accessibilityNeeds": [
+      "acc_interpreter"
+    ],
+    "location": null,
+    "symptoms": {
+      "mainConcern": "Fever",
+      "onset": "Since yesterday",
+      "otherSymptoms": "Chills",
+      "painLevel": 3
+    }
+  },
+  {
+    "source": "walk_in",
+    "language": "en",
+    "legalName": "Zion Reed",
+    "dateOfBirth": "1962-03-02",
+    "insurance": "Medicaid/CHIP",
+    "accessibilityNeeds": [],
+    "location": null,
+    "symptoms": {
+      "mainConcern": "Shortness of breath",
+      "onset": "About 5 minutes ago",
+      "otherSymptoms": "Wheezing",
+      "painLevel": 8
+    }
+  },
+  {
+    "source": "front_desk",
+    "language": "es",
+    "legalName": "Avery James",
+    "dateOfBirth": "1969-04-03",
+    "insurance": "Medicare",
+    "accessibilityNeeds": [
+      "acc_interpreter"
+    ],
+    "location": null,
+    "symptoms": {
+      "mainConcern": "Shoulder pain",
+      "onset": "This morning",
+      "otherSymptoms": "Limited movement",
+      "painLevel": 4
+    }
+  },
+  {
+    "source": "staff_assisted",
+    "language": "en",
+    "legalName": "Casey Park",
+    "dateOfBirth": "1976-05-04",
+    "insurance": "Uninsured",
+    "accessibilityNeeds": [],
+    "location": null,
+    "symptoms": {
+      "mainConcern": "Leg pain",
+      "onset": "About 3 hours ago",
+      "otherSymptoms": "Swelling",
+      "painLevel": 5
+    }
+  },
+  {
+    "source": "walk_in",
+    "language": "en",
+    "legalName": "Devon Price",
+    "dateOfBirth": "1983-06-05",
+    "insurance": "Other/Unspecified",
+    "accessibilityNeeds": [],
+    "location": null,
+    "symptoms": {
+      "mainConcern": "Nausea",
+      "onset": "This morning",
+      "otherSymptoms": "Dizziness",
+      "painLevel": 3
+    }
+  },
+  {
+    "source": "ipad",
+    "language": "en",
+    "legalName": "Ellis Ward",
+    "dateOfBirth": "1990-07-06",
+    "insurance": "Medicaid/CHIP",
+    "accessibilityNeeds": [],
+    "location": null,
+    "symptoms": {
+      "mainConcern": "Head injury concern",
+      "onset": "About 1 hour ago",
+      "otherSymptoms": "Headache",
+      "painLevel": 5
+    }
+  }
+]

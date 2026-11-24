@@ -1,0 +1,19 @@
+﻿field,type,meaning,source_or_caveat
+visit_id,string,Stable synthetic encounter identifier,Web-compatible fixture id
+registration_completed_at,ISO-8601,Registration completed time,PDF registration service 5–10 min; generated timestamps
+triage_started_at,ISO-8601,Nurse triage start,Synthetic timestamp
+triage_completed_at,ISO-8601,Nurse-confirmed triage completion; W2 start,Team-locked W2 definition
+triagego_suggested_esi,integer 1–5,Synthetic initial recommendation,Demo only; not clinical advice
+nurse_confirmed_esi,integer 1–5,Final nurse-confirmed ESI,ESI mix is synthetic test coverage
+required_room_type,enum,Nurse-confirmed room type,Not fixed by ESI
+room_called_at,ISO-8601,Time room is called,Does not end W2
+room_entered_at,ISO-8601,Actual physical room entry; W2 end,Required for W2 actual
+provider_first_seen_at,ISO-8601,First physician/APP encounter,Independent of room entry
+departure_at,ISO-8601,Verified departure time,Required with provider chronology for LWBS
+w2_actual_minutes,number/null,room_entered_at - triage_completed_at,Null if no room entry
+w2_elapsed_at_snapshot_minutes,number/null,Elapsed active W2 for still-waiting patient,Not the same as W2 completed
+nurse_care_alert_at,ISO-8601/null,Alert at 60 minutes of actual elapsed W2,"Team rule, not PDF fact"
+first_unanswered_call_at,ISO-8601/null,Start of recall window,"Team rule, not PDF fact"
+inactive_at,ISO-8601/null,Time marked inactive after 30-minute recall,Not LWBS without verified departure
+lwbs_status,enum,CONFIRMED_LWBS / NOT_LWBS / PENDING,LWBS requires departure before first provider
+door_to_provider_min,number/null,Arrival to first physician/APP encounter,PDF KPI; never use as W2

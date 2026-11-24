@@ -1,0 +1,1641 @@
+{
+  "patients": [
+    {
+      "id": "P001",
+      "waitingNumber": "A-001",
+      "legalName": "Alex Morgan",
+      "dateOfBirth": "1967-02-02",
+      "phone": "555-0101",
+      "insurance": "Commercial",
+      "insuranceDeferred": false,
+      "accessibilityNeeds": [],
+      "language": "en",
+      "source": "mobile",
+      "status": "waiting_nurse",
+      "symptoms": {
+        "mainConcern": "Chest pressure",
+        "onset": "About 20 minutes ago",
+        "otherSymptoms": "Shortness of breath",
+        "painLevel": 5
+      },
+      "summary": {
+        "draft": "Chest pressure; onset: about 20 minutes ago; other symptoms: shortness of breath.",
+        "text": "Chest pressure; onset: about 20 minutes ago; other symptoms: shortness of breath.",
+        "editedByPatient": false
+      },
+      "location": {
+        "zone": "Zone A",
+        "seat": "Seat 01"
+      },
+      "nursePriority": null,
+      "symptomsChanged": false,
+      "symptomUpdates": [],
+      "contacts": [
+        {
+          "kind": "registration",
+          "label": "Registration",
+          "note": "Synthetic check-in record",
+          "at": "2026-11-23T11:53:00-05:00"
+        }
+      ],
+      "checkedInAt": "2026-11-23T11:53:00-05:00",
+      "updatedAt": "2026-11-23T12:00:00-05:00",
+      "assessedAt": null,
+      "waitMinutes": 7,
+      "peopleAhead": 1,
+      "estimatedWaitMinutes": null,
+      "lastContact": {
+        "kind": "registration",
+        "label": "Registration",
+        "note": "Synthetic check-in record",
+        "at": "2026-11-23T11:53:00-05:00"
+      },
+      "followUpStatus": null,
+      "hasLiveUpdates": true
+    },
+    {
+      "id": "P002",
+      "waitingNumber": "A-002",
+      "legalName": "Blair Carter",
+      "dateOfBirth": "1974-03-03",
+      "phone": "555-0102",
+      "insurance": "Medicaid/CHIP",
+      "insuranceDeferred": false,
+      "accessibilityNeeds": [
+        "acc_interpreter"
+      ],
+      "language": "es",
+      "source": "mobile",
+      "status": "waiting_nurse",
+      "symptoms": {
+        "mainConcern": "Abdominal pain",
+        "onset": "This morning",
+        "otherSymptoms": "Nausea",
+        "painLevel": 6
+      },
+      "summary": {
+        "draft": "Abdominal pain; onset: this morning; other symptoms: nausea.",
+        "text": "Abdominal pain; onset: this morning; other symptoms: nausea.",
+        "editedByPatient": false
+      },
+      "location": {
+        "zone": "Zone A",
+        "seat": "Seat 02"
+      },
+      "nursePriority": null,
+      "symptomsChanged": false,
+      "symptomUpdates": [],
+      "contacts": [
+        {
+          "kind": "registration",
+          "label": "Registration",
+          "note": "Synthetic check-in record",
+          "at": "2026-11-23T11:48:00-05:00"
+        }
+      ],
+      "checkedInAt": "2026-11-23T11:48:00-05:00",
+      "updatedAt": "2026-11-23T12:00:00-05:00",
+      "assessedAt": null,
+      "waitMinutes": 12,
+      "peopleAhead": 2,
+      "estimatedWaitMinutes": null,
+      "lastContact": {
+        "kind": "registration",
+        "label": "Registration",
+        "note": "Synthetic check-in record",
+        "at": "2026-11-23T11:48:00-05:00"
+      },
+      "followUpStatus": null,
+      "hasLiveUpdates": true
+    },
+    {
+      "id": "P003",
+      "waitingNumber": "A-003",
+      "legalName": "Cameron Brooks",
+      "dateOfBirth": "1981-04-04",
+      "phone": "555-0103",
+      "insurance": "Medicare",
+      "insuranceDeferred": false,
+      "accessibilityNeeds": [],
+      "language": "en",
+      "source": "mobile",
+      "status": "waiting_nurse",
+      "symptoms": {
+        "mainConcern": "Twisted ankle",
+        "onset": "About 1 hour ago",
+        "otherSymptoms": "Swelling",
+        "painLevel": 6
+      },
+      "summary": {
+        "draft": "Twisted ankle; onset: about 1 hour ago; other symptoms: swelling.",
+        "text": "Twisted ankle; onset: about 1 hour ago; other symptoms: swelling.",
+        "editedByPatient": false
+      },
+      "location": {
+        "zone": "Zone A",
+        "seat": "Seat 03"
+      },
+      "nursePriority": null,
+      "symptomsChanged": false,
+      "symptomUpdates": [],
+      "contacts": [
+        {
+          "kind": "registration",
+          "label": "Registration",
+          "note": "Synthetic check-in record",
+          "at": "2026-11-23T11:42:00-05:00"
+        }
+      ],
+      "checkedInAt": "2026-11-23T11:42:00-05:00",
+      "updatedAt": "2026-11-23T12:00:00-05:00",
+      "assessedAt": null,
+      "waitMinutes": 18,
+      "peopleAhead": 3,
+      "estimatedWaitMinutes": null,
+      "lastContact": {
+        "kind": "registration",
+        "label": "Registration",
+        "note": "Synthetic check-in record",
+        "at": "2026-11-23T11:42:00-05:00"
+      },
+      "followUpStatus": null,
+      "hasLiveUpdates": true
+    },
+    {
+      "id": "P004",
+      "waitingNumber": "A-004",
+      "legalName": "Dakota Reed",
+      "dateOfBirth": "1988-05-05",
+      "phone": "555-0104",
+      "insurance": "Commercial",
+      "insuranceDeferred": false,
+      "accessibilityNeeds": [
+        "acc_interpreter"
+      ],
+      "language": "zh",
+      "source": "mobile",
+      "status": "waiting_nurse",
+      "symptoms": {
+        "mainConcern": "Fever and cough",
+        "onset": "Two days ago",
+        "otherSymptoms": "Sore throat",
+        "painLevel": 3
+      },
+      "summary": {
+        "draft": "Fever and cough; onset: two days ago; other symptoms: sore throat.",
+        "text": "Fever and cough; onset: two days ago; other symptoms: sore throat.",
+        "editedByPatient": false
+      },
+      "location": {
+        "zone": "Zone A",
+        "seat": "Seat 04"
+      },
+      "nursePriority": null,
+      "symptomsChanged": false,
+      "symptomUpdates": [],
+      "contacts": [
+        {
+          "kind": "registration",
+          "label": "Registration",
+          "note": "Synthetic check-in record",
+          "at": "2026-11-23T11:37:00-05:00"
+        }
+      ],
+      "checkedInAt": "2026-11-23T11:37:00-05:00",
+      "updatedAt": "2026-11-23T12:00:00-05:00",
+      "assessedAt": null,
+      "waitMinutes": 23,
+      "peopleAhead": 0,
+      "estimatedWaitMinutes": null,
+      "lastContact": {
+        "kind": "registration",
+        "label": "Registration",
+        "note": "Synthetic check-in record",
+        "at": "2026-11-23T11:37:00-05:00"
+      },
+      "followUpStatus": null,
+      "hasLiveUpdates": true
+    },
+    {
+      "id": "P005",
+      "waitingNumber": "A-005",
+      "legalName": "Emery Chen",
+      "dateOfBirth": "1995-06-06",
+      "phone": "555-0105",
+      "insurance": "Medicaid/CHIP",
+      "insuranceDeferred": false,
+      "accessibilityNeeds": [],
+      "language": "en",
+      "source": "mobile",
+      "status": "waiting_nurse",
+      "symptoms": {
+        "mainConcern": "Headache",
+        "onset": "Yesterday",
+        "otherSymptoms": "Light sensitivity",
+        "painLevel": 4
+      },
+      "summary": {
+        "draft": "Headache; onset: yesterday; other symptoms: light sensitivity.",
+        "text": "Headache; onset: yesterday; other symptoms: light sensitivity.",
+        "editedByPatient": false
+      },
+      "location": {
+        "zone": "Zone A",
+        "seat": "Seat 05"
+      },
+      "nursePriority": null,
+      "symptomsChanged": false,
+      "symptomUpdates": [],
+      "contacts": [
+        {
+          "kind": "registration",
+          "label": "Registration",
+          "note": "Synthetic check-in record",
+          "at": "2026-11-23T11:32:00-05:00"
+        }
+      ],
+      "checkedInAt": "2026-11-23T11:32:00-05:00",
+      "updatedAt": "2026-11-23T12:00:00-05:00",
+      "assessedAt": null,
+      "waitMinutes": 28,
+      "peopleAhead": 1,
+      "estimatedWaitMinutes": null,
+      "lastContact": {
+        "kind": "registration",
+        "label": "Registration",
+        "note": "Synthetic check-in record",
+        "at": "2026-11-23T11:32:00-05:00"
+      },
+      "followUpStatus": null,
+      "hasLiveUpdates": true
+    },
+    {
+      "id": "P006",
+      "waitingNumber": "A-006",
+      "legalName": "Finley Rivera",
+      "dateOfBirth": "2002-07-07",
+      "phone": "555-0106",
+      "insurance": "Medicaid/CHIP",
+      "insuranceDeferred": false,
+      "accessibilityNeeds": [
+        "acc_interpreter"
+      ],
+      "language": "es",
+      "source": "mobile",
+      "status": "in_assessment",
+      "symptoms": {
+        "mainConcern": "Dizziness",
+        "onset": "This morning",
+        "otherSymptoms": "Weakness",
+        "painLevel": 3
+      },
+      "summary": {
+        "draft": "Dizziness; onset: this morning; other symptoms: weakness.",
+        "text": "Dizziness; onset: this morning; other symptoms: weakness.",
+        "editedByPatient": false
+      },
+      "location": {
+        "zone": "Zone A",
+        "seat": "Seat 06"
+      },
+      "nursePriority": null,
+      "symptomsChanged": false,
+      "symptomUpdates": [],
+      "contacts": [
+        {
+          "kind": "registration",
+          "label": "Registration",
+          "note": "Synthetic check-in record",
+          "at": "2026-11-23T11:44:00-05:00"
+        }
+      ],
+      "checkedInAt": "2026-11-23T11:44:00-05:00",
+      "updatedAt": "2026-11-23T12:00:00-05:00",
+      "assessedAt": null,
+      "waitMinutes": 16,
+      "peopleAhead": null,
+      "estimatedWaitMinutes": null,
+      "lastContact": {
+        "kind": "registration",
+        "label": "Registration",
+        "note": "Synthetic check-in record",
+        "at": "2026-11-23T11:44:00-05:00"
+      },
+      "followUpStatus": null,
+      "hasLiveUpdates": true
+    },
+    {
+      "id": "P007",
+      "waitingNumber": "A-007",
+      "legalName": "Gray Patel",
+      "dateOfBirth": "1964-08-08",
+      "phone": "555-0107",
+      "insurance": "Commercial",
+      "insuranceDeferred": false,
+      "accessibilityNeeds": [],
+      "language": "en",
+      "source": "mobile",
+      "status": "in_assessment",
+      "symptoms": {
+        "mainConcern": "Back pain",
+        "onset": "Three days ago",
+        "otherSymptoms": "Pain with movement",
+        "painLevel": 5
+      },
+      "summary": {
+        "draft": "Back pain; onset: three days ago; other symptoms: pain with movement.",
+        "text": "Back pain; onset: three days ago; other symptoms: pain with movement.",
+        "editedByPatient": false
+      },
+      "location": {
+        "zone": "Zone A",
+        "seat": "Seat 07"
+      },
+      "nursePriority": null,
+      "symptomsChanged": false,
+      "symptomUpdates": [],
+      "contacts": [
+        {
+          "kind": "registration",
+          "label": "Registration",
+          "note": "Synthetic check-in record",
+          "at": "2026-11-23T11:40:00-05:00"
+        }
+      ],
+      "checkedInAt": "2026-11-23T11:40:00-05:00",
+      "updatedAt": "2026-11-23T12:00:00-05:00",
+      "assessedAt": null,
+      "waitMinutes": 20,
+      "peopleAhead": null,
+      "estimatedWaitMinutes": null,
+      "lastContact": {
+        "kind": "registration",
+        "label": "Registration",
+        "note": "Synthetic check-in record",
+        "at": "2026-11-23T11:40:00-05:00"
+      },
+      "followUpStatus": null,
+      "hasLiveUpdates": true
+    },
+    {
+      "id": "P008",
+      "waitingNumber": "A-008",
+      "legalName": "Harper Lewis",
+      "dateOfBirth": "1971-09-09",
+      "phone": "555-0108",
+      "insurance": "Medicare",
+      "insuranceDeferred": false,
+      "accessibilityNeeds": [
+        "acc_interpreter"
+      ],
+      "language": "ar",
+      "source": "mobile",
+      "status": "in_assessment",
+      "symptoms": {
+        "mainConcern": "Wheezing",
+        "onset": "About 30 minutes ago",
+        "otherSymptoms": "Cough",
+        "painLevel": 6
+      },
+      "summary": {
+        "draft": "Wheezing; onset: about 30 minutes ago; other symptoms: cough.",
+        "text": "Wheezing; onset: about 30 minutes ago; other symptoms: cough.",
+        "editedByPatient": false
+      },
+      "location": {
+        "zone": "Zone A",
+        "seat": "Seat 08"
+      },
+      "nursePriority": null,
+      "symptomsChanged": false,
+      "symptomUpdates": [],
+      "contacts": [
+        {
+          "kind": "registration",
+          "label": "Registration",
+          "note": "Synthetic check-in record",
+          "at": "2026-11-23T11:34:00-05:00"
+        }
+      ],
+      "checkedInAt": "2026-11-23T11:34:00-05:00",
+      "updatedAt": "2026-11-23T12:00:00-05:00",
+      "assessedAt": null,
+      "waitMinutes": 26,
+      "peopleAhead": null,
+      "estimatedWaitMinutes": null,
+      "lastContact": {
+        "kind": "registration",
+        "label": "Registration",
+        "note": "Synthetic check-in record",
+        "at": "2026-11-23T11:34:00-05:00"
+      },
+      "followUpStatus": null,
+      "hasLiveUpdates": true
+    },
+    {
+      "id": "P009",
+      "waitingNumber": "A-009",
+      "legalName": "Indigo Martinez",
+      "dateOfBirth": "1978-10-10",
+      "phone": "555-0109",
+      "insurance": "Uninsured",
+      "insuranceDeferred": false,
+      "accessibilityNeeds": [],
+      "language": "en",
+      "source": "mobile",
+      "status": "in_assessment",
+      "symptoms": {
+        "mainConcern": "Rash",
+        "onset": "This afternoon",
+        "otherSymptoms": "Itching",
+        "painLevel": 2
+      },
+      "summary": {
+        "draft": "Rash; onset: this afternoon; other symptoms: itching.",
+        "text": "Rash; onset: this afternoon; other symptoms: itching.",
+        "editedByPatient": false
+      },
+      "location": {
+        "zone": "Zone A",
+        "seat": "Seat 09"
+      },
+      "nursePriority": null,
+      "symptomsChanged": false,
+      "symptomUpdates": [],
+      "contacts": [
+        {
+          "kind": "registration",
+          "label": "Registration",
+          "note": "Synthetic check-in record",
+          "at": "2026-11-23T11:30:00-05:00"
+        }
+      ],
+      "checkedInAt": "2026-11-23T11:30:00-05:00",
+      "updatedAt": "2026-11-23T12:00:00-05:00",
+      "assessedAt": null,
+      "waitMinutes": 30,
+      "peopleAhead": null,
+      "estimatedWaitMinutes": null,
+      "lastContact": {
+        "kind": "registration",
+        "label": "Registration",
+        "note": "Synthetic check-in record",
+        "at": "2026-11-23T11:30:00-05:00"
+      },
+      "followUpStatus": null,
+      "hasLiveUpdates": true
+    },
+    {
+      "id": "P010",
+      "waitingNumber": "A-010",
+      "legalName": "Jordan Kim",
+      "dateOfBirth": "1985-11-11",
+      "phone": "555-0110",
+      "insurance": "Medicaid/CHIP",
+      "insuranceDeferred": false,
+      "accessibilityNeeds": [],
+      "language": "en",
+      "source": "mobile",
+      "status": "waiting_provider",
+      "symptoms": {
+        "mainConcern": "Hand laceration",
+        "onset": "About 45 minutes ago",
+        "otherSymptoms": "Bleeding controlled",
+        "painLevel": 4
+      },
+      "summary": {
+        "draft": "Hand laceration; onset: about 45 minutes ago; other symptoms: bleeding controlled.",
+        "text": "Hand laceration; onset: about 45 minutes ago; other symptoms: bleeding controlled.",
+        "editedByPatient": false
+      },
+      "location": {
+        "zone": "Zone A",
+        "seat": "Seat 10"
+      },
+      "nursePriority": 2,
+      "symptomsChanged": false,
+      "symptomUpdates": [],
+      "contacts": [
+        {
+          "kind": "registration",
+          "label": "Registration",
+          "note": "Synthetic check-in record",
+          "at": "2026-11-23T11:30:00-05:00"
+        }
+      ],
+      "checkedInAt": "2026-11-23T11:30:00-05:00",
+      "updatedAt": "2026-11-23T12:00:00-05:00",
+      "assessedAt": "2026-11-23T11:45:00-05:00",
+      "waitMinutes": 30,
+      "peopleAhead": 6,
+      "estimatedWaitMinutes": null,
+      "lastContact": {
+        "kind": "registration",
+        "label": "Registration",
+        "note": "Synthetic check-in record",
+        "at": "2026-11-23T11:30:00-05:00"
+      },
+      "followUpStatus": null,
+      "hasLiveUpdates": true
+    },
+    {
+      "id": "P011",
+      "waitingNumber": "A-011",
+      "legalName": "Kai Thompson",
+      "dateOfBirth": "1992-12-12",
+      "phone": "555-0111",
+      "insurance": "Commercial",
+      "insuranceDeferred": false,
+      "accessibilityNeeds": [
+        "acc_interpreter"
+      ],
+      "language": "zh",
+      "source": "mobile",
+      "status": "waiting_provider",
+      "symptoms": {
+        "mainConcern": "Abdominal discomfort",
+        "onset": "Last night",
+        "otherSymptoms": "Vomiting",
+        "painLevel": 5
+      },
+      "summary": {
+        "draft": "Abdominal discomfort; onset: last night; other symptoms: vomiting.",
+        "text": "Abdominal discomfort; onset: last night; other symptoms: vomiting.",
+        "editedByPatient": false
+      },
+      "location": {
+        "zone": "Zone B",
+        "seat": "Seat 11"
+      },
+      "nursePriority": 2,
+      "symptomsChanged": false,
+      "symptomUpdates": [],
+      "contacts": [
+        {
+          "kind": "registration",
+          "label": "Registration",
+          "note": "Synthetic check-in record",
+          "at": "2026-11-23T11:20:00-05:00"
+        }
+      ],
+      "checkedInAt": "2026-11-23T11:20:00-05:00",
+      "updatedAt": "2026-11-23T12:00:00-05:00",
+      "assessedAt": "2026-11-23T11:35:00-05:00",
+      "waitMinutes": 40,
+      "peopleAhead": 1,
+      "estimatedWaitMinutes": null,
+      "lastContact": {
+        "kind": "registration",
+        "label": "Registration",
+        "note": "Synthetic check-in record",
+        "at": "2026-11-23T11:20:00-05:00"
+      },
+      "followUpStatus": null,
+      "hasLiveUpdates": true
+    },
+    {
+      "id": "P012",
+      "waitingNumber": "A-012",
+      "legalName": "Logan Davis",
+      "dateOfBirth": "1999-01-13",
+      "phone": "555-0112",
+      "insurance": "Medicaid/CHIP",
+      "insuranceDeferred": false,
+      "accessibilityNeeds": [],
+      "language": "en",
+      "source": "mobile",
+      "status": "waiting_provider",
+      "symptoms": {
+        "mainConcern": "Migraine symptoms",
+        "onset": "This morning",
+        "otherSymptoms": "Nausea",
+        "painLevel": 7
+      },
+      "summary": {
+        "draft": "Migraine symptoms; onset: this morning; other symptoms: nausea.",
+        "text": "Migraine symptoms; onset: this morning; other symptoms: nausea.",
+        "editedByPatient": false
+      },
+      "location": {
+        "zone": "Zone B",
+        "seat": "Seat 12"
+      },
+      "nursePriority": 3,
+      "symptomsChanged": false,
+      "symptomUpdates": [],
+      "contacts": [
+        {
+          "kind": "registration",
+          "label": "Registration",
+          "note": "Synthetic check-in record",
+          "at": "2026-11-23T11:10:00-05:00"
+        }
+      ],
+      "checkedInAt": "2026-11-23T11:10:00-05:00",
+      "updatedAt": "2026-11-23T12:00:00-05:00",
+      "assessedAt": "2026-11-23T11:25:00-05:00",
+      "waitMinutes": 50,
+      "peopleAhead": 4,
+      "estimatedWaitMinutes": null,
+      "lastContact": {
+        "kind": "registration",
+        "label": "Registration",
+        "note": "Synthetic check-in record",
+        "at": "2026-11-23T11:10:00-05:00"
+      },
+      "followUpStatus": null,
+      "hasLiveUpdates": true
+    },
+    {
+      "id": "P013",
+      "waitingNumber": "A-013",
+      "legalName": "Morgan Ellis",
+      "dateOfBirth": "1961-02-14",
+      "phone": "555-0113",
+      "insurance": "Commercial",
+      "insuranceDeferred": false,
+      "accessibilityNeeds": [
+        "acc_interpreter"
+      ],
+      "language": "es",
+      "source": "mobile",
+      "status": "waiting_provider",
+      "symptoms": {
+        "mainConcern": "Knee pain",
+        "onset": "Yesterday",
+        "otherSymptoms": "Difficulty walking",
+        "painLevel": 5
+      },
+      "summary": {
+        "draft": "Knee pain; onset: yesterday; other symptoms: difficulty walking.",
+        "text": "Knee pain; onset: yesterday; other symptoms: difficulty walking.",
+        "editedByPatient": false
+      },
+      "location": {
+        "zone": "Zone B",
+        "seat": "Seat 13"
+      },
+      "nursePriority": 3,
+      "symptomsChanged": false,
+      "symptomUpdates": [],
+      "contacts": [
+        {
+          "kind": "registration",
+          "label": "Registration",
+          "note": "Synthetic check-in record",
+          "at": "2026-11-23T10:46:00-05:00"
+        }
+      ],
+      "checkedInAt": "2026-11-23T10:46:00-05:00",
+      "updatedAt": "2026-11-23T12:00:00-05:00",
+      "assessedAt": "2026-11-23T11:01:00-05:00",
+      "waitMinutes": 74,
+      "peopleAhead": 7,
+      "estimatedWaitMinutes": null,
+      "lastContact": {
+        "kind": "registration",
+        "label": "Registration",
+        "note": "Synthetic check-in record",
+        "at": "2026-11-23T10:46:00-05:00"
+      },
+      "followUpStatus": null,
+      "hasLiveUpdates": true
+    },
+    {
+      "id": "P014",
+      "waitingNumber": "A-014",
+      "legalName": "Nova Bennett",
+      "dateOfBirth": "1968-03-15",
+      "phone": "555-0114",
+      "insurance": "Medicaid/CHIP",
+      "insuranceDeferred": false,
+      "accessibilityNeeds": [],
+      "language": "en",
+      "source": "mobile",
+      "status": "waiting_provider",
+      "symptoms": {
+        "mainConcern": "Shortness of breath",
+        "onset": "About 15 minutes ago",
+        "otherSymptoms": "Chest tightness",
+        "painLevel": 7
+      },
+      "summary": {
+        "draft": "Shortness of breath; onset: about 15 minutes ago; other symptoms: chest tightness.",
+        "text": "Shortness of breath; onset: about 15 minutes ago; other symptoms: chest tightness.",
+        "editedByPatient": false
+      },
+      "location": {
+        "zone": "Zone B",
+        "seat": "Seat 14"
+      },
+      "nursePriority": 4,
+      "symptomsChanged": false,
+      "symptomUpdates": [],
+      "contacts": [
+        {
+          "kind": "registration",
+          "label": "Registration",
+          "note": "Synthetic check-in record",
+          "at": "2026-11-23T10:45:00-05:00"
+        }
+      ],
+      "checkedInAt": "2026-11-23T10:45:00-05:00",
+      "updatedAt": "2026-11-23T12:00:00-05:00",
+      "assessedAt": "2026-11-23T11:00:00-05:00",
+      "waitMinutes": 75,
+      "peopleAhead": 2,
+      "estimatedWaitMinutes": null,
+      "lastContact": {
+        "kind": "registration",
+        "label": "Registration",
+        "note": "Synthetic check-in record",
+        "at": "2026-11-23T10:45:00-05:00"
+      },
+      "followUpStatus": null,
+      "hasLiveUpdates": true
+    },
+    {
+      "id": "P015",
+      "waitingNumber": "A-015",
+      "legalName": "Oakley Turner",
+      "dateOfBirth": "1975-04-16",
+      "phone": "555-0115",
+      "insurance": "Medicare",
+      "insuranceDeferred": false,
+      "accessibilityNeeds": [],
+      "language": "en",
+      "source": "mobile",
+      "status": "waiting_provider",
+      "symptoms": {
+        "mainConcern": "Sore throat",
+        "onset": "Two days ago",
+        "otherSymptoms": "Fever",
+        "painLevel": 2
+      },
+      "summary": {
+        "draft": "Sore throat; onset: two days ago; other symptoms: fever.",
+        "text": "Sore throat; onset: two days ago; other symptoms: fever.",
+        "editedByPatient": false
+      },
+      "location": {
+        "zone": "Zone B",
+        "seat": "Seat 15"
+      },
+      "nursePriority": 5,
+      "symptomsChanged": false,
+      "symptomUpdates": [],
+      "contacts": [
+        {
+          "kind": "registration",
+          "label": "Registration",
+          "note": "Synthetic check-in record",
+          "at": "2026-11-23T10:30:00-05:00"
+        }
+      ],
+      "checkedInAt": "2026-11-23T10:30:00-05:00",
+      "updatedAt": "2026-11-23T12:00:00-05:00",
+      "assessedAt": "2026-11-23T10:45:00-05:00",
+      "waitMinutes": 90,
+      "peopleAhead": 5,
+      "estimatedWaitMinutes": null,
+      "lastContact": {
+        "kind": "registration",
+        "label": "Registration",
+        "note": "Synthetic check-in record",
+        "at": "2026-11-23T10:30:00-05:00"
+      },
+      "followUpStatus": null,
+      "hasLiveUpdates": true
+    },
+    {
+      "id": "P016",
+      "waitingNumber": "A-016",
+      "legalName": "Parker Nguyen",
+      "dateOfBirth": "1982-05-17",
+      "phone": "",
+      "insurance": "Commercial",
+      "insuranceDeferred": false,
+      "accessibilityNeeds": [
+        "acc_interpreter"
+      ],
+      "language": "es",
+      "source": "ipad",
+      "status": "waiting_provider",
+      "symptoms": {
+        "mainConcern": "Fall with wrist pain",
+        "onset": "About 2 hours ago",
+        "otherSymptoms": "Swelling",
+        "painLevel": 5
+      },
+      "summary": {
+        "draft": "Fall with wrist pain; onset: about 2 hours ago; other symptoms: swelling.",
+        "text": "Fall with wrist pain; onset: about 2 hours ago; other symptoms: swelling.",
+        "editedByPatient": false
+      },
+      "location": {
+        "zone": "Zone B",
+        "seat": "Seat 16"
+      },
+      "nursePriority": 3,
+      "symptomsChanged": false,
+      "symptomUpdates": [],
+      "contacts": [
+        {
+          "kind": "registration",
+          "label": "Registration",
+          "note": "Synthetic check-in record",
+          "at": "2026-11-23T11:00:00-05:00"
+        }
+      ],
+      "checkedInAt": "2026-11-23T11:00:00-05:00",
+      "updatedAt": "2026-11-23T12:00:00-05:00",
+      "assessedAt": "2026-11-23T11:15:00-05:00",
+      "waitMinutes": 60,
+      "peopleAhead": 0,
+      "estimatedWaitMinutes": null,
+      "lastContact": {
+        "kind": "registration",
+        "label": "Registration",
+        "note": "Synthetic check-in record",
+        "at": "2026-11-23T11:00:00-05:00"
+      },
+      "followUpStatus": "recheck",
+      "hasLiveUpdates": false
+    },
+    {
+      "id": "P017",
+      "waitingNumber": "A-017",
+      "legalName": "Quinn Foster",
+      "dateOfBirth": "1989-06-18",
+      "phone": "",
+      "insurance": "Medicaid/CHIP",
+      "insuranceDeferred": false,
+      "accessibilityNeeds": [],
+      "language": "en",
+      "source": "front_desk",
+      "status": "waiting_provider",
+      "symptoms": {
+        "mainConcern": "Panic symptoms",
+        "onset": "About 1 hour ago",
+        "otherSymptoms": "Rapid breathing",
+        "painLevel": 4
+      },
+      "summary": {
+        "draft": "Panic symptoms; onset: about 1 hour ago; other symptoms: rapid breathing.",
+        "text": "Panic symptoms; onset: about 1 hour ago; other symptoms: rapid breathing.",
+        "editedByPatient": false
+      },
+      "location": {
+        "zone": "Zone B",
+        "seat": "Seat 17"
+      },
+      "nursePriority": 4,
+      "symptomsChanged": true,
+      "symptomUpdates": [
+        {
+          "at": "2026-11-23T11:45:00-05:00",
+          "by": "patient",
+          "previous": {
+            "mainConcern": "Panic symptoms",
+            "onset": "About 1 hour ago",
+            "otherSymptoms": "Rapid breathing",
+            "painLevel": 4
+          },
+          "symptoms": {
+            "mainConcern": "Panic symptoms",
+            "onset": "About 1 hour ago",
+            "otherSymptoms": "Returned after unanswered call; reports symptoms are unchanged",
+            "painLevel": 4
+          },
+          "note": "Synthetic symptom update for UI test"
+        }
+      ],
+      "contacts": [
+        {
+          "kind": "registration",
+          "label": "Registration",
+          "note": "Synthetic check-in record",
+          "at": "2026-11-23T10:55:00-05:00"
+        },
+        {
+          "kind": "check_in",
+          "label": "Nurse check-in",
+          "note": "Synthetic staff follow-up",
+          "at": "2026-11-23T11:30:00-05:00"
+        },
+        {
+          "kind": "symptoms_changed",
+          "label": "Symptoms updated",
+          "note": "Patient confirmed no new red flags in this demo record",
+          "at": "2026-11-23T11:45:00-05:00"
+        }
+      ],
+      "checkedInAt": "2026-11-23T10:55:00-05:00",
+      "updatedAt": "2026-11-23T12:00:00-05:00",
+      "assessedAt": "2026-11-23T11:10:00-05:00",
+      "waitMinutes": 65,
+      "peopleAhead": 3,
+      "estimatedWaitMinutes": null,
+      "lastContact": {
+        "kind": "symptoms_changed",
+        "label": "Symptoms updated",
+        "note": "Patient confirmed no new red flags in this demo record",
+        "at": "2026-11-23T11:45:00-05:00"
+      },
+      "followUpStatus": "symptoms_changed",
+      "hasLiveUpdates": false
+    },
+    {
+      "id": "P018",
+      "waitingNumber": "A-018",
+      "legalName": "Riley Adams",
+      "dateOfBirth": "1996-07-19",
+      "phone": "",
+      "insurance": "Uninsured",
+      "insuranceDeferred": false,
+      "accessibilityNeeds": [
+        "acc_interpreter"
+      ],
+      "language": "zh",
+      "source": "staff_assisted",
+      "status": "waiting_provider",
+      "symptoms": {
+        "mainConcern": "Flu-like symptoms",
+        "onset": "Yesterday",
+        "otherSymptoms": "Body aches",
+        "painLevel": 3
+      },
+      "summary": {
+        "draft": "Flu-like symptoms; onset: yesterday; other symptoms: body aches.",
+        "text": "Flu-like symptoms; onset: yesterday; other symptoms: body aches.",
+        "editedByPatient": false
+      },
+      "location": null,
+      "nursePriority": 5,
+      "symptomsChanged": false,
+      "symptomUpdates": [],
+      "contacts": [
+        {
+          "kind": "registration",
+          "label": "Registration",
+          "note": "Synthetic check-in record",
+          "at": "2026-11-23T10:50:00-05:00"
+        },
+        {
+          "kind": "check_in",
+          "label": "Nurse check-in",
+          "note": "Synthetic staff follow-up",
+          "at": "2026-11-23T11:25:00-05:00"
+        }
+      ],
+      "checkedInAt": "2026-11-23T10:50:00-05:00",
+      "updatedAt": "2026-11-23T12:00:00-05:00",
+      "assessedAt": "2026-11-23T11:05:00-05:00",
+      "waitMinutes": 70,
+      "peopleAhead": 6,
+      "estimatedWaitMinutes": null,
+      "lastContact": {
+        "kind": "check_in",
+        "label": "Nurse check-in",
+        "note": "Synthetic staff follow-up",
+        "at": "2026-11-23T11:25:00-05:00"
+      },
+      "followUpStatus": "recheck",
+      "hasLiveUpdates": false
+    },
+    {
+      "id": "P019",
+      "waitingNumber": "A-019",
+      "legalName": "Sage Wilson",
+      "dateOfBirth": "2003-08-20",
+      "phone": "",
+      "insurance": "Medicare",
+      "insuranceDeferred": false,
+      "accessibilityNeeds": [],
+      "language": "en",
+      "source": "walk_in",
+      "status": "waiting_provider",
+      "symptoms": {
+        "mainConcern": "Back strain",
+        "onset": "This morning",
+        "otherSymptoms": "Muscle spasms",
+        "painLevel": 4
+      },
+      "summary": {
+        "draft": "Back strain; onset: this morning; other symptoms: muscle spasms.",
+        "text": "Back strain; onset: this morning; other symptoms: muscle spasms.",
+        "editedByPatient": false
+      },
+      "location": {
+        "zone": "Zone B",
+        "seat": "Seat 18"
+      },
+      "nursePriority": 2,
+      "symptomsChanged": false,
+      "symptomUpdates": [],
+      "contacts": [
+        {
+          "kind": "registration",
+          "label": "Registration",
+          "note": "Synthetic check-in record",
+          "at": "2026-11-23T11:25:00-05:00"
+        }
+      ],
+      "checkedInAt": "2026-11-23T11:25:00-05:00",
+      "updatedAt": "2026-11-23T12:00:00-05:00",
+      "assessedAt": "2026-11-23T11:40:00-05:00",
+      "waitMinutes": 35,
+      "peopleAhead": 1,
+      "estimatedWaitMinutes": null,
+      "lastContact": {
+        "kind": "registration",
+        "label": "Registration",
+        "note": "Synthetic check-in record",
+        "at": "2026-11-23T11:25:00-05:00"
+      },
+      "followUpStatus": "recheck",
+      "hasLiveUpdates": false
+    },
+    {
+      "id": "P020",
+      "waitingNumber": "A-020",
+      "legalName": "Taylor Brooks",
+      "dateOfBirth": "1965-09-21",
+      "phone": "",
+      "insurance": "Medicaid/CHIP",
+      "insuranceDeferred": false,
+      "accessibilityNeeds": [],
+      "language": "en",
+      "source": "front_desk",
+      "status": "waiting_provider",
+      "symptoms": {
+        "mainConcern": "Ear pain",
+        "onset": "Since last night",
+        "otherSymptoms": "Reduced hearing",
+        "painLevel": 3
+      },
+      "summary": {
+        "draft": "Ear pain; onset: since last night; other symptoms: reduced hearing.",
+        "text": "Ear pain; onset: since last night; other symptoms: reduced hearing.",
+        "editedByPatient": false
+      },
+      "location": {
+        "zone": "Zone B",
+        "seat": "Seat 19"
+      },
+      "nursePriority": 3,
+      "symptomsChanged": false,
+      "symptomUpdates": [],
+      "contacts": [
+        {
+          "kind": "registration",
+          "label": "Registration",
+          "note": "Synthetic check-in record",
+          "at": "2026-11-23T11:15:00-05:00"
+        }
+      ],
+      "checkedInAt": "2026-11-23T11:15:00-05:00",
+      "updatedAt": "2026-11-23T12:00:00-05:00",
+      "assessedAt": "2026-11-23T11:30:00-05:00",
+      "waitMinutes": 45,
+      "peopleAhead": 4,
+      "estimatedWaitMinutes": null,
+      "lastContact": {
+        "kind": "registration",
+        "label": "Registration",
+        "note": "Synthetic check-in record",
+        "at": "2026-11-23T11:15:00-05:00"
+      },
+      "followUpStatus": "recheck",
+      "hasLiveUpdates": false
+    },
+    {
+      "id": "P021",
+      "waitingNumber": "A-021",
+      "legalName": "Uma Shah",
+      "dateOfBirth": "1972-10-22",
+      "phone": "",
+      "insurance": "Commercial",
+      "insuranceDeferred": false,
+      "accessibilityNeeds": [
+        "acc_interpreter"
+      ],
+      "language": "es",
+      "source": "staff_assisted",
+      "status": "waiting_provider",
+      "symptoms": {
+        "mainConcern": "Abdominal pain",
+        "onset": "About 2 hours ago",
+        "otherSymptoms": "Cramping",
+        "painLevel": 6
+      },
+      "summary": {
+        "draft": "Abdominal pain; onset: about 2 hours ago; other symptoms: cramping.",
+        "text": "Abdominal pain; onset: about 2 hours ago; other symptoms: cramping.",
+        "editedByPatient": false
+      },
+      "location": {
+        "zone": "Zone B",
+        "seat": "Seat 20"
+      },
+      "nursePriority": 4,
+      "symptomsChanged": false,
+      "symptomUpdates": [],
+      "contacts": [
+        {
+          "kind": "registration",
+          "label": "Registration",
+          "note": "Synthetic check-in record",
+          "at": "2026-11-23T11:05:00-05:00"
+        }
+      ],
+      "checkedInAt": "2026-11-23T11:05:00-05:00",
+      "updatedAt": "2026-11-23T12:00:00-05:00",
+      "assessedAt": "2026-11-23T11:20:00-05:00",
+      "waitMinutes": 55,
+      "peopleAhead": 7,
+      "estimatedWaitMinutes": null,
+      "lastContact": {
+        "kind": "registration",
+        "label": "Registration",
+        "note": "Synthetic check-in record",
+        "at": "2026-11-23T11:05:00-05:00"
+      },
+      "followUpStatus": "recheck",
+      "hasLiveUpdates": false
+    },
+    {
+      "id": "P022",
+      "waitingNumber": "A-022",
+      "legalName": "Val Lee",
+      "dateOfBirth": "1979-11-23",
+      "phone": "",
+      "insurance": "Commercial",
+      "insuranceDeferred": false,
+      "accessibilityNeeds": [],
+      "language": "en",
+      "source": "walk_in",
+      "status": "with_care_team",
+      "symptoms": {
+        "mainConcern": "Sudden weakness",
+        "onset": "About 10 minutes ago",
+        "otherSymptoms": "Speech difficulty",
+        "painLevel": 8
+      },
+      "summary": {
+        "draft": "Sudden weakness; onset: about 10 minutes ago; other symptoms: speech difficulty.",
+        "text": "Sudden weakness; onset: about 10 minutes ago; other symptoms: speech difficulty.",
+        "editedByPatient": false
+      },
+      "location": null,
+      "nursePriority": 1,
+      "symptomsChanged": false,
+      "symptomUpdates": [],
+      "contacts": [
+        {
+          "kind": "registration",
+          "label": "Registration",
+          "note": "Synthetic check-in record",
+          "at": "2026-11-23T11:35:00-05:00"
+        }
+      ],
+      "checkedInAt": "2026-11-23T11:35:00-05:00",
+      "updatedAt": "2026-11-23T11:58:00-05:00",
+      "assessedAt": "2026-11-23T11:50:00-05:00",
+      "waitMinutes": 25,
+      "peopleAhead": null,
+      "estimatedWaitMinutes": null,
+      "lastContact": {
+        "kind": "registration",
+        "label": "Registration",
+        "note": "Synthetic check-in record",
+        "at": "2026-11-23T11:35:00-05:00"
+      },
+      "followUpStatus": null,
+      "hasLiveUpdates": false
+    },
+    {
+      "id": "P023",
+      "waitingNumber": "A-023",
+      "legalName": "Wren Cooper",
+      "dateOfBirth": "1986-12-24",
+      "phone": "",
+      "insurance": "Medicaid/CHIP",
+      "insuranceDeferred": false,
+      "accessibilityNeeds": [
+        "acc_interpreter"
+      ],
+      "language": "zh",
+      "source": "ipad",
+      "status": "with_care_team",
+      "symptoms": {
+        "mainConcern": "Cut finger",
+        "onset": "About 30 minutes ago",
+        "otherSymptoms": "Bleeding stopped",
+        "painLevel": 3
+      },
+      "summary": {
+        "draft": "Cut finger; onset: about 30 minutes ago; other symptoms: bleeding stopped.",
+        "text": "Cut finger; onset: about 30 minutes ago; other symptoms: bleeding stopped.",
+        "editedByPatient": false
+      },
+      "location": null,
+      "nursePriority": 2,
+      "symptomsChanged": false,
+      "symptomUpdates": [],
+      "contacts": [
+        {
+          "kind": "registration",
+          "label": "Registration",
+          "note": "Synthetic check-in record",
+          "at": "2026-11-23T11:20:00-05:00"
+        },
+        {
+          "kind": "check_in",
+          "label": "Nurse check-in",
+          "note": "Synthetic staff follow-up",
+          "at": "2026-11-23T11:30:00-05:00"
+        }
+      ],
+      "checkedInAt": "2026-11-23T11:20:00-05:00",
+      "updatedAt": "2026-11-23T11:52:00-05:00",
+      "assessedAt": "2026-11-23T11:35:00-05:00",
+      "waitMinutes": 40,
+      "peopleAhead": null,
+      "estimatedWaitMinutes": null,
+      "lastContact": {
+        "kind": "check_in",
+        "label": "Nurse check-in",
+        "note": "Synthetic staff follow-up",
+        "at": "2026-11-23T11:30:00-05:00"
+      },
+      "followUpStatus": null,
+      "hasLiveUpdates": false
+    },
+    {
+      "id": "P024",
+      "waitingNumber": "A-024",
+      "legalName": "Xander Hill",
+      "dateOfBirth": "1993-01-25",
+      "phone": "",
+      "insurance": "Medicare",
+      "insuranceDeferred": false,
+      "accessibilityNeeds": [],
+      "language": "en",
+      "source": "front_desk",
+      "status": "with_care_team",
+      "symptoms": {
+        "mainConcern": "Anxiety and agitation",
+        "onset": "This afternoon",
+        "otherSymptoms": "Difficulty sleeping",
+        "painLevel": 2
+      },
+      "summary": {
+        "draft": "Anxiety and agitation; onset: this afternoon; other symptoms: difficulty sleeping.",
+        "text": "Anxiety and agitation; onset: this afternoon; other symptoms: difficulty sleeping.",
+        "editedByPatient": false
+      },
+      "location": null,
+      "nursePriority": 3,
+      "symptomsChanged": false,
+      "symptomUpdates": [],
+      "contacts": [
+        {
+          "kind": "registration",
+          "label": "Registration",
+          "note": "Synthetic check-in record",
+          "at": "2026-11-23T11:05:00-05:00"
+        }
+      ],
+      "checkedInAt": "2026-11-23T11:05:00-05:00",
+      "updatedAt": "2026-11-23T11:58:00-05:00",
+      "assessedAt": "2026-11-23T11:20:00-05:00",
+      "waitMinutes": 55,
+      "peopleAhead": null,
+      "estimatedWaitMinutes": null,
+      "lastContact": {
+        "kind": "registration",
+        "label": "Registration",
+        "note": "Synthetic check-in record",
+        "at": "2026-11-23T11:05:00-05:00"
+      },
+      "followUpStatus": null,
+      "hasLiveUpdates": false
+    },
+    {
+      "id": "P025",
+      "waitingNumber": "A-025",
+      "legalName": "Yael Morris",
+      "dateOfBirth": "2000-02-01",
+      "phone": "",
+      "insurance": "Commercial",
+      "insuranceDeferred": false,
+      "accessibilityNeeds": [
+        "acc_interpreter"
+      ],
+      "language": "ar",
+      "source": "staff_assisted",
+      "status": "with_care_team",
+      "symptoms": {
+        "mainConcern": "Fever",
+        "onset": "Since yesterday",
+        "otherSymptoms": "Chills",
+        "painLevel": 3
+      },
+      "summary": {
+        "draft": "Fever; onset: since yesterday; other symptoms: chills.",
+        "text": "Fever; onset: since yesterday; other symptoms: chills.",
+        "editedByPatient": false
+      },
+      "location": null,
+      "nursePriority": 4,
+      "symptomsChanged": false,
+      "symptomUpdates": [],
+      "contacts": [
+        {
+          "kind": "registration",
+          "label": "Registration",
+          "note": "Synthetic check-in record",
+          "at": "2026-11-23T10:55:00-05:00"
+        },
+        {
+          "kind": "check_in",
+          "label": "Nurse check-in",
+          "note": "Synthetic staff follow-up",
+          "at": "2026-11-23T11:30:00-05:00"
+        }
+      ],
+      "checkedInAt": "2026-11-23T10:55:00-05:00",
+      "updatedAt": "2026-11-23T11:57:00-05:00",
+      "assessedAt": "2026-11-23T11:10:00-05:00",
+      "waitMinutes": 65,
+      "peopleAhead": null,
+      "estimatedWaitMinutes": null,
+      "lastContact": {
+        "kind": "check_in",
+        "label": "Nurse check-in",
+        "note": "Synthetic staff follow-up",
+        "at": "2026-11-23T11:30:00-05:00"
+      },
+      "followUpStatus": null,
+      "hasLiveUpdates": false
+    },
+    {
+      "id": "P026",
+      "waitingNumber": "A-026",
+      "legalName": "Zion Reed",
+      "dateOfBirth": "1962-03-02",
+      "phone": "",
+      "insurance": "Medicaid/CHIP",
+      "insuranceDeferred": false,
+      "accessibilityNeeds": [],
+      "language": "en",
+      "source": "walk_in",
+      "status": "completed",
+      "symptoms": {
+        "mainConcern": "Shortness of breath",
+        "onset": "About 5 minutes ago",
+        "otherSymptoms": "Wheezing",
+        "painLevel": 8
+      },
+      "summary": {
+        "draft": "Shortness of breath; onset: about 5 minutes ago; other symptoms: wheezing.",
+        "text": "Shortness of breath; onset: about 5 minutes ago; other symptoms: wheezing.",
+        "editedByPatient": false
+      },
+      "location": null,
+      "nursePriority": 1,
+      "symptomsChanged": false,
+      "symptomUpdates": [],
+      "contacts": [
+        {
+          "kind": "registration",
+          "label": "Registration",
+          "note": "Synthetic check-in record",
+          "at": "2026-11-23T10:35:00-05:00"
+        }
+      ],
+      "checkedInAt": "2026-11-23T10:35:00-05:00",
+      "updatedAt": "2026-11-23T11:50:00-05:00",
+      "assessedAt": "2026-11-23T10:50:00-05:00",
+      "waitMinutes": 85,
+      "peopleAhead": null,
+      "estimatedWaitMinutes": null,
+      "lastContact": {
+        "kind": "registration",
+        "label": "Registration",
+        "note": "Synthetic check-in record",
+        "at": "2026-11-23T10:35:00-05:00"
+      },
+      "followUpStatus": null,
+      "hasLiveUpdates": false
+    },
+    {
+      "id": "P027",
+      "waitingNumber": "A-027",
+      "legalName": "Avery James",
+      "dateOfBirth": "1969-04-03",
+      "phone": "",
+      "insurance": "Medicare",
+      "insuranceDeferred": false,
+      "accessibilityNeeds": [
+        "acc_interpreter"
+      ],
+      "language": "es",
+      "source": "front_desk",
+      "status": "completed",
+      "symptoms": {
+        "mainConcern": "Shoulder pain",
+        "onset": "This morning",
+        "otherSymptoms": "Limited movement",
+        "painLevel": 4
+      },
+      "summary": {
+        "draft": "Shoulder pain; onset: this morning; other symptoms: limited movement.",
+        "text": "Shoulder pain; onset: this morning; other symptoms: limited movement.",
+        "editedByPatient": false
+      },
+      "location": null,
+      "nursePriority": 3,
+      "symptomsChanged": false,
+      "symptomUpdates": [],
+      "contacts": [
+        {
+          "kind": "registration",
+          "label": "Registration",
+          "note": "Synthetic check-in record",
+          "at": "2026-11-23T10:25:00-05:00"
+        }
+      ],
+      "checkedInAt": "2026-11-23T10:25:00-05:00",
+      "updatedAt": "2026-11-23T11:55:00-05:00",
+      "assessedAt": "2026-11-23T10:40:00-05:00",
+      "waitMinutes": 95,
+      "peopleAhead": null,
+      "estimatedWaitMinutes": null,
+      "lastContact": {
+        "kind": "registration",
+        "label": "Registration",
+        "note": "Synthetic check-in record",
+        "at": "2026-11-23T10:25:00-05:00"
+      },
+      "followUpStatus": null,
+      "hasLiveUpdates": false
+    },
+    {
+      "id": "P028",
+      "waitingNumber": "A-028",
+      "legalName": "Casey Park",
+      "dateOfBirth": "1976-05-04",
+      "phone": "",
+      "insurance": "Uninsured",
+      "insuranceDeferred": false,
+      "accessibilityNeeds": [],
+      "language": "en",
+      "source": "staff_assisted",
+      "status": "left",
+      "symptoms": {
+        "mainConcern": "Leg pain",
+        "onset": "About 3 hours ago",
+        "otherSymptoms": "Swelling",
+        "painLevel": 5
+      },
+      "summary": {
+        "draft": "Leg pain; onset: about 3 hours ago; other symptoms: swelling.",
+        "text": "Leg pain; onset: about 3 hours ago; other symptoms: swelling.",
+        "editedByPatient": false
+      },
+      "location": null,
+      "nursePriority": 4,
+      "symptomsChanged": false,
+      "symptomUpdates": [],
+      "contacts": [
+        {
+          "kind": "registration",
+          "label": "Registration",
+          "note": "Synthetic check-in record",
+          "at": "2026-11-23T10:35:00-05:00"
+        }
+      ],
+      "checkedInAt": "2026-11-23T10:35:00-05:00",
+      "updatedAt": "2026-11-23T11:25:00-05:00",
+      "assessedAt": "2026-11-23T10:50:00-05:00",
+      "waitMinutes": 85,
+      "peopleAhead": null,
+      "estimatedWaitMinutes": null,
+      "lastContact": {
+        "kind": "registration",
+        "label": "Registration",
+        "note": "Synthetic check-in record",
+        "at": "2026-11-23T10:35:00-05:00"
+      },
+      "followUpStatus": null,
+      "hasLiveUpdates": false
+    },
+    {
+      "id": "P029",
+      "waitingNumber": "A-029",
+      "legalName": "Devon Price",
+      "dateOfBirth": "1983-06-05",
+      "phone": "",
+      "insurance": "Other/Unspecified",
+      "insuranceDeferred": false,
+      "accessibilityNeeds": [],
+      "language": "en",
+      "source": "walk_in",
+      "status": "left",
+      "symptoms": {
+        "mainConcern": "Nausea",
+        "onset": "This morning",
+        "otherSymptoms": "Dizziness",
+        "painLevel": 3
+      },
+      "summary": {
+        "draft": "Nausea; onset: this morning; other symptoms: dizziness.",
+        "text": "Nausea; onset: this morning; other symptoms: dizziness.",
+        "editedByPatient": false
+      },
+      "location": null,
+      "nursePriority": 5,
+      "symptomsChanged": false,
+      "symptomUpdates": [],
+      "contacts": [
+        {
+          "kind": "registration",
+          "label": "Registration",
+          "note": "Synthetic check-in record",
+          "at": "2026-11-23T10:15:00-05:00"
+        }
+      ],
+      "checkedInAt": "2026-11-23T10:15:00-05:00",
+      "updatedAt": "2026-11-23T11:50:00-05:00",
+      "assessedAt": "2026-11-23T10:30:00-05:00",
+      "waitMinutes": 105,
+      "peopleAhead": null,
+      "estimatedWaitMinutes": null,
+      "lastContact": {
+        "kind": "registration",
+        "label": "Registration",
+        "note": "Synthetic check-in record",
+        "at": "2026-11-23T10:15:00-05:00"
+      },
+      "followUpStatus": null,
+      "hasLiveUpdates": false
+    },
+    {
+      "id": "P030",
+      "waitingNumber": "A-030",
+      "legalName": "Ellis Ward",
+      "dateOfBirth": "1990-07-06",
+      "phone": "",
+      "insurance": "Medicaid/CHIP",
+      "insuranceDeferred": false,
+      "accessibilityNeeds": [],
+      "language": "en",
+      "source": "ipad",
+      "status": "left",
+      "symptoms": {
+        "mainConcern": "Head injury concern",
+        "onset": "About 1 hour ago",
+        "otherSymptoms": "Headache",
+        "painLevel": 5
+      },
+      "summary": {
+        "draft": "Head injury concern; onset: about 1 hour ago; other symptoms: headache.",
+        "text": "Head injury concern; onset: about 1 hour ago; other symptoms: headache.",
+        "editedByPatient": false
+      },
+      "location": null,
+      "nursePriority": 4,
+      "symptomsChanged": false,
+      "symptomUpdates": [],
+      "contacts": [
+        {
+          "kind": "registration",
+          "label": "Registration",
+          "note": "Synthetic check-in record",
+          "at": "2026-11-23T10:05:00-05:00"
+        }
+      ],
+      "checkedInAt": "2026-11-23T10:05:00-05:00",
+      "updatedAt": "2026-11-23T11:10:00-05:00",
+      "assessedAt": "2026-11-23T10:20:00-05:00",
+      "waitMinutes": 115,
+      "peopleAhead": null,
+      "estimatedWaitMinutes": null,
+      "lastContact": {
+        "kind": "registration",
+        "label": "Registration",
+        "note": "Synthetic check-in record",
+        "at": "2026-11-23T10:05:00-05:00"
+      },
+      "followUpStatus": null,
+      "hasLiveUpdates": false
+    }
+  ],
+  "updatedAt": "2026-11-23T12:00:00-05:00",
+  "config": {
+    "recheckAfterMinutes": 30,
+    "longWaitMinutes": 45
+  }
+}

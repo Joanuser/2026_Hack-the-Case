@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "analysis_type": "CONDITIONAL_SCENARIO_PROJECTION_NOT_OBSERVED_HOSPITAL_OUTCOME",
+  "real_intervention_effect": "NOT_IDENTIFIABLE",
+  "default_assumption_set": "neutral",
+  "fixed_cohort": "all_85000_original_annual_records_without_resampling",
+  "w_definition": "room_entered_at minus triage_completed_at",
+  "w_metric_cohort": "historically_roomed_patients_only",
+  "lwbs_rate_denominator": "all_patients_in_each_reported_group",
+  "routing_w_eligible_esi": [
+    3,
+    4,
+    5
+  ],
+  "routing_w_ineligible_esi": [
+    1,
+    2
+  ],
+  "combined_lwbs_deduplication": "routing_prevention_first_then_outreach_retention_on_remaining_historical_lwbs",
+  "capacity_interpretation": "NOT_A_VALIDATED_CAPACITY_CONSTRAINED_SIMULATION",
+  "parameter_definitions": {
+    "routing_avoidable_w_fraction": {
+      "meaning": "Mathematically reduce each historically roomed ESI 3-5 patient's observed W by this fraction; do not create a new room_entered_at.",
+      "evidence_status": "HYPOTHETICAL_INPUT_NOT_EVIDENCE"
+    },
+    "outreach_lwbs_retention_fraction": {
+      "meaning": "Expected fraction of historical LWBS hypothetically retained by nurse outreach; not model recall or observed outreach success.",
+      "evidence_status": "HYPOTHETICAL_INPUT_NOT_EVIDENCE"
+    },
+    "routing_lwbs_prevention_fraction": {
+      "meaning": "Optional expected fraction of historical LWBS hypothetically prevented by routing before outreach; primary scenarios set this to zero.",
+      "evidence_status": "HYPOTHETICAL_INPUT_NOT_EVIDENCE"
+    }
+  },
+  "assumption_sets": [
+    {
+      "name": "strict_zero",
+      "routing_avoidable_w_fraction": 0.0,
+      "outreach_lwbs_retention_fraction": 0.0,
+      "routing_lwbs_prevention_fraction": 0.0,
+      "evidence_status": "HYPOTHETICAL_INPUT_NOT_EVIDENCE",
+      "label_en": "Strict zero-effect reference"
+    },
+    {
+      "name": "conservative",
+      "routing_avoidable_w_fraction": 0.05,
+      "outreach_lwbs_retention_fraction": 0.1,
+      "routing_lwbs_prevention_fraction": 0.0,
+      "evidence_status": "HYPOTHETICAL_INPUT_NOT_EVIDENCE",
+      "label_en": "Conservative illustration"
+    },
+    {
+      "name": "neutral",
+      "routing_avoidable_w_fraction": 0.1,
+      "outreach_lwbs_retention_fraction": 0.2,
+      "routing_lwbs_prevention_fraction": 0.0,
+      "evidence_status": "HYPOTHETICAL_INPUT_NOT_EVIDENCE",
+      "label_en": "Neutral illustration"
+    },
+    {
+      "name": "more_optimistic",
+      "routing_avoidable_w_fraction": 0.2,
+      "outreach_lwbs_retention_fraction": 0.3,
+      "routing_lwbs_prevention_fraction": 0.0,
+      "evidence_status": "HYPOTHETICAL_INPUT_NOT_EVIDENCE",
+      "label_en": "More optimistic illustration"
+    },
+    {
+      "name": "neutral_routing_lwbs_5",
+      "routing_avoidable_w_fraction": 0.1,
+      "outreach_lwbs_retention_fraction": 0.2,
+      "routing_lwbs_prevention_fraction": 0.05,
+      "evidence_status": "HYPOTHETICAL_INPUT_NOT_EVIDENCE",
+      "label_en": "Neutral W/outreach plus hypothetical 5% routing LWBS prevention"
+    },
+    {
+      "name": "neutral_routing_lwbs_10",
+      "routing_avoidable_w_fraction": 0.1,
+      "outreach_lwbs_retention_fraction": 0.2,
+      "routing_lwbs_prevention_fraction": 0.1,
+      "evidence_status": "HYPOTHETICAL_INPUT_NOT_EVIDENCE",
+      "label_en": "Neutral W/outreach plus hypothetical 10% routing LWBS prevention"
+    }
+  ]
+}

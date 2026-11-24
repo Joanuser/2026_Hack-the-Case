@@ -1,0 +1,8 @@
+scope,kpi,unit,baseline,seensooner,difference_seensooner_minus_baseline,reduction_baseline_minus_seensooner
+Neutral normal weekday; 30 paired replicates,Median W2,minutes,26.674484131550116,25.03984188437991,-1.6346422471702056,1.6346422471702056
+Neutral normal weekday; 30 paired replicates,Mean W2,minutes,35.0980116221756,33.24491577074945,-1.853095851426147,1.853095851426147
+Neutral normal weekday; 30 paired replicates,P90 W2,minutes,55.855834680217384,53.904851788131076,-1.9509828920863086,1.9509828920863086
+Neutral normal weekday; 30 paired replicates,Peak-hour Median W2,minutes,26.795097672752206,25.183283882795777,-1.6118137899564289,1.6118137899564289
+Neutral normal weekday; 30 paired replicates,ESI 3-5 Median W2,minutes,26.78870691310607,25.121493227051438,-1.6672136860546303,1.6672136860546303
+Neutral normal weekday; 30 paired replicates,W2 over 60 minutes,proportion,0.08285628201265441,0.07622777945164207,-0.006628502561012342,0.006628502561012342
+Neutral normal weekday; 30 paired replicates,No-response resource idle,minutes_per_day,82.83333333333333,16.566666666666666,-66.26666666666667,66.26666666666667

@@ -1,0 +1,8 @@
+{
+  "calibration_partition_only": true,
+  "calibration_n": 8227,
+  "residual_q10_min": -15.013443441788207,
+  "residual_q90_min": 16.16683514159714,
+  "coverage_on_final_test": 0.7993092389293204,
+  "note": "Synthetic interval; final test was not used for fitting or calibration."
+}

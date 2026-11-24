@@ -1,0 +1,28 @@
+﻿check,result,actual,expected,note
+StaffPatient exact TypeScript keys,PASS,"['id', 'waitingNumber', 'legalName', 'dateOfBirth', 'phone', 'insurance', 'insuranceDeferred', 'accessibilityNeeds', 'language', 'source', 'status', 'symptoms', 'summary', 'location', 'nursePriority', 'symptomsChanged', 'symptomUpdates', 'contacts', 'checkedInAt', 'updatedAt', 'assessedAt', 'waitMinutes', 'peopleAhead', 'estimatedWaitMinutes', 'lastContact', 'followUpStatus', 'hasLiveUpdates']",StaffPatient schema,
+PatientStatusView exact TypeScript keys,PASS,"['id', 'waitingNumber', 'status', 'language', 'peopleAhead', 'estimatedWaitMinutes', 'insuranceMissing', 'symptoms', 'summary', 'lastSymptomUpdateAt', 'updatedAt']",PatientStatusView schema,
+PublicQueue exact TypeScript keys,PASS,"['updatedAt', 'providerQueue', 'nowSeeing', 'awaitingNurse', 'inAssessment']",PublicQueue schema,
+15 mobile requests,PASS,15,15,
+15 staff-created requests,PASS,15,15,
+Allowed source enums,PASS,"['front_desk', 'ipad', 'mobile', 'staff_assisted', 'walk_in']",mobile/ipad/front_desk/staff_assisted/walk_in,
+30 unique web IDs,PASS,30,30,
+30 patient W2 formula,PASS,8,all room-entry rows match,
+Room call does not end W2,PASS,P016 called/no entry/W2 open,W2 remains open,
+W2 care threshold 59,PASS,59.0/False,59/False,
+W2 care threshold 60,PASS,60.0/True,60/True,
+W2 care threshold 75,PASS,75.0/True,75/True,
+Return within 30 minutes,PASS,2026-11-23T11:45:00-05:00,returned/not inactive,
+Inactive without verified departure is not LWBS,PASS,PENDING,PENDING,
+No ESI1 confirmed LWBS,PASS,none,none,
+Room capacities reconcile,PASS,12 snapshots,32/8/4/4; occupied+available=total,
+Waiting seats fixed at 40,PASS,[40],40,
+Nurse staffing by shift matches PDF,PASS,"{'Day': 14, 'Evening': 14, 'Night': 9}","{'Day': 14, 'Evening': 14, 'Night': 9}",
+30 patient chronology,PASS,all non-null core events,chronological,
+200 payer mix,PASS,"{'Medicaid/CHIP': 70, 'Commercial': 66, 'Medicare': 44, 'Uninsured': 16, 'Other/Unspecified': 4}","{'Medicaid/CHIP': 70, 'Medicare': 44, 'Commercial': 66, 'Uninsured': 16, 'Other/Unspecified': 4}",
+200 admission rate 16%,PASS,32,32,
+200 LWBS rate 4%,PASS,8,8,
+200 ESI1 not marked LWBS,PASS,none,none,
+200 row W2 formula,PASS,182,all room-entry rows match,
+PDF DTP median anchor Commercial,PASS,48.0,48,Door-to-Provider only; not W2
+PDF DTP median anchor Medicaid/CHIP,PASS,58.0,58,Door-to-Provider only; not W2
+PDF DTP median anchor Uninsured,PASS,64.0,64,Door-to-Provider only; not W2

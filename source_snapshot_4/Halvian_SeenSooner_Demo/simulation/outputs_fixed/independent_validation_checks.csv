@@ -1,0 +1,13 @@
+check,status,observed,expected
+required_outputs_present,PASS,[],[]
+kpi_difference_reconciles,PASS,1.4432899320127035e-14,0
+kpi_reduction_reconciles,PASS,1.4432899320127035e-14,0
+assumption_source_classes,PASS,"['Derived synthetic setup', 'PDF fact', 'PDF fact / retained reference', 'Safety-conservative simulation rule', 'Simulation assumption', 'Synthetic reference', 'Team rule']",PDF fact + Synthetic reference + Simulation assumption
+event_sample_fields,PASS,[],[]
+sample_nonentered_has_no_complete_w2,PASS,0,0
+equal_process_null_has_zero_effect,PASS,0.0,0
+immediate_skip_no_response_idle_equal,PASS,True,True
+lwbs_no_complete_w2_fabricated,PASS,0,0
+lwbs_no_causal_claim,PASS,False,False
+internal_simulation_checks_all_pass,PASS,14,14
+esi1_no_individual_worsening_in_primary,PASS,0.0,0

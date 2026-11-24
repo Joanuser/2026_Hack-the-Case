@@ -1,0 +1,20 @@
+﻿current_web_field,new_data_field,compatibility,important_note
+StaffPatient.id,visit_id,Direct for fixture IDs,Stable synthetic ID
+StaffPatient.waitingNumber,ticket_id,Direct,Public-safe waiting number
+StaffPatient.checkedInAt,registration_completed_at,Direct,Keep as registration timestamp; NEVER overwrite with triage completion
+StaffPatient.assessedAt,triage_completed_at,Candidate semantic mapping,Represents completed nurse assessment in current UI; verify before using as W2 start
+StaffPatient.nursePriority,nurse_confirmed_esi,Direct after nurse confirmation,Nurse-only field; null before assessment
+StaffPatient.status,web_status,Direct enum only,Current enum has no INACTIVE; do not map INACTIVE to left automatically
+StaffPatient.estimatedWaitMinutes,none / null,No validated model output,Do not fill with W2 unless UI and API explicitly support W2 semantics
+StaffPatient.waitMinutes,registration_completed_at elapsed,Current frontend calculation,"Current code computes now - checkedInAt; this is registration elapsed, NOT W2"
+StaffPatient.location,zone/seat,Direct,Staff-only; never send to public display
+StaffPatient.source,source,Direct enum,mobile/ipad/front_desk/staff_assisted/walk_in
+PatientStatusView.estimatedWaitMinutes,none / null,No validated W2 model output,Null means unavailable; do not invent an ETA
+PublicQueue.providerQueue,waiting_provider records,Current contract only,Public display says Waiting for provider; not equivalent to W2 waiting for room
+W2 extension.triage_completed_at,no dedicated current field,Not represented cleanly,assessedAt is only a candidate mapping; backend/API needs explicit field for production W2
+W2 extension.required_room_type,no current field,Missing from current web schema,Requires minimal API/backend field or keep only in separate simulation
+W2 extension.room_called_at,no current field,Missing from current web schema,Room call does not end W2
+W2 extension.room_entered_at,no current field,Missing from current web schema,Required W2 endpoint; not present in current API contract
+W2 extension.provider_first_seen_at,no current field,Missing from current web schema,Keep separate for LWBS; not equal to room entry
+W2 extension.inactive_at,no current status,Missing from current web schema,Do not collapse into left; requires separate status/event support
+PublicQueue fields,waitingNumber + numeric estimatedWaitMinutes,Direct but limited,"No names, DOB, symptoms, insurance, ESI, or room detail"

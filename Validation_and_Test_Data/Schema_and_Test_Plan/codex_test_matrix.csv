@@ -1,0 +1,16 @@
+﻿test_id,test,file,scenario,pass_criteria
+T01,Nurse API payload schema,staff_patients_response.json,30 StaffPatient objects conform to current TypeScript fields,No extra unsupported keys; required fields/types valid
+T02,Patient status schema,patient_status_views_30.json,30 PatientStatusView objects conform to current TypeScript fields,IDs/ticket numbers align with nurse list
+T03,Mobile registration request,patient_checkin_requests_15.json,15 valid CheckInRequest bodies,No real GPS coordinates; geo null
+T04,Staff-assisted registration,staff_create_requests_15.json,15 valid StaffCreatePatientRequest bodies,All sources are allowed non-mobile enum values
+T05,Public display privacy,public_queue_ui_fixture.json,Only waiting numbers and numeric placeholder ETA,"No name, DOB, symptoms, insurance, ESI, room type, seat"
+T06,Status coverage,staff_patients_response.json,All six current PatientStatus values represented,waiting_nurse/in_assessment/waiting_provider/with_care_team/completed/left
+T07,ESI coverage,w2_patient_timeline_30.csv,ESI 1–5 represented among nurse-confirmed records,ESI 1 highest urgency; same ESI longer wait first
+T08,W2 formula,w2_patient_timeline_30.csv,W2 = room_entered_at - triage_completed_at,Only rows with both endpoints have actual W2
+T09,Room call vs entry,P016 in timeline,Room called but not entered,W2 remains open
+T10,60-minute nurse care,P013/P014/P015,"59, 60, 75-minute active W2 boundary cases",59 no alert; 60 and 75 alert
+T11,30-minute recall return,P017,Return within 30-minute recall window,Returned; not marked inactive
+T12,Inactive not LWBS,P018,"30-minute recall elapsed, no verified departure",Inactive extension; LWBS remains pending
+T13,LWBS before provider,P028/P030,Verified departure before first provider,Confirmed LWBS; room entry alone does not equal provider encounter
+T14,Room capacity,resource_snapshots_12.csv,32/8/4/4 room totals; 40 waiting seats,Occupied + available = total
+T15,200-row reference alignment,encounters_200_w2_scenario.csv,"Payer mix, admission, DTP and LWBS scenario checks",All W2 values labeled synthetic assumptions

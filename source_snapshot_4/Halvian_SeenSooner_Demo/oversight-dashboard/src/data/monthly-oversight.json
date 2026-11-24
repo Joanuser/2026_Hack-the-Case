@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "datasetType": "ILLUSTRATIVE_UI_MOCK_DATA",
+  "disclaimer": "Illustrative monthly demo data only — not observed hospital outcomes.",
+  "periods": ["Baseline", "Month 1", "Month 2", "Month 3", "Month 4", "Month 5", "Month 6", "Month 7", "Month 8", "Month 9"],
+  "metrics": {
+    "doorToProviderMedianMin": [55, 55, 55, 55, 54, 53, 52.5, 52, 51, 50],
+    "lwbsRatePct": [4, 4, 4, 4, 3.95, 3.9, 3.86, 3.82, 3.79, 3.75],
+    "uninsuredWalkoutGapPp": [2.8, 2.8, 2.8, 2.8, 2.7, 2.65, 2.58, 2.52, 2.47, 2.4],
+    "medicaidWalkoutGapPp": [1.6, 1.6, 1.6, 1.6, 1.55, 1.5, 1.46, 1.48, 1.5, 1.6],
+    "missedHighRiskPct": [0.85, 0.85, 0.84, 0.84, 0.83, 0.82, 0.82, 0.83, 0.84, 0.85],
+    "nurseOverridePct": [14, 14, 14, 14, 13.8, 13.7, 13.9, 14.1, 14.2, 14]
+  },
+  "payerLwbsRatePct": {
+    "commercial": [3, 3, 3, 3, 2.98, 2.96, 2.94, 2.92, 2.91, 2.9],
+    "medicare": [3.9, 3.9, 3.9, 3.9, 3.88, 3.85, 3.82, 3.8, 3.76, 3.7],
+    "medicaid": [4.6, 4.6, 4.6, 4.6, 4.55, 4.48, 4.42, 4.4, 4.41, 4.5],
+    "uninsured": [5.8, 5.8, 5.8, 5.8, 5.7, 5.63, 5.54, 5.46, 5.39, 5.3]
+  },
+  "targets": {
+    "doorToProviderMedianMin": 45,
+    "lwbsRatePct": 3.5,
+    "uninsuredWalkoutGapPp": 2,
+    "missedHighRiskPct": 1,
+    "nurseOverridePctMin": 8,
+    "nurseOverridePctMax": 30
+  }
+}

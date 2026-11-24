@@ -1,0 +1,26 @@
+Verification date: 2026-11-22 (America/New_York)
+
+Environment
+- Python 3.14.7
+- Node.js 24.21.0
+- npm 11.19.0
+
+Builds
+- patient-app: PASS (tsc --noEmit + vite build)
+- nurse-app: PASS (tsc --noEmit + vite build)
+- display-app: PASS (tsc --noEmit + vite build)
+
+Backend integration
+- 45 checks run, 45 PASS, 0 FAIL
+- Detailed results: reports/integration_test_results.csv
+
+Simulation validation
+- 12 independent checks run, 12 PASS, 0 FAIL
+- Detailed results: simulation/outputs_fixed/independent_validation_checks.csv
+
+Browser verification
+- Patient Portal loaded at http://127.0.0.1:5173 and submitted synthetic check-in A-031.
+- Nurse Dashboard loaded at http://127.0.0.1:5175 and showed Local W2 API connected with live refresh.
+- Waiting Room Display loaded at http://127.0.0.1:5174 and showed anonymized queue numbers, called state, and Remaining W2 ranges.
+- Display example observed: A-011, 2–18 min remaining W2 estimate.
+- No names, DOBs, phone numbers, symptoms, ESI, insurance, or required room type were shown on the public display.

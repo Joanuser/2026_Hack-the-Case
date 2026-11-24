@@ -1,0 +1,13 @@
+﻿snapshot_id,snapshot_time,shift,winter_surge_scenario,winter_volume_multiplier,ed_treatment_total,ed_treatment_occupied,ed_treatment_available,fast_track_total,fast_track_occupied,fast_track_available,trauma_resus_total,trauma_resus_occupied,trauma_resus_available,behavioral_health_total,behavioral_health_occupied,behavioral_health_available,waiting_room_seats_total,waiting_patients,waiting_room_overflow,inpatient_beds_total,icu_beds_total,inpatient_beds_open,on_duty_physicians,on_duty_app,on_duty_nurses_triage_and_bedside,on_duty_technicians_registration,data_status
+RS-001,2026-11-23T07:00:00-05:00,Day,False,1.0,32,16,16,8,4,4,4,1,3,4,2,2,40,16,0,320,24,40,4,3,14,8,SYNTHETIC_SCENARIO_OCCUPANCY; capacities/staffing anchored to PDF
+RS-002,2026-11-23T10:00:00-05:00,Day,False,1.0,32,23,9,8,5,3,4,1,3,4,1,3,40,35,0,320,24,40,4,3,14,8,SYNTHETIC_SCENARIO_OCCUPANCY; capacities/staffing anchored to PDF
+RS-003,2026-11-23T15:00:00-05:00,Evening,False,1.0,32,20,12,8,5,3,4,2,2,4,1,3,40,21,0,320,24,40,4,3,14,7,SYNTHETIC_SCENARIO_OCCUPANCY; capacities/staffing anchored to PDF
+RS-004,2026-11-23T18:00:00-05:00,Evening,False,1.0,32,22,10,8,4,4,4,3,1,4,3,1,40,30,0,320,24,40,4,3,14,7,SYNTHETIC_SCENARIO_OCCUPANCY; capacities/staffing anchored to PDF
+RS-005,2026-11-23T23:00:00-05:00,Night,False,1.0,32,17,15,8,4,4,4,2,2,4,0,4,40,22,0,320,24,40,2,1,9,4,SYNTHETIC_SCENARIO_OCCUPANCY; capacities/staffing anchored to PDF
+RS-006,2026-11-24T02:00:00-05:00,Night,False,1.0,32,19,13,8,3,5,4,2,2,4,0,4,40,25,0,320,24,40,2,1,9,4,SYNTHETIC_SCENARIO_OCCUPANCY; capacities/staffing anchored to PDF
+RS-007,2026-01-05T07:00:00-05:00,Day,True,1.2,32,16,16,8,4,4,4,2,2,4,2,2,40,28,0,320,24,40,4,3,14,8,SYNTHETIC_SCENARIO_OCCUPANCY; capacities/staffing anchored to PDF
+RS-008,2026-01-05T10:00:00-05:00,Day,True,1.2,32,21,11,8,4,4,4,2,2,4,1,3,40,41,1,320,24,40,4,3,14,8,SYNTHETIC_SCENARIO_OCCUPANCY; capacities/staffing anchored to PDF
+RS-009,2026-01-05T15:00:00-05:00,Evening,True,1.2,32,19,13,8,3,5,4,0,4,4,1,3,40,25,0,320,24,40,4,3,14,7,SYNTHETIC_SCENARIO_OCCUPANCY; capacities/staffing anchored to PDF
+RS-010,2026-01-05T18:00:00-05:00,Evening,True,1.2,32,19,13,8,5,3,4,1,3,4,2,2,40,37,0,320,24,40,4,3,14,7,SYNTHETIC_SCENARIO_OCCUPANCY; capacities/staffing anchored to PDF
+RS-011,2026-01-05T23:00:00-05:00,Night,True,1.2,32,18,14,8,4,4,4,1,3,4,0,4,40,18,0,320,24,40,2,1,9,4,SYNTHETIC_SCENARIO_OCCUPANCY; capacities/staffing anchored to PDF
+RS-012,2026-01-06T02:00:00-05:00,Night,True,1.2,32,17,15,8,3,5,4,1,3,4,0,4,40,28,0,320,24,40,2,1,9,4,SYNTHETIC_SCENARIO_OCCUPANCY; capacities/staffing anchored to PDF

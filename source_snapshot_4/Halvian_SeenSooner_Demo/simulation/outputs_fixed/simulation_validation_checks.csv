@@ -1,0 +1,15 @@
+check,status,observed,expected
+fixture_rows,PASS,200,200
+resource_snapshot_rows,PASS,12,12
+annual_rows,PASS,85000,85000
+annual_unique_ids,PASS,85000,85000
+room_capacity_pdf,PASS,"{'REGULAR_ED': 32, 'FAST_TRACK': 8, 'RESUSCITATION_TRAUMA': 4, 'BEHAVIORAL_HEALTH': 4}",32/8/4/4
+nurse_staffing_pdf,PASS,"{'Day': 14, 'Evening': 14, 'Night': 9}",14/14/9
+capacity_violations,PASS,0,0
+no_complete_w2_for_nonentered,PASS,0,0
+w2_formula_max_error,PASS,6.660982876383059e-11,<1e-6 minute
+paired_inputs_identical,PASS,True,True
+room_type_preserved,PASS,"['BEHAVIORAL_HEALTH', 'FAST_TRACK', 'REGULAR_ED', 'RESUSCITATION_TRAUMA']","['BEHAVIORAL_HEALTH', 'FAST_TRACK', 'REGULAR_ED', 'RESUSCITATION_TRAUMA']"
+esi_range,PASS,1-5,1-5
+returned_patient_nurse_reassessment_gate,PASS,4082,4082
+esi_never_changed_by_simulation,PASS,0,0

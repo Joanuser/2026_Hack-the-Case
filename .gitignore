@@ -1,0 +1,38 @@
+# Python
+**/__pycache__/
+**/*.py[cod]
+**/.pytest_cache/
+**/.mypy_cache/
+.venv/
+**/.venv/
+
+# Node / Vite
+**/node_modules/
+**/dist/
+**/.vite/
+**/*.tsbuildinfo
+
+# Runtime state and generated service logs
+**/.seensooner-runtime/
+**/logs/unified-launch/
+
+# Local secrets and overrides (setup scripts generate demo-only .env.local files)
+.env
+.env.*
+**/.env
+**/.env.*
+!**/.env.example
+
+# Editors and operating systems
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Archives and presentations are delivery outputs, not repository source
+*.zip
+*.ppt
+*.pptx
+
+# Hosted-demo frontend build (created by build-web.sh / Dockerfile)
+**/web-dist/

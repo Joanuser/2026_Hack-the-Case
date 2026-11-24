@@ -1,0 +1,662 @@
+[
+  {
+    "id": "P001",
+    "waitingNumber": "A-001",
+    "status": "waiting_nurse",
+    "language": "en",
+    "peopleAhead": 1,
+    "estimatedWaitMinutes": null,
+    "insuranceMissing": false,
+    "symptoms": {
+      "mainConcern": "Chest pressure",
+      "onset": "About 20 minutes ago",
+      "otherSymptoms": "Shortness of breath",
+      "painLevel": 5
+    },
+    "summary": {
+      "draft": "Chest pressure; onset: about 20 minutes ago; other symptoms: shortness of breath.",
+      "text": "Chest pressure; onset: about 20 minutes ago; other symptoms: shortness of breath.",
+      "editedByPatient": false
+    },
+    "lastSymptomUpdateAt": null,
+    "updatedAt": "2026-11-23T12:00:00-05:00"
+  },
+  {
+    "id": "P002",
+    "waitingNumber": "A-002",
+    "status": "waiting_nurse",
+    "language": "es",
+    "peopleAhead": 2,
+    "estimatedWaitMinutes": null,
+    "insuranceMissing": false,
+    "symptoms": {
+      "mainConcern": "Abdominal pain",
+      "onset": "This morning",
+      "otherSymptoms": "Nausea",
+      "painLevel": 6
+    },
+    "summary": {
+      "draft": "Abdominal pain; onset: this morning; other symptoms: nausea.",
+      "text": "Abdominal pain; onset: this morning; other symptoms: nausea.",
+      "editedByPatient": false
+    },
+    "lastSymptomUpdateAt": null,
+    "updatedAt": "2026-11-23T12:00:00-05:00"
+  },
+  {
+    "id": "P003",
+    "waitingNumber": "A-003",
+    "status": "waiting_nurse",
+    "language": "en",
+    "peopleAhead": 3,
+    "estimatedWaitMinutes": null,
+    "insuranceMissing": false,
+    "symptoms": {
+      "mainConcern": "Twisted ankle",
+      "onset": "About 1 hour ago",
+      "otherSymptoms": "Swelling",
+      "painLevel": 6
+    },
+    "summary": {
+      "draft": "Twisted ankle; onset: about 1 hour ago; other symptoms: swelling.",
+      "text": "Twisted ankle; onset: about 1 hour ago; other symptoms: swelling.",
+      "editedByPatient": false
+    },
+    "lastSymptomUpdateAt": null,
+    "updatedAt": "2026-11-23T12:00:00-05:00"
+  },
+  {
+    "id": "P004",
+    "waitingNumber": "A-004",
+    "status": "waiting_nurse",
+    "language": "zh",
+    "peopleAhead": 0,
+    "estimatedWaitMinutes": null,
+    "insuranceMissing": false,
+    "symptoms": {
+      "mainConcern": "Fever and cough",
+      "onset": "Two days ago",
+      "otherSymptoms": "Sore throat",
+      "painLevel": 3
+    },
+    "summary": {
+      "draft": "Fever and cough; onset: two days ago; other symptoms: sore throat.",
+      "text": "Fever and cough; onset: two days ago; other symptoms: sore throat.",
+      "editedByPatient": false
+    },
+    "lastSymptomUpdateAt": null,
+    "updatedAt": "2026-11-23T12:00:00-05:00"
+  },
+  {
+    "id": "P005",
+    "waitingNumber": "A-005",
+    "status": "waiting_nurse",
+    "language": "en",
+    "peopleAhead": 1,
+    "estimatedWaitMinutes": null,
+    "insuranceMissing": false,
+    "symptoms": {
+      "mainConcern": "Headache",
+      "onset": "Yesterday",
+      "otherSymptoms": "Light sensitivity",
+      "painLevel": 4
+    },
+    "summary": {
+      "draft": "Headache; onset: yesterday; other symptoms: light sensitivity.",
+      "text": "Headache; onset: yesterday; other symptoms: light sensitivity.",
+      "editedByPatient": false
+    },
+    "lastSymptomUpdateAt": null,
+    "updatedAt": "2026-11-23T12:00:00-05:00"
+  },
+  {
+    "id": "P006",
+    "waitingNumber": "A-006",
+    "status": "in_assessment",
+    "language": "es",
+    "peopleAhead": null,
+    "estimatedWaitMinutes": null,
+    "insuranceMissing": false,
+    "symptoms": {
+      "mainConcern": "Dizziness",
+      "onset": "This morning",
+      "otherSymptoms": "Weakness",
+      "painLevel": 3
+    },
+    "summary": {
+      "draft": "Dizziness; onset: this morning; other symptoms: weakness.",
+      "text": "Dizziness; onset: this morning; other symptoms: weakness.",
+      "editedByPatient": false
+    },
+    "lastSymptomUpdateAt": null,
+    "updatedAt": "2026-11-23T12:00:00-05:00"
+  },
+  {
+    "id": "P007",
+    "waitingNumber": "A-007",
+    "status": "in_assessment",
+    "language": "en",
+    "peopleAhead": null,
+    "estimatedWaitMinutes": null,
+    "insuranceMissing": false,
+    "symptoms": {
+      "mainConcern": "Back pain",
+      "onset": "Three days ago",
+      "otherSymptoms": "Pain with movement",
+      "painLevel": 5
+    },
+    "summary": {
+      "draft": "Back pain; onset: three days ago; other symptoms: pain with movement.",
+      "text": "Back pain; onset: three days ago; other symptoms: pain with movement.",
+      "editedByPatient": false
+    },
+    "lastSymptomUpdateAt": null,
+    "updatedAt": "2026-11-23T12:00:00-05:00"
+  },
+  {
+    "id": "P008",
+    "waitingNumber": "A-008",
+    "status": "in_assessment",
+    "language": "ar",
+    "peopleAhead": null,
+    "estimatedWaitMinutes": null,
+    "insuranceMissing": false,
+    "symptoms": {
+      "mainConcern": "Wheezing",
+      "onset": "About 30 minutes ago",
+      "otherSymptoms": "Cough",
+      "painLevel": 6
+    },
+    "summary": {
+      "draft": "Wheezing; onset: about 30 minutes ago; other symptoms: cough.",
+      "text": "Wheezing; onset: about 30 minutes ago; other symptoms: cough.",
+      "editedByPatient": false
+    },
+    "lastSymptomUpdateAt": null,
+    "updatedAt": "2026-11-23T12:00:00-05:00"
+  },
+  {
+    "id": "P009",
+    "waitingNumber": "A-009",
+    "status": "in_assessment",
+    "language": "en",
+    "peopleAhead": null,
+    "estimatedWaitMinutes": null,
+    "insuranceMissing": false,
+    "symptoms": {
+      "mainConcern": "Rash",
+      "onset": "This afternoon",
+      "otherSymptoms": "Itching",
+      "painLevel": 2
+    },
+    "summary": {
+      "draft": "Rash; onset: this afternoon; other symptoms: itching.",
+      "text": "Rash; onset: this afternoon; other symptoms: itching.",
+      "editedByPatient": false
+    },
+    "lastSymptomUpdateAt": null,
+    "updatedAt": "2026-11-23T12:00:00-05:00"
+  },
+  {
+    "id": "P010",
+    "waitingNumber": "A-010",
+    "status": "waiting_provider",
+    "language": "en",
+    "peopleAhead": 6,
+    "estimatedWaitMinutes": null,
+    "insuranceMissing": false,
+    "symptoms": {
+      "mainConcern": "Hand laceration",
+      "onset": "About 45 minutes ago",
+      "otherSymptoms": "Bleeding controlled",
+      "painLevel": 4
+    },
+    "summary": {
+      "draft": "Hand laceration; onset: about 45 minutes ago; other symptoms: bleeding controlled.",
+      "text": "Hand laceration; onset: about 45 minutes ago; other symptoms: bleeding controlled.",
+      "editedByPatient": false
+    },
+    "lastSymptomUpdateAt": null,
+    "updatedAt": "2026-11-23T12:00:00-05:00"
+  },
+  {
+    "id": "P011",
+    "waitingNumber": "A-011",
+    "status": "waiting_provider",
+    "language": "zh",
+    "peopleAhead": 1,
+    "estimatedWaitMinutes": null,
+    "insuranceMissing": false,
+    "symptoms": {
+      "mainConcern": "Abdominal discomfort",
+      "onset": "Last night",
+      "otherSymptoms": "Vomiting",
+      "painLevel": 5
+    },
+    "summary": {
+      "draft": "Abdominal discomfort; onset: last night; other symptoms: vomiting.",
+      "text": "Abdominal discomfort; onset: last night; other symptoms: vomiting.",
+      "editedByPatient": false
+    },
+    "lastSymptomUpdateAt": null,
+    "updatedAt": "2026-11-23T12:00:00-05:00"
+  },
+  {
+    "id": "P012",
+    "waitingNumber": "A-012",
+    "status": "waiting_provider",
+    "language": "en",
+    "peopleAhead": 4,
+    "estimatedWaitMinutes": null,
+    "insuranceMissing": false,
+    "symptoms": {
+      "mainConcern": "Migraine symptoms",
+      "onset": "This morning",
+      "otherSymptoms": "Nausea",
+      "painLevel": 7
+    },
+    "summary": {
+      "draft": "Migraine symptoms; onset: this morning; other symptoms: nausea.",
+      "text": "Migraine symptoms; onset: this morning; other symptoms: nausea.",
+      "editedByPatient": false
+    },
+    "lastSymptomUpdateAt": null,
+    "updatedAt": "2026-11-23T12:00:00-05:00"
+  },
+  {
+    "id": "P013",
+    "waitingNumber": "A-013",
+    "status": "waiting_provider",
+    "language": "es",
+    "peopleAhead": 7,
+    "estimatedWaitMinutes": null,
+    "insuranceMissing": false,
+    "symptoms": {
+      "mainConcern": "Knee pain",
+      "onset": "Yesterday",
+      "otherSymptoms": "Difficulty walking",
+      "painLevel": 5
+    },
+    "summary": {
+      "draft": "Knee pain; onset: yesterday; other symptoms: difficulty walking.",
+      "text": "Knee pain; onset: yesterday; other symptoms: difficulty walking.",
+      "editedByPatient": false
+    },
+    "lastSymptomUpdateAt": null,
+    "updatedAt": "2026-11-23T12:00:00-05:00"
+  },
+  {
+    "id": "P014",
+    "waitingNumber": "A-014",
+    "status": "waiting_provider",
+    "language": "en",
+    "peopleAhead": 2,
+    "estimatedWaitMinutes": null,
+    "insuranceMissing": false,
+    "symptoms": {
+      "mainConcern": "Shortness of breath",
+      "onset": "About 15 minutes ago",
+      "otherSymptoms": "Chest tightness",
+      "painLevel": 7
+    },
+    "summary": {
+      "draft": "Shortness of breath; onset: about 15 minutes ago; other symptoms: chest tightness.",
+      "text": "Shortness of breath; onset: about 15 minutes ago; other symptoms: chest tightness.",
+      "editedByPatient": false
+    },
+    "lastSymptomUpdateAt": null,
+    "updatedAt": "2026-11-23T12:00:00-05:00"
+  },
+  {
+    "id": "P015",
+    "waitingNumber": "A-015",
+    "status": "waiting_provider",
+    "language": "en",
+    "peopleAhead": 5,
+    "estimatedWaitMinutes": null,
+    "insuranceMissing": false,
+    "symptoms": {
+      "mainConcern": "Sore throat",
+      "onset": "Two days ago",
+      "otherSymptoms": "Fever",
+      "painLevel": 2
+    },
+    "summary": {
+      "draft": "Sore throat; onset: two days ago; other symptoms: fever.",
+      "text": "Sore throat; onset: two days ago; other symptoms: fever.",
+      "editedByPatient": false
+    },
+    "lastSymptomUpdateAt": null,
+    "updatedAt": "2026-11-23T12:00:00-05:00"
+  },
+  {
+    "id": "P016",
+    "waitingNumber": "A-016",
+    "status": "waiting_provider",
+    "language": "es",
+    "peopleAhead": 0,
+    "estimatedWaitMinutes": null,
+    "insuranceMissing": false,
+    "symptoms": {
+      "mainConcern": "Fall with wrist pain",
+      "onset": "About 2 hours ago",
+      "otherSymptoms": "Swelling",
+      "painLevel": 5
+    },
+    "summary": {
+      "draft": "Fall with wrist pain; onset: about 2 hours ago; other symptoms: swelling.",
+      "text": "Fall with wrist pain; onset: about 2 hours ago; other symptoms: swelling.",
+      "editedByPatient": false
+    },
+    "lastSymptomUpdateAt": null,
+    "updatedAt": "2026-11-23T12:00:00-05:00"
+  },
+  {
+    "id": "P017",
+    "waitingNumber": "A-017",
+    "status": "waiting_provider",
+    "language": "en",
+    "peopleAhead": 3,
+    "estimatedWaitMinutes": null,
+    "insuranceMissing": false,
+    "symptoms": {
+      "mainConcern": "Panic symptoms",
+      "onset": "About 1 hour ago",
+      "otherSymptoms": "Rapid breathing",
+      "painLevel": 4
+    },
+    "summary": {
+      "draft": "Panic symptoms; onset: about 1 hour ago; other symptoms: rapid breathing.",
+      "text": "Panic symptoms; onset: about 1 hour ago; other symptoms: rapid breathing.",
+      "editedByPatient": false
+    },
+    "lastSymptomUpdateAt": "2026-11-23T11:45:00-05:00",
+    "updatedAt": "2026-11-23T12:00:00-05:00"
+  },
+  {
+    "id": "P018",
+    "waitingNumber": "A-018",
+    "status": "waiting_provider",
+    "language": "zh",
+    "peopleAhead": 6,
+    "estimatedWaitMinutes": null,
+    "insuranceMissing": false,
+    "symptoms": {
+      "mainConcern": "Flu-like symptoms",
+      "onset": "Yesterday",
+      "otherSymptoms": "Body aches",
+      "painLevel": 3
+    },
+    "summary": {
+      "draft": "Flu-like symptoms; onset: yesterday; other symptoms: body aches.",
+      "text": "Flu-like symptoms; onset: yesterday; other symptoms: body aches.",
+      "editedByPatient": false
+    },
+    "lastSymptomUpdateAt": null,
+    "updatedAt": "2026-11-23T12:00:00-05:00"
+  },
+  {
+    "id": "P019",
+    "waitingNumber": "A-019",
+    "status": "waiting_provider",
+    "language": "en",
+    "peopleAhead": 1,
+    "estimatedWaitMinutes": null,
+    "insuranceMissing": false,
+    "symptoms": {
+      "mainConcern": "Back strain",
+      "onset": "This morning",
+      "otherSymptoms": "Muscle spasms",
+      "painLevel": 4
+    },
+    "summary": {
+      "draft": "Back strain; onset: this morning; other symptoms: muscle spasms.",
+      "text": "Back strain; onset: this morning; other symptoms: muscle spasms.",
+      "editedByPatient": false
+    },
+    "lastSymptomUpdateAt": null,
+    "updatedAt": "2026-11-23T12:00:00-05:00"
+  },
+  {
+    "id": "P020",
+    "waitingNumber": "A-020",
+    "status": "waiting_provider",
+    "language": "en",
+    "peopleAhead": 4,
+    "estimatedWaitMinutes": null,
+    "insuranceMissing": false,
+    "symptoms": {
+      "mainConcern": "Ear pain",
+      "onset": "Since last night",
+      "otherSymptoms": "Reduced hearing",
+      "painLevel": 3
+    },
+    "summary": {
+      "draft": "Ear pain; onset: since last night; other symptoms: reduced hearing.",
+      "text": "Ear pain; onset: since last night; other symptoms: reduced hearing.",
+      "editedByPatient": false
+    },
+    "lastSymptomUpdateAt": null,
+    "updatedAt": "2026-11-23T12:00:00-05:00"
+  },
+  {
+    "id": "P021",
+    "waitingNumber": "A-021",
+    "status": "waiting_provider",
+    "language": "es",
+    "peopleAhead": 7,
+    "estimatedWaitMinutes": null,
+    "insuranceMissing": false,
+    "symptoms": {
+      "mainConcern": "Abdominal pain",
+      "onset": "About 2 hours ago",
+      "otherSymptoms": "Cramping",
+      "painLevel": 6
+    },
+    "summary": {
+      "draft": "Abdominal pain; onset: about 2 hours ago; other symptoms: cramping.",
+      "text": "Abdominal pain; onset: about 2 hours ago; other symptoms: cramping.",
+      "editedByPatient": false
+    },
+    "lastSymptomUpdateAt": null,
+    "updatedAt": "2026-11-23T12:00:00-05:00"
+  },
+  {
+    "id": "P022",
+    "waitingNumber": "A-022",
+    "status": "with_care_team",
+    "language": "en",
+    "peopleAhead": null,
+    "estimatedWaitMinutes": null,
+    "insuranceMissing": false,
+    "symptoms": {
+      "mainConcern": "Sudden weakness",
+      "onset": "About 10 minutes ago",
+      "otherSymptoms": "Speech difficulty",
+      "painLevel": 8
+    },
+    "summary": {
+      "draft": "Sudden weakness; onset: about 10 minutes ago; other symptoms: speech difficulty.",
+      "text": "Sudden weakness; onset: about 10 minutes ago; other symptoms: speech difficulty.",
+      "editedByPatient": false
+    },
+    "lastSymptomUpdateAt": null,
+    "updatedAt": "2026-11-23T12:00:00-05:00"
+  },
+  {
+    "id": "P023",
+    "waitingNumber": "A-023",
+    "status": "with_care_team",
+    "language": "zh",
+    "peopleAhead": null,
+    "estimatedWaitMinutes": null,
+    "insuranceMissing": false,
+    "symptoms": {
+      "mainConcern": "Cut finger",
+      "onset": "About 30 minutes ago",
+      "otherSymptoms": "Bleeding stopped",
+      "painLevel": 3
+    },
+    "summary": {
+      "draft": "Cut finger; onset: about 30 minutes ago; other symptoms: bleeding stopped.",
+      "text": "Cut finger; onset: about 30 minutes ago; other symptoms: bleeding stopped.",
+      "editedByPatient": false
+    },
+    "lastSymptomUpdateAt": null,
+    "updatedAt": "2026-11-23T12:00:00-05:00"
+  },
+  {
+    "id": "P024",
+    "waitingNumber": "A-024",
+    "status": "with_care_team",
+    "language": "en",
+    "peopleAhead": null,
+    "estimatedWaitMinutes": null,
+    "insuranceMissing": false,
+    "symptoms": {
+      "mainConcern": "Anxiety and agitation",
+      "onset": "This afternoon",
+      "otherSymptoms": "Difficulty sleeping",
+      "painLevel": 2
+    },
+    "summary": {
+      "draft": "Anxiety and agitation; onset: this afternoon; other symptoms: difficulty sleeping.",
+      "text": "Anxiety and agitation; onset: this afternoon; other symptoms: difficulty sleeping.",
+      "editedByPatient": false
+    },
+    "lastSymptomUpdateAt": null,
+    "updatedAt": "2026-11-23T12:00:00-05:00"
+  },
+  {
+    "id": "P025",
+    "waitingNumber": "A-025",
+    "status": "with_care_team",
+    "language": "ar",
+    "peopleAhead": null,
+    "estimatedWaitMinutes": null,
+    "insuranceMissing": false,
+    "symptoms": {
+      "mainConcern": "Fever",
+      "onset": "Since yesterday",
+      "otherSymptoms": "Chills",
+      "painLevel": 3
+    },
+    "summary": {
+      "draft": "Fever; onset: since yesterday; other symptoms: chills.",
+      "text": "Fever; onset: since yesterday; other symptoms: chills.",
+      "editedByPatient": false
+    },
+    "lastSymptomUpdateAt": null,
+    "updatedAt": "2026-11-23T12:00:00-05:00"
+  },
+  {
+    "id": "P026",
+    "waitingNumber": "A-026",
+    "status": "completed",
+    "language": "en",
+    "peopleAhead": null,
+    "estimatedWaitMinutes": null,
+    "insuranceMissing": false,
+    "symptoms": {
+      "mainConcern": "Shortness of breath",
+      "onset": "About 5 minutes ago",
+      "otherSymptoms": "Wheezing",
+      "painLevel": 8
+    },
+    "summary": {
+      "draft": "Shortness of breath; onset: about 5 minutes ago; other symptoms: wheezing.",
+      "text": "Shortness of breath; onset: about 5 minutes ago; other symptoms: wheezing.",
+      "editedByPatient": false
+    },
+    "lastSymptomUpdateAt": null,
+    "updatedAt": "2026-11-23T12:00:00-05:00"
+  },
+  {
+    "id": "P027",
+    "waitingNumber": "A-027",
+    "status": "completed",
+    "language": "es",
+    "peopleAhead": null,
+    "estimatedWaitMinutes": null,
+    "insuranceMissing": false,
+    "symptoms": {
+      "mainConcern": "Shoulder pain",
+      "onset": "This morning",
+      "otherSymptoms": "Limited movement",
+      "painLevel": 4
+    },
+    "summary": {
+      "draft": "Shoulder pain; onset: this morning; other symptoms: limited movement.",
+      "text": "Shoulder pain; onset: this morning; other symptoms: limited movement.",
+      "editedByPatient": false
+    },
+    "lastSymptomUpdateAt": null,
+    "updatedAt": "2026-11-23T12:00:00-05:00"
+  },
+  {
+    "id": "P028",
+    "waitingNumber": "A-028",
+    "status": "left",
+    "language": "en",
+    "peopleAhead": null,
+    "estimatedWaitMinutes": null,
+    "insuranceMissing": false,
+    "symptoms": {
+      "mainConcern": "Leg pain",
+      "onset": "About 3 hours ago",
+      "otherSymptoms": "Swelling",
+      "painLevel": 5
+    },
+    "summary": {
+      "draft": "Leg pain; onset: about 3 hours ago; other symptoms: swelling.",
+      "text": "Leg pain; onset: about 3 hours ago; other symptoms: swelling.",
+      "editedByPatient": false
+    },
+    "lastSymptomUpdateAt": null,
+    "updatedAt": "2026-11-23T12:00:00-05:00"
+  },
+  {
+    "id": "P029",
+    "waitingNumber": "A-029",
+    "status": "left",
+    "language": "en",
+    "peopleAhead": null,
+    "estimatedWaitMinutes": null,
+    "insuranceMissing": false,
+    "symptoms": {
+      "mainConcern": "Nausea",
+      "onset": "This morning",
+      "otherSymptoms": "Dizziness",
+      "painLevel": 3
+    },
+    "summary": {
+      "draft": "Nausea; onset: this morning; other symptoms: dizziness.",
+      "text": "Nausea; onset: this morning; other symptoms: dizziness.",
+      "editedByPatient": false
+    },
+    "lastSymptomUpdateAt": null,
+    "updatedAt": "2026-11-23T12:00:00-05:00"
+  },
+  {
+    "id": "P030",
+    "waitingNumber": "A-030",
+    "status": "left",
+    "language": "en",
+    "peopleAhead": null,
+    "estimatedWaitMinutes": null,
+    "insuranceMissing": false,
+    "symptoms": {
+      "mainConcern": "Head injury concern",
+      "onset": "About 1 hour ago",
+      "otherSymptoms": "Headache",
+      "painLevel": 5
+    },
+    "summary": {
+      "draft": "Head injury concern; onset: about 1 hour ago; other symptoms: headache.",
+      "text": "Head injury concern; onset: about 1 hour ago; other symptoms: headache.",
+      "editedByPatient": false
+    },
+    "lastSymptomUpdateAt": null,
+    "updatedAt": "2026-11-23T12:00:00-05:00"
+  }
+]

@@ -1,0 +1,5 @@
+scenario,contact_coverage_assumption,rescue_success_assumption,patients_reaching_60min_w2,baseline_lwbs_eligible_at_60min,expected_prevented_lwbs,expected_lwbs_n,expected_lwbs_rate_pct,absolute_reduction_pp,estimated_contacts_all_60min_patients,estimated_nurse_hours_at_3min_each,estimated_nurse_cost_usd_at_65_per_hour
+Baseline_no_outreach,0.0,0.0,8038,2999,0.0,3400.0,4.0,0.0,0.0,0.0,0.0
+Conservative,0.5,0.1,8038,2999,149.95000000000002,3250.05,3.8235882352941184,0.17641176470588213,4019.0,200.95,13061.75
+Planning,0.7,0.2,8038,2999,419.85999999999996,2980.14,3.506047058823529,0.4939529411764707,5626.599999999999,281.33,18286.45
+Optimistic,0.85,0.3,8038,2999,764.745,2635.255,3.1003000000000003,0.8996999999999998,6832.3,341.615,22204.975000000002

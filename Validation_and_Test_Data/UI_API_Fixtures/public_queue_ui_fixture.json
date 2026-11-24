@@ -1,0 +1,98 @@
+{
+  "updatedAt": "2026-11-23T12:00:00-05:00",
+  "providerQueue": [
+    {
+      "waitingNumber": "A-010",
+      "estimatedWaitMinutes": 25
+    },
+    {
+      "waitingNumber": "A-011",
+      "estimatedWaitMinutes": 30
+    },
+    {
+      "waitingNumber": "A-012",
+      "estimatedWaitMinutes": 35
+    },
+    {
+      "waitingNumber": "A-013",
+      "estimatedWaitMinutes": 40
+    },
+    {
+      "waitingNumber": "A-014",
+      "estimatedWaitMinutes": 45
+    },
+    {
+      "waitingNumber": "A-015",
+      "estimatedWaitMinutes": 50
+    },
+    {
+      "waitingNumber": "A-016",
+      "estimatedWaitMinutes": 30
+    },
+    {
+      "waitingNumber": "A-017",
+      "estimatedWaitMinutes": 35
+    },
+    {
+      "waitingNumber": "A-018",
+      "estimatedWaitMinutes": 40
+    },
+    {
+      "waitingNumber": "A-019",
+      "estimatedWaitMinutes": 25
+    },
+    {
+      "waitingNumber": "A-020",
+      "estimatedWaitMinutes": 30
+    },
+    {
+      "waitingNumber": "A-021",
+      "estimatedWaitMinutes": 35
+    }
+  ],
+  "nowSeeing": [
+    {
+      "waitingNumber": "A-022"
+    },
+    {
+      "waitingNumber": "A-023"
+    },
+    {
+      "waitingNumber": "A-024"
+    },
+    {
+      "waitingNumber": "A-025"
+    }
+  ],
+  "awaitingNurse": [
+    {
+      "waitingNumber": "A-001"
+    },
+    {
+      "waitingNumber": "A-002"
+    },
+    {
+      "waitingNumber": "A-003"
+    },
+    {
+      "waitingNumber": "A-004"
+    },
+    {
+      "waitingNumber": "A-005"
+    }
+  ],
+  "inAssessment": [
+    {
+      "waitingNumber": "A-006"
+    },
+    {
+      "waitingNumber": "A-007"
+    },
+    {
+      "waitingNumber": "A-008"
+    },
+    {
+      "waitingNumber": "A-009"
+    }
+  ]
+}
