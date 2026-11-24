@@ -58,13 +58,19 @@ h1:focus { outline: none; }
   .device.tablet .cover-center { max-width: 420px; }
   .device.tablet .slip-card { width: 100%; max-width: 520px; align-self: center; }
 }
-@media (min-width: 1100px) and (pointer: fine) {
-  /* Desktop preview (mouse, not touch): a landscape 4:3 tablet frame that always fits the window. */
-  .device.tablet { padding: 24px 0; }
+@media (pointer: fine) {
+  /* Computer preview (mouse or trackpad, any window size): a landscape 4:3 tablet frame
+     that always fits inside the window. Touch tablets keep the full-screen layout above. */
+  .device.tablet { padding: 24px; }
   .device.tablet .p-screen, .device.tablet .cover {
-    zoom: 1; height: min(768px, calc(100dvh - 48px)); width: calc(min(768px, calc(100dvh - 48px)) * 4 / 3);
-    border-radius: 22px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.09);
+    zoom: 1;
+    height: min(768px, calc(100dvh - 48px), calc((100vw - 48px) * 3 / 4));
+    width: calc(min(768px, calc(100dvh - 48px), calc((100vw - 48px) * 3 / 4)) * 4 / 3);
+    border-radius: 22px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12); border: 10px solid #1f1b2b;
   }
+  .device.tablet .p-main { padding: 8px max(28px, calc(50% - 300px)) 12px; gap: 6px; }
+  .device.tablet .card { gap: 10px; padding-top: 10px; padding-bottom: 10px; }
+  .device.tablet .slip-card { width: 100%; max-width: 520px; align-self: center; }
 }
 
 /* ---------- header ---------- */
