@@ -27,3 +27,4 @@ export interface PatientSession {
 export const SESSION_KEY = 'seensooner.patient.session';
 export const DRAFT_KEY = 'seensooner.patient.draft';
 export const LANG_KEY = 'seensooner.patient.lang';
+export const TEXT_KEY = 'seensooner.patient.bigtext';

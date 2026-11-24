@@ -291,3 +291,79 @@ h1:focus { outline: none; }
 .tell-chip { height: 52px; border: 1px solid #d6cbe5; border-radius: 12px; background: #fff; font-size: 15px; font-weight: 600; color: var(--ink, #262130); }
 .tell-chip.on { background: var(--purple-tint, #f1ecf9); border-color: var(--purple); color: var(--purple); }
 .slip-number .number-value { font-size: 84px; }
+
+/* ---------- Header tools: text size, language, emergency ---------- */
+.p-tools { display: flex; align-items: center; gap: 6px; }
+.p-header { padding: 0 12px 0 16px; gap: 8px; }
+.device:not(.tablet) .p-brand .wordmark { display: none; }
+.size-pill { display: inline-flex; align-items: baseline; gap: 1px; height: 31px; padding: 0 9px; border: 1px solid #d6cbe5; border-radius: 99px; background: #fff; color: var(--purple); font-weight: 700; line-height: 1; }
+.size-pill .a-sm { font-size: 11px; }
+.size-pill .a-lg { font-size: 16px; }
+.size-pill.on { background: var(--purple); color: #fff; border-color: var(--purple); }
+.sos-pill { display: inline-flex; align-items: center; gap: 4px; height: 31px; padding: 0 10px; border: 0; border-radius: 99px; background: #c62828; color: #fff; font-size: 11px; font-weight: 700; white-space: nowrap; }
+.sos-pill:hover { background: #a91f1f; }
+.cover-top { width: 100%; display: flex; align-items: center; justify-content: space-between; }
+.cover-top .cover-brand { margin: 0; }
+.cover-tools { display: flex; gap: 8px; }
+.cover-tools .size-pill { background: transparent; color: #fff; border-color: rgba(255, 255, 255, 0.6); }
+.cover-tools .size-pill.on { background: #fff; color: var(--purple); }
+
+/* Larger text: scales the screen content (not the header) by 125%. */
+.device.big-text .p-main { zoom: 1.25; }
+.device.big-text .cover-center { zoom: 1.2; }
+
+/* ---------- Emergency dialog ---------- */
+.em-modal { text-align: center; }
+.em-modal p { margin: 0; font-size: 15px; line-height: 1.45; color: #3a3346; }
+.em-icon { width: 56px; height: 56px; border-radius: 50%; background: #fde8e6; color: #c62828; display: grid; place-items: center; }
+.btn-danger { display: inline-flex; align-items: center; justify-content: center; height: 52px; border-radius: 26px; background: #c62828; color: #fff; font-size: 18px; font-weight: 700; text-decoration: none; }
+.btn-danger.wide { width: 100%; }
+
+/* ---------- Accessibility checklist ---------- */
+.acc-field { border: 0; padding: 0; margin: 0; }
+.acc-field legend { font-size: 13px; font-weight: 600; color: #3a3346; margin-bottom: 2px; padding: 0; }
+.acc-field .hint { margin: 0 0 8px; }
+.acc-list { display: grid; gap: 6px; }
+.acc-row { display: flex; align-items: center; gap: 10px; min-height: 42px; padding: 8px 12px; border: 1px solid var(--border); border-radius: 12px; background: #fff; font-size: 14px; color: #2c2635; cursor: pointer; }
+.acc-row input { width: 18px; height: 18px; accent-color: var(--purple); flex: none; }
+.acc-row.on { border-color: var(--purple); background: #f7f3ff; }
+.device.tablet .acc-list { grid-template-columns: 1fr 1fr; }
+
+/* ---------- Voice input ---------- */
+.voice { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: -6px; }
+.voice-btn { display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 12px; border: 1px solid #d6cbe5; border-radius: 99px; background: #fff; color: var(--purple); font-size: 12px; font-weight: 600; }
+.voice-btn.on { background: var(--purple); color: #fff; border-color: var(--purple); }
+.voice-live { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: #6b5f80; }
+.voice-live .dot { width: 8px; height: 8px; border-radius: 50%; background: #c62828; animation: vpulse 1s infinite; }
+@keyframes vpulse { 50% { opacity: 0.25; } }
+.voice .hint { width: 100%; margin: 0; }
+.hipaa { width: 100%; display: flex; gap: 9px; padding: 10px 12px; border: 1px solid #c9dcf0; background: #f1f7fd; border-radius: 12px; color: #1f4f7a; }
+.hipaa svg { flex: none; margin-top: 2px; }
+.hipaa p { margin: 0; font-size: 12px; line-height: 1.4; }
+.hipaa .hipaa-t { font-weight: 700; margin-bottom: 2px; }
+
+/* ---------- Dropdowns: birth date and onset ---------- */
+.input.sel { appearance: none; -webkit-appearance: none; padding-right: 30px; background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23574a72' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 10px center; cursor: pointer; }
+.input.sel.placeholder { color: #8a8494; }
+.input.sel option { color: var(--ink); }
+.dob-select { display: grid; grid-template-columns: 1.6fr 1fr 1.2fr; gap: 6px; }
+/* Pain 0–10: eleven equal buttons */
+.pain-row { gap: 3px; }
+.pain-row button { min-width: 0; padding: 0; }
+
+/* Header pills share one height and a centred text line */
+.p-tools > *, .cover-tools > * { box-sizing: border-box; height: 32px; display: inline-flex; align-items: center; justify-content: center; line-height: 1; vertical-align: middle; }
+.lang-pill { padding: 0 10px; }
+.size-pill { padding: 0; width: 40px; }
+.size-pill .a-pair { display: inline-flex; align-items: baseline; gap: 1px; line-height: 1; }
+.sos-pill span, .lang-pill span { line-height: 1; }
+
+/* Text baselines line up across the bar: the A/A pair sits on the same 11px line as the other pill labels */
+.size-pill .a-pair { font-size: 11px; line-height: 11px; height: 11px; align-items: baseline; overflow: visible; }
+.size-pill .a-sm { font-size: 11px; line-height: 11px; }
+.size-pill .a-lg { font-size: 15px; line-height: 11px; }
+.p-tools, .cover-tools { align-items: center; }
+.cover-top { align-items: baseline; }
+.cover-brand { line-height: 1; }
+.size-pill .a-pair { transform: translateY(-2px); }
+.cover-brand { position: relative; top: -2px; }

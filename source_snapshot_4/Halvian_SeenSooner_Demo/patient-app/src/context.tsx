@@ -6,6 +6,9 @@ export interface AppCtx {
   t: Strings;
   setLang: (l: Lang) => void;
   openLanguageSheet: () => void;
+  bigText: boolean;
+  toggleBigText: () => void;
+  openEmergency: () => void;
 }
 
 export const Ctx = createContext<AppCtx | null>(null);

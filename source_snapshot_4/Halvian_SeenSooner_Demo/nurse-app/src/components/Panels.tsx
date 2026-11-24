@@ -80,6 +80,9 @@ export function FollowUpPanel({ p, now, run, onClose }: { p: StaffPatient; now: 
       {p.symptomsChanged && (
         <div className="alert-red"><Warning size={16} /> Symptom change reported — review in the assessment queue.</div>
       )}
+      {p.careDue && (
+        <div className="alert-red" role="alert" data-testid="care-due"><Warning size={16} /> 60-minute check due: waiting {Math.round(p.w2ElapsedMinutes)} min after triage.</div>
+      )}
       <p className="panel-eyebrow">QUICK CHECK-IN</p>
       <ol className="checklist">
         {CHECKLIST.map((c, i) => (
@@ -102,7 +105,7 @@ export function FollowUpPanel({ p, now, run, onClose }: { p: StaffPatient; now: 
             className="btn-primary"
             disabled={busy}
             data-testid="checkin-complete"
-            onClick={() => act(`${p.waitingNumber} checked in`, () => api.recordContact(p.id, { kind: 'check_in', checklist: CHECKLIST.filter((_, i) => checks[i]) }))}
+            onClick={() => act(p.careDue ? `${p.waitingNumber} 60-minute check completed` : `${p.waitingNumber} checked in`, () => api.recordContact(p.id, { kind: 'check_in', checklist: CHECKLIST.filter((_, i) => checks[i]) }))}
           >
             Check in complete
           </button>
@@ -153,7 +156,7 @@ export function PatientPanel({ p, now, run, onClose }: { p: StaffPatient; now: n
           </div>
         )}
         {p.careDue && (
-          <div className="alert-red" role="alert"><Warning size={16} /> Actual W2 is 60+ minutes — nurse care check is due now.</div>
+          <div className="alert-red" role="alert"><Warning size={16} /> Waiting 60+ minutes after triage. The front desk does the 60-minute check; worse symptoms come back to you.</div>
         )}
         {p.reassessmentRequired && (
           <div className="alert-red" role="status"><Warning size={16} /> Returned after recall. Nurse reassessment and confirmation are required before re-entry.</div>
@@ -229,9 +232,6 @@ export function PatientPanel({ p, now, run, onClose }: { p: StaffPatient; now: n
       </div>
 
       <div className="panel-actions">
-        {p.careDue && (
-          <button type="button" className="btn-danger-outline" disabled={busy} data-testid="care-check" onClick={() => act(`${p.waitingNumber} 60-minute care check completed`, () => api.recordContact(p.id, { kind: 'check_in', note: '60-minute W2 nurse care check completed' }))}>Complete 60-minute care check</button>
-        )}
         {p.status === 'waiting_nurse' && (
           <>
             <button type="button" className="btn-primary" disabled={busy} data-testid="start-assessment" onClick={() => act(`${p.waitingNumber} moved to assessment`, () => api.updatePatient(p.id, { status: 'in_assessment' }))}>Start assessment</button>

@@ -260,3 +260,11 @@ p, h1, h2 { margin: 0; }
 .nav-group + .nav-group { margin-top: 14px; }
 .row-actions { display: flex; align-items: center; gap: 8px; }
 .row-actions .link { font-size: 11px; }
+
+/* Emergency alert banner (patient pressed Emergency) */
+.em-banner { display: flex; align-items: center; gap: 10px; padding: 10px 14px; margin-bottom: 10px; border-radius: 10px; background: #c62828; color: #fff; font-size: 13px; animation: empulse 1.2s ease-in-out infinite; }
+.em-banner.responding { background: #fde8e6; color: #8a1f1a; animation: none; border: 1px solid #f0b4ae; }
+.em-banner span { flex: 1; }
+.em-ack { border: 0; background: #fff; color: #c62828; font-weight: 700; font-size: 12px; padding: 6px 12px; border-radius: 99px; }
+.em-resp { flex: none !important; font-weight: 700; font-size: 12px; }
+@keyframes empulse { 50% { box-shadow: 0 0 0 4px rgba(198, 40, 40, 0.25); } }

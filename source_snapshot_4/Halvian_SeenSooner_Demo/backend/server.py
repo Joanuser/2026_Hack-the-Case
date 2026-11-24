@@ -60,6 +60,24 @@ WEB_APPS = {"patient", "nurse", "display", "oversight", "tablet"}
 # The check-in tablet runs the patient app in kiosk mode at /tablet/.
 WEB_ALIASES = {"tablet": "patient"}
 
+def has_red_flag(p: dict[str, Any]) -> bool:
+    text = " ".join(str((p.get("symptoms") or {}).get(k) or "") for k in ("mainConcern", "otherSymptoms")).lower()
+    return any(w in text for w in RED_FLAG_WORDS)
+
+
+def callback_plan(p: dict[str, Any]) -> dict[str, str]:
+    """Who calls back a patient who left, and when.
+    Before triage: warning symptoms -> nurse today; otherwise front desk off-peak.
+    After triage: ESI 1-3 -> nurse today; ESI 4-5 -> front desk off-peak."""
+    if p.get("triageCompletedAt"):
+        urgent = (p.get("nursePriority") or 5) <= 3
+        basis = f"Left after triage (ESI {p.get('nursePriority') or '?'})"
+    else:
+        urgent = has_red_flag(p)
+        basis = "Left before triage" + (" with warning symptoms" if urgent else "")
+    return {"priority": "Today" if urgent else "Off-peak", "owner": "nurse" if urgent else "front_desk", "basis": basis}
+
+
 RED_FLAG_WORDS = ("chest pain", "chest tightness", "shortness of breath", "can't breathe", "trouble breathing", "fainted",
                   "passed out", "confusion", "stroke", "face drooping", "slurred speech", "severe bleeding", "suicidal",
                   "overdose", "seizure")
@@ -120,6 +138,7 @@ def _percentile(values: list[float], fraction: float) -> float | None:
 class DemoStore:
     def __init__(self) -> None:
         self.lock = threading.RLock()
+        self.alerts: list[dict[str, Any]] = []
         self.offset = timedelta(0)
         self.force_model_failure = False
         self.clients: list[dict[str, Any]] = []
@@ -135,6 +154,7 @@ class DemoStore:
 
     def reset(self) -> None:
         with self.lock:
+            self.alerts = []
             self.offset = timedelta(0)
             self.force_model_failure = False
             payload = json.loads((ROOT / "fixtures" / "staff_patients_response.json").read_text(encoding="utf-8"))
@@ -402,6 +422,7 @@ class DemoStore:
                 patients.append(view)
             return {
                 "patients": patients,
+                "alerts": [a for a in self.alerts if a["status"] == "open" or minutes_between(parse_dt(a["ackAt"]), self.now()) < 10][-10:],
                 "updatedAt": iso(self.now()),
                 "config": {"recheckAfterMinutes": 30, "longWaitMinutes": 60},
             }
@@ -996,8 +1017,7 @@ class ApiHandler(BaseHTTPRequestHandler):
                 return
             now = STORE.now()
             action = body.get("action")
-            text = " ".join(str((p.get("symptoms") or {}).get(k) or "") for k in ("mainConcern", "otherSymptoms")).lower()
-            red = any(w in text for w in RED_FLAG_WORDS)
+            red = has_red_flag(p)
             if action == "leaving":
                 reason = str(body.get("reason") or "Prefer not to say")
                 details = str(body.get("details") or "").strip()
@@ -1007,7 +1027,7 @@ class ApiHandler(BaseHTTPRequestHandler):
                 p["status"] = "left"; p["departureAt"] = iso(now); p["departureVerified"] = True; p["lwbsStatus"] = "PENDING_LWBS_REVIEW"
                 p["leaveReason"] = {"reason": reason, "details": details, "source": "patient_tablet", "at": iso(now)}
                 p["callBack"] = {"status": "open", "noPhone": no_phone, "phone": "" if no_phone else p.get("phone", ""), "at": iso(now),
-                                 "priority": "Today" if (red and not p.get("triageCompletedAt")) else "Off-peak"}
+                                 "via": "tablet", **callback_plan(p)}
                 note = f"Tablet: leaving · {reason}" + (f" ({details})" if details else "") + (" · no phone" if no_phone else " · call back requested")
                 p["contacts"].append({"kind": "tablet_request", "label": "Check-in tablet", "note": note, "at": iso(now)})
                 case = "see_desk" if (red and not p.get("triageCompletedAt")) or no_phone else "call"
@@ -1079,6 +1099,40 @@ class ApiHandler(BaseHTTPRequestHandler):
                     result.pop("accessToken", None)
                 self._json(201, result)
                 return
+            if path == "/api/emergency":
+                # Patient pressed Emergency while in the hospital: alert front desk and nurses at once.
+                cid = str(body.get("checkinId") or "")
+                with STORE.lock:
+                    p = STORE.patients.get(cid) if cid else None
+                    if p and not secrets.compare_digest(self._bearer(), p["accessToken"]):
+                        p = None
+                    now = STORE.now()
+                    alert = {"id": secrets.token_hex(4), "at": iso(now), "status": "open",
+                             "device": "tablet" if body.get("device") == "tablet" else "phone",
+                             "waitingNumber": p["waitingNumber"] if p else None,
+                             "patientId": p["id"] if p else None,
+                             "location": (p or {}).get("location")}
+                    STORE.alerts.append(alert)
+                    if p:
+                        p["contacts"].append({"kind": "emergency", "label": "Emergency button", "note": "Patient pressed Emergency", "at": iso(now)})
+                        p["symptomsChanged"] = True
+                        p["updatedAt"] = iso(now)
+                STORE.publish("emergency.alert", p)
+                self._json(200, {"ok": True, "alertId": alert["id"]})
+                return
+            match = re.fullmatch(r"/api/staff/alerts/([^/]+)/ack", path)
+            if match:
+                if not self._require_staff():
+                    return
+                with STORE.lock:
+                    a = next((x for x in STORE.alerts if x["id"] == match.group(1)), None)
+                    if not a:
+                        self._error(404, "not_found", "Alert not found")
+                        return
+                    a["status"] = "responding"; a["ackAt"] = iso(STORE.now())
+                STORE.publish("emergency.ack")
+                self._json(200, a)
+                return
             match = re.fullmatch(r"/api/checkins/([^/]+)/location-exit", path)
             if match:
                 p = self._patient(match.group(1))
@@ -1090,6 +1144,9 @@ class ApiHandler(BaseHTTPRequestHandler):
                     note = ("Patient scanned slip at check-in tablet: leaving" if via_tablet else "Patient reported left") if body.get("left") else "Patient confirmed still present"
                     p["contacts"].append({"kind": "location_exit", "label": "Check-in tablet" if via_tablet else "Location check", "note": note, "at": iso(now)})
                     if body.get("left"):
+                        if p.get("status") not in {"left", "completed", "inactive"}:
+                            p["callBack"] = {"status": "open", "noPhone": not p.get("phone"), "phone": p.get("phone", ""), "at": iso(now),
+                                             "via": "tablet" if via_tablet else "phone", **callback_plan(p)}
                         p["status"] = "left"
                         p["departureAt"] = iso(now)
                         p["departureVerified"] = True
@@ -1110,7 +1167,7 @@ class ApiHandler(BaseHTTPRequestHandler):
                         return
                     now = STORE.now()
                     kind = body.get("kind") or "check_in"
-                    p["contacts"].append({"kind": kind, "label": "Nurse care check" if p.get("careDue") else "Nurse check-in", "note": body.get("note") or "", "at": iso(now), "checklist": body.get("checklist") or []})
+                    p["contacts"].append({"kind": kind, "label": "60-minute check (front desk)" if p.get("careDue") else "Front desk check-in", "note": body.get("note") or "", "at": iso(now), "checklist": body.get("checklist") or []})
                     if p.get("careDue"):
                         p["careCompletedAt"] = iso(now)
                         p["careDue"] = False

@@ -108,6 +108,7 @@ export function createHttpApi(baseUrl: string, opts: { staffName?: string; staff
     createStaffPatient: (req) => request('POST', '/api/staff/patients', req),
     updatePatient: (id, patch) => request('PATCH', `/api/staff/patients/${enc(id)}`, patch),
     recordContact: (id, body) => request('POST', `/api/staff/patients/${enc(id)}/contacts`, body),
+    ackAlert: (id) => request('POST', `/api/staff/alerts/${enc(id)}/ack`),
     getPublicQueue: () => request('GET', '/api/public/queue'),
     subscribe,
   };

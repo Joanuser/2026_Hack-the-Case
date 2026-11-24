@@ -4,7 +4,8 @@ import { fmt } from '../i18n';
 import { api, type KioskLookup, type KioskRequest } from '../api';
 import { Check } from '../ui/icons';
 import { Banner, BackLink, Field, PrimaryButton, Screen, TextInput } from '../components/ui';
-import { dobToIso, maskDob } from '../lib/validation';
+import { dobToIso } from '../lib/validation';
+import { DobSelect } from '../components/DobSelect';
 
 type Step = 'identify' | 'choose' | 'reason' | 'phone' | 'need' | 'done';
 const REASONS = ['reasonWait', 'reasonBetter', 'reasonPersonal', 'reasonFamily', 'reasonOther', 'reasonNoSay'] as const;
@@ -62,7 +63,7 @@ export function TellUs({ onExit }: { onExit: () => void }) {
       <h1 tabIndex={-1}>{t.tellTitle}</h1>
       <p className="sub">{t.tellSub}</p>
       <Field id="k-num" label={t.tellNumber}>{(a) => <TextInput {...a} value={num} autoCapitalize="characters" autoComplete="off" placeholder={t.tellNumberPh} onChange={(e) => setNum(e.target.value)} />}</Field>
-      <Field id="k-dob" label={t.dob}>{(a) => <TextInput {...a} value={dob} inputMode="numeric" placeholder={t.dobPh} onChange={(e) => setDob(maskDob(e.target.value))} dir="ltr" />}</Field>
+      <Field id="k-dob" label={t.dob}>{(a) => <DobSelect id={a.id} value={dob} onChange={setDob} />}</Field>
       {err && <Banner kind="error">{err}</Banner>}
       <PrimaryButton type="submit" busy={busy}>{t.tellFind}</PrimaryButton>
     </form>

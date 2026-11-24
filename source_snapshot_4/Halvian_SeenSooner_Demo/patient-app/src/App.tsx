@@ -2,8 +2,8 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Ctx } from './context';
 import { LANGUAGES, STRINGS, type Lang } from './i18n';
 import { api, type LocationAuthorization, type PatientStatusView } from './api';
-import { Modal } from './components/ui';
-import { Close } from './ui/icons';
+import { Banner, Modal } from './components/ui';
+import { Close, Warning } from './ui/icons';
 import { Cover } from './screens/Cover';
 import { Scan, parseSiteCode } from './screens/Scan';
 import { Language, LanguageList } from './screens/Language';
@@ -17,7 +17,7 @@ import { Slip } from './screens/Slip';
 import { TellUs } from './screens/TellUs';
 import { IS_TABLET } from './lib/device';
 import { dobToIso, emptyInfo, emptySymptoms, validateInfo, validateSymptoms, type InfoForm, type SymptomForm } from './lib/validation';
-import { DRAFT_KEY, LANG_KEY, SESSION_KEY, readJson, writeJson, type PatientSession } from './lib/storage';
+import { DRAFT_KEY, LANG_KEY, SESSION_KEY, TEXT_KEY, readJson, writeJson, type PatientSession } from './lib/storage';
 import { getPosition } from './lib/geo';
 
 type Route = 'cover' | 'scan' | 'language' | 'info' | 'symptoms' | 'review' | 'waiting' | 'details' | 'update' | 'slip' | 'leave';
@@ -67,6 +67,9 @@ export default function App() {
   });
   const [lastStatus, setLastStatus] = useState<PatientStatusView | null>(null);
   const [flash, setFlash] = useState<string | null>(null);
+  // Larger text: remembered on a personal phone; the shared tablet resets for each patient.
+  const [bigText, setBigText] = useState<boolean>(() => !IS_TABLET && readJson<boolean>(localStorage, TEXT_KEY, false));
+  const [emergency, setEmergency] = useState<null | 'sending' | 'sent' | 'failed' | 'outside'>(null);
 
   const t = STRINGS[lang];
   const dir = LANGUAGES.find((l) => l.code === lang)?.dir ?? 'ltr';
@@ -77,6 +80,8 @@ export default function App() {
     writeJson(localStorage, LANG_KEY, lang);
   }, [lang, dir]);
   useEffect(() => writeJson(sessionStorage, DRAFT_KEY, draft), [draft]);
+  useEffect(() => { if (!IS_TABLET) writeJson(localStorage, TEXT_KEY, bigText); }, [bigText]);
+  useEffect(() => { if (IS_TABLET && route === 'cover') setBigText(false); }, [route]);
   useEffect(() => writeJson(localStorage, SESSION_KEY, session), [session]);
   useEffect(() => {
     const onHash = () => setRoute(readRoute());
@@ -128,7 +133,7 @@ export default function App() {
       phone: draft.info.phone.trim(),
       insurance: draft.info.insuranceDeferred ? '' : draft.info.insurance.trim(),
       insuranceDeferred: draft.info.insuranceDeferred,
-      accessibilityNeeds: draft.info.accessibility,
+      accessibilityNeeds: draft.info.accessibility.filter((k) => k !== 'acc_none'),
       symptoms: toSymptoms(draft.symptoms),
       summary: draft.summary.status === 'ready' ? { draft: draft.summary.draft, text: draft.summary.text, editedByPatient: draft.summary.editedByPatient } : undefined,
       locationAuthorization: draft.locationAuthorization ?? undefined,
@@ -146,7 +151,17 @@ export default function App() {
     go('cover', true);
   };
 
-  const ctx = useMemo(() => ({ lang, t, setLang: setLangState, openLanguageSheet: () => setSheet(true) }), [lang, t]);
+  // Inside the hospital, Emergency alerts staff (faster than 911, which would send an ambulance to the ED door).
+  // Once a phone patient has left the hospital, the same button offers Call 911.
+  const outside = !IS_TABLET && lastStatus?.status === 'left';
+  const openEmergency = useCallback(() => {
+    if (outside) { setEmergency('outside'); return; }
+    setEmergency('sending');
+    api.reportEmergency({ checkinId: session?.id, token: session?.token, device: IS_TABLET ? 'tablet' : 'phone' })
+      .then(() => setEmergency((e) => (e ? 'sent' : e)))
+      .catch(() => setEmergency((e) => (e ? 'failed' : e)));
+  }, [outside, session]);
+  const ctx = useMemo(() => ({ lang, t, setLang: setLangState, openLanguageSheet: () => setSheet(true), bigText, toggleBigText: () => setBigText((b) => !b), openEmergency }), [lang, t, bigText, openEmergency]);
   const onStatus = useCallback((s: PatientStatusView) => setLastStatus(s), []);
   const clearFlash = useCallback(() => setFlash(null), []);
 
@@ -223,7 +238,28 @@ export default function App() {
 
   return (
     <Ctx.Provider value={ctx}>
-      <div className={IS_TABLET ? 'device tablet' : 'device'}>{screen}</div>
+      <div className={`${IS_TABLET ? 'device tablet' : 'device'}${bigText ? ' big-text' : ''}`}>{screen}</div>
+      {emergency && (
+        <Modal labelledBy="em-title" onClose={() => setEmergency(null)} className="em-modal">
+          <div className="em-icon"><Warning size={30} /></div>
+          {emergency === 'outside' ? (
+            <>
+              <h2 id="em-title">{t.emTitleOut}</h2>
+              <p>{t.emBodyOut}</p>
+              <a className="btn-danger wide" href="tel:911" data-testid="call-911">{t.emCall}</a>
+            </>
+          ) : (
+            <>
+              <h2 id="em-title">{t.emTitleIn}</h2>
+              <p>{t.emBodyIn}</p>
+              {emergency === 'sending' && <Banner kind="info">{t.emSending}</Banner>}
+              {emergency === 'sent' && <Banner kind="ok">{t.emSent}</Banner>}
+              {emergency === 'failed' && <Banner kind="error">{t.emSendFail}</Banner>}
+            </>
+          )}
+          <button type="button" className="btn-outline wide" onClick={() => setEmergency(null)}>{t.close}</button>
+        </Modal>
+      )}
       {sheet && (
         <Modal labelledBy="lang-sheet-title" onClose={() => setSheet(false)} className="lang-sheet">
           <div className="sheet-head">

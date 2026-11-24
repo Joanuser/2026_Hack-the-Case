@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { api, isMockMode, ApiRequestError, type ChangeEvent, type StaffPatient, type StaffPatientList } from './api';
 import { useLive } from './api/useLive';
-import { BrandCross, ChevronRight, Plus, Close } from './ui/icons';
+import { BrandCross, ChevronRight, Plus, Close, Warning } from './ui/icons';
 import { DataTable, type Column } from './components/Table';
 import { FilterPopover } from './components/FilterPopover';
 import { FollowUpPanel, PatientPanel, type RunAction } from './components/Panels';
@@ -57,15 +57,15 @@ const VIEW_COPY: Record<View, { title: string; sub: string; listTitle: string; p
   },
   unseen: {
     title: 'Not yet seen',
-    sub: 'Everyone registered but not yet seen by a provider — not triaged, in triage, or waiting for a provider. Check they are still here; call anyone you cannot find.',
+    sub: 'Everyone registered but not yet seen by a provider. Check they are still here, do the 60-minute check for long waits, and call anyone you cannot find.',
     listTitle: 'Registered patients not yet seen',
-    purpose: ['WHO DOES WHAT', 'Front desk checks presence and calls back at off-peak times. Red-flag symptoms or worse symptoms go to a nurse right away.'],
+    purpose: ['WHO DOES WHAT', 'Front desk checks presence and does the 60-minute check. Worse or red-flag symptoms go to a nurse right away.'],
   },
   callbacks: {
-    title: 'Call-backs & tablet requests',
-    sub: 'Patients who told the tablet they are leaving, and patients who asked to be checked on.',
+    title: 'Call-backs & requests',
+    sub: 'Patients who told us they left, and patients who asked to be checked on. Each call-back shows who calls and when.',
     listTitle: 'Open requests',
-    purpose: ['FOLLOW-UP', 'Call patients who left. “Today” means they left before triage with warning symptoms: a nurse should call them now.'],
+    purpose: ['WHO CALLS BACK', 'Nurse, today: left before triage with warning symptoms, or after triage at ESI 1–3. Front desk, off-peak: everyone else.'],
   },
   in_assessment: {
     title: 'In assessment',
@@ -110,7 +110,7 @@ function ConnectionChip({ connection, lastSyncedAt, error, now }: { connection: 
 }
 
 export default function App() {
-  const now = useNow();
+  const clock = useNow();
   const [view, setView] = useState<View>(() => (localStorage.getItem('ss.view') as View) || 'followup');
   const [filters, setFilters] = useState<Record<View, Filters>>(() => readLocal('ss.filters', DEFAULT_FILTERS));
   const [sorts, setSorts] = useState<Record<View, Sort>>(() => readLocal('ss.sorts', DEFAULT_SORT));
@@ -129,7 +129,8 @@ export default function App() {
   }, []);
 
   const onEvent = useCallback((e: ChangeEvent) => {
-    if (e.type === 'checkin.created') toast({ kind: 'info', text: `New check-in ${e.waitingNumber ?? ''}`, patientId: e.patientId });
+    if (e.type === 'emergency.alert') toast({ kind: 'alert', text: `EMERGENCY: ${e.waitingNumber ?? 'patient at the check-in tablet'} needs help now`, patientId: e.patientId });
+    else if (e.type === 'checkin.created') toast({ kind: 'info', text: `New check-in ${e.waitingNumber ?? ''}`, patientId: e.patientId });
     else if (e.type === 'patient.symptoms_changed') toast({ kind: 'alert', text: `${e.waitingNumber ?? 'A patient'} reported a symptom change`, patientId: e.patientId });
     else if (e.type === 'patient.location_exit') toast({ kind: 'info', text: `${e.waitingNumber ?? 'A patient'} answered the location check`, patientId: e.patientId });
   }, [toast]);
@@ -137,6 +138,10 @@ export default function App() {
   const fetcher = useCallback(() => api.listPatients(), []);
   const live = useLive<StaffPatientList>(fetcher, 'staff', { onEvent });
   const all = useMemo(() => live.data?.patients ?? [], [live.data]);
+  const alerts = live.data?.alerts ?? [];
+  // Use the server's clock (it also follows the demo's time controls), not the browser's.
+  const skew = live.data && live.lastSyncedAt ? Date.parse(live.data.updatedAt) - live.lastSyncedAt : 0;
+  const now = clock + skew;
 
   const run: RunAction = useCallback(async (label, fn) => {
     try { await fn(); toast({ kind: 'ok', text: label }); await live.refresh(); return true; }
@@ -193,14 +198,14 @@ export default function App() {
     if (view === 'unseen') {
       return [
         ['NOT TRIAGED', base.filter((p) => p.status !== 'waiting_provider').length, 'patients'],
-        ['WAITING FOR PROVIDER', base.filter((p) => p.status === 'waiting_provider').length, 'patients'],
+        [`${LONG_WAIT}-MIN CHECK DUE`, base.filter((p) => p.careDue).length, 'front desk'],
         ['NO PHONE ON FILE', base.filter((p) => !p.phone).length, 'check in person'],
       ];
     }
     if (view === 'callbacks') {
       return [
-        ['CALL BACK TODAY', base.filter((p) => p.callBack?.status === 'open' && p.callBack.priority === 'Today').length, 'nurse call'],
-        ['CALL BACK OFF-PEAK', base.filter((p) => p.callBack?.status === 'open' && p.callBack.priority !== 'Today').length, 'front desk'],
+        ['NURSE · TODAY', base.filter((p) => p.callBack?.status === 'open' && p.callBack.priority === 'Today').length, 'call now'],
+        ['FRONT DESK · OFF-PEAK', base.filter((p) => p.callBack?.status === 'open' && p.callBack.priority !== 'Today').length, 'call later'],
         ['CHECK ON ME', base.filter((p) => p.tabletRequest?.status === 'open').length, 'in the waiting room'],
       ];
     }
@@ -250,15 +255,16 @@ export default function App() {
     { key: 'loc', label: 'PHONE', width: '120px', render: (p) => (p.phone ? <span className="meta">On file</span> : <span className="fu-chip needs_follow_up">No phone</span>) },
   ];
   const close = (p: StaffPatient, text: string) => run(`${p.waitingNumber}: ${text}`, () => api.updatePatient(p.id, { closeRequest: text }));
+  const who = (p: StaffPatient) => (p.callBack?.priority === 'Today' ? 'Nurse' : 'Front desk');
   const callbackCols: Column<StaffPatient>[] = [
     numberCol, patientCol,
     { key: 'concern', label: 'REQUEST', sortKey: 'concern', width: 'minmax(200px,1.6fr)', render: (p) => p.callBack?.status === 'open'
-      ? <div className="stack"><span className="concern"><b>Left via tablet</b> · {p.leaveReason?.reason || 'No reason given'}{p.leaveReason?.details ? ` — ${p.leaveReason.details}` : ''}</span><span className="meta">{p.triageCompletedAt ? 'Left after triage' : 'Left before triage'} · {ago(p.callBack.at, now)}</span></div>
+      ? <div className="stack"><span className="concern"><b>{p.callBack.via === 'phone' ? 'Left (phone)' : 'Left via tablet'}</b>{p.callBack.via === 'phone' ? '' : ` · ${p.leaveReason?.reason || 'No reason given'}`}{p.leaveReason?.details ? ` — ${p.leaveReason.details}` : ''}</span><span className="meta">{p.callBack.basis || (p.triageCompletedAt ? 'Left after triage' : 'Left before triage')} · {ago(p.callBack.at, now)}</span></div>
       : <div className="stack"><span className="concern"><b>Check on me</b> · {p.tabletRequest ? NEED_LABEL[p.tabletRequest.need] : ''}</span><span className="meta">Still in the waiting room · {p.tabletRequest ? ago(p.tabletRequest.at, now) : ''}</span></div> },
     { key: 'loc', label: 'CONTACT', width: '150px', render: (p) => (p.callBack?.status === 'open' ? (p.callBack.noPhone ? <span className="fu-chip needs_follow_up">No phone</span> : <span className="bold">{p.callBack.phone || p.phone}</span>) : <span className="meta">In person</span>) },
-    { key: 'prio', label: 'WHEN', width: '96px', render: (p) => (p.callBack?.status === 'open' ? <span className={`prio ${p.callBack.priority === 'Today' ? 'p2' : 'none'}`}>{p.callBack.priority}</span> : p.tabletRequest?.need === 'symptoms_worse' ? <span className="prio p1">Now · nurse</span> : <span className="prio p4">Soon</span>) },
+    { key: 'prio', label: 'WHO · WHEN', width: '150px', render: (p) => (p.callBack?.status === 'open' ? <span className={`prio ${p.callBack.priority === 'Today' ? 'p2' : 'none'}`}>{p.callBack.priority === 'Today' ? 'Nurse · today' : 'Front desk · off-peak'}</span> : p.tabletRequest?.need === 'symptoms_worse' ? <span className="prio p1">Now · nurse</span> : <span className="prio p4">Soon</span>) },
     { key: 'action', label: 'ACTION', width: '190px', render: (p) => (<div className="row-actions">
-      {p.callBack?.status === 'open' && !p.callBack.noPhone && <><button type="button" className="checkin-btn" data-testid="callback-reached" onClick={(e) => { e.stopPropagation(); void close(p, 'Front desk called back: reached'); }}>Called · reached</button><button type="button" className="link" onClick={(e) => { e.stopPropagation(); void close(p, 'Front desk called back: no answer'); }}>No answer</button></>}
+      {p.callBack?.status === 'open' && !p.callBack.noPhone && <><button type="button" className="checkin-btn" data-testid="callback-reached" onClick={(e) => { e.stopPropagation(); void close(p, `${who(p)} called back: reached`); }}>Called · reached</button><button type="button" className="link" onClick={(e) => { e.stopPropagation(); void close(p, `${who(p)} called back: no answer`); }}>No answer</button></>}
       {p.callBack?.status === 'open' && p.callBack.noPhone && <button type="button" className="checkin-btn" onClick={(e) => { e.stopPropagation(); void close(p, 'No phone: departure noted at desk'); }}>Noted</button>}
       {p.callBack?.status !== 'open' && p.tabletRequest?.status === 'open' && <button type="button" className="checkin-btn" data-testid="request-done" onClick={(e) => { e.stopPropagation(); void close(p, 'Front desk checked on patient'); }}>Done · checked on</button>}
     </div>) },
@@ -326,6 +332,16 @@ export default function App() {
             <h1>{copy.title}</h1>
             <p>{copy.sub}</p>
           </div>
+
+          {alerts.map((a) => (
+            <div key={a.id} className={`em-banner ${a.status}`} role="alert" data-testid="emergency-banner">
+              <Warning size={18} />
+              <span><b>EMERGENCY</b> · {a.waitingNumber ? `${a.waitingNumber} (${a.device === 'tablet' ? 'tablet' : 'phone'})` : 'Someone at the check-in tablet'}{a.location ? ` · ${a.location.zone} ${a.location.seat}` : ''} pressed Emergency {ago(a.at, now)}. Go to them now.</span>
+              {a.status === 'open'
+                ? <button type="button" className="em-ack" onClick={() => void run('Marked as responding', () => api.ackAlert(a.id))}>I’m responding</button>
+                : <span className="em-resp">Staff responding</span>}
+            </div>
+          ))}
 
           {live.error && live.data && (
             <div className="banner warn" role="status">Showing data from {live.lastSyncedAt ? new Date(live.lastSyncedAt).toLocaleTimeString() : 'earlier'} — {live.error.isNetwork ? 'connection lost, retrying automatically.' : live.error.message}

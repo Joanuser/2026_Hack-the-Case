@@ -1,10 +1,14 @@
 import { useApp } from '../context';
+import { EmergencyButton, TextSizeButton } from '../components/ui';
 
 export function Cover({ onStart, onLeave }: { onStart: () => void; onLeave?: () => void }) {
   const { t } = useApp();
   return (
     <div className="cover">
-      <p className="cover-brand">SeenSooner</p>
+      <div className="cover-top">
+        <p className="cover-brand">SeenSooner</p>
+        <div className="cover-tools"><TextSizeButton /><EmergencyButton /></div>
+      </div>
       <div className="cover-center">
         <h1 className="cover-title" tabIndex={-1}>
           <span>{t.coverTitle1}</span>

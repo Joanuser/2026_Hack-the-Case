@@ -82,7 +82,7 @@ export interface CheckInResponse {
 
 export interface DraftSummaryResponse { draft: string; generatedBy: string; isDraft: true }
 
-export type ContactKind = 'registration' | 'check_in' | 'symptoms_changed' | 'status' | 'location_exit' | 'location_check' | 'tablet_request' | 'front_desk' | 'self_check_in';
+export type ContactKind = 'registration' | 'check_in' | 'symptoms_changed' | 'status' | 'location_exit' | 'location_check' | 'tablet_request' | 'front_desk' | 'self_check_in' | 'emergency';
 
 export interface Contact { kind: ContactKind; label: string; note: string; at: string; checklist?: string[] }
 
@@ -135,13 +135,16 @@ export interface StaffPatient {
   followUpStatus: FollowUpStatus;
   hasLiveUpdates: boolean;
   /** Set when a patient tells the check-in tablet they are leaving (front desk calls back). */
-  callBack?: { status: 'open' | 'done'; noPhone: boolean; phone: string; at: string; priority: 'Today' | 'Off-peak'; outcome?: string } | null;
+  callBack?: { status: 'open' | 'done'; noPhone: boolean; phone: string; at: string; priority: 'Today' | 'Off-peak'; owner?: 'nurse' | 'front_desk'; basis?: string; via?: 'tablet' | 'phone'; outcome?: string } | null;
   /** Set when a patient asks the tablet to be checked on. */
   tabletRequest?: { status: 'open' | 'done'; need: 'symptoms_worse' | 'question' | 'need_help'; at: string } | null;
   leaveReason?: { reason: string; details: string; source: string; at: string } | null;
 }
 
+export interface EmergencyAlert { id: string; at: string; status: 'open' | 'responding'; device: 'phone' | 'tablet'; waitingNumber: string | null; patientId: string | null; location: { zone: string; seat: string } | null }
+
 export interface StaffPatientList {
+  alerts?: EmergencyAlert[];
   patients: StaffPatient[];
   updatedAt: string;
   config?: { recheckAfterMinutes: number; longWaitMinutes: number };
@@ -225,6 +228,7 @@ export interface SeenSoonerApi {
   createStaffPatient(req: StaffCreatePatientRequest): Promise<StaffPatient>;
   updatePatient(id: string, patch: StaffUpdatePatientRequest): Promise<StaffPatient>;
   recordContact(id: string, body: StaffContactRequest): Promise<StaffPatient>;
+  ackAlert(id: string): Promise<unknown>;
   // public (waiting-room display)
   getPublicQueue(): Promise<PublicQueue>;
   // realtime

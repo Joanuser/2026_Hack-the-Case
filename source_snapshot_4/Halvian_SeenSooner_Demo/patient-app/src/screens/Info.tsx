@@ -1,44 +1,30 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { useApp } from '../context';
-import { ChevronDown } from '../ui/icons';
 import { BackLink, EmergencyWarning, Field, PrimaryButton, Progress, Screen, TextInput } from '../components/ui';
-import { maskDob, validateInfo, type InfoForm } from '../lib/validation';
+import { validateInfo, type InfoForm } from '../lib/validation';
+import { DobSelect } from '../components/DobSelect';
 
-export const ACCESS_KEYS = ['acc_wheelchair', 'acc_interpreter', 'acc_hearing', 'acc_vision', 'acc_forms', 'acc_other'] as const;
+export const ACCESS_KEYS = ['acc_wheelchair', 'acc_vision', 'acc_hearing', 'acc_forms', 'acc_other'] as const;
 
-function AccessibilitySelect({ value, onChange, id }: { value: string[]; onChange: (v: string[]) => void; id: string }) {
+/** Visible checklist (more than one need is common, e.g. blind and using a wheelchair). "None" clears the rest. */
+function AccessibilityChecklist({ value, onChange, id }: { value: string[]; onChange: (v: string[]) => void; id: string }) {
   const { t } = useApp();
-  const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    if (!open) return;
-    const close = (e: MouseEvent) => { if (!ref.current?.contains(e.target as Node)) setOpen(false); };
-    const esc = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(false); };
-    document.addEventListener('mousedown', close);
-    document.addEventListener('keydown', esc);
-    return () => { document.removeEventListener('mousedown', close); document.removeEventListener('keydown', esc); };
-  }, [open]);
-  const label = value.length === 0 ? t.accessibilityPh : value.length === 1 ? t[value[0] as (typeof ACCESS_KEYS)[number]] : t.selectedCount.replace('{n}', String(value.length));
+  const none = value.includes('acc_none');
   return (
-    <div className="select" ref={ref}>
-      <button type="button" id={id} className={`input select-trigger ${value.length ? '' : 'placeholder'}`} aria-haspopup="listbox" aria-expanded={open} onClick={() => setOpen(!open)}>
-        <span>{label}</span>
-        <ChevronDown size={16} />
-      </button>
-      {open && (
-        <div className="select-pop" role="listbox" aria-multiselectable="true">
-          {ACCESS_KEYS.map((k) => {
-            const on = value.includes(k);
-            return (
-              <label key={k} className="check-row" role="option" aria-selected={on}>
-                <input type="checkbox" checked={on} onChange={() => onChange(on ? value.filter((x) => x !== k) : [...value, k])} />
-                <span>{t[k]}</span>
-              </label>
-            );
-          })}
-          <button type="button" className="select-done" onClick={() => setOpen(false)}>{t.save}</button>
-        </div>
-      )}
+    <div className="acc-list" role="group" aria-labelledby={`${id}-lbl`} id={id} tabIndex={-1}>
+      <label className={`acc-row ${none ? 'on' : ''}`}>
+        <input type="checkbox" checked={none} onChange={() => onChange(none ? [] : ['acc_none'])} data-testid="acc-none" />
+        <span>{t.acc_none}</span>
+      </label>
+      {ACCESS_KEYS.map((k) => {
+        const on = value.includes(k);
+        return (
+          <label key={k} className={`acc-row ${on ? 'on' : ''}`}>
+            <input type="checkbox" checked={on} onChange={() => onChange(on ? value.filter((x) => x !== k) : [...value.filter((x) => x !== 'acc_none'), k])} data-testid={k} />
+            <span>{t[k]}</span>
+          </label>
+        );
+      })}
     </div>
   );
 }
@@ -75,7 +61,7 @@ export function Info({ value, onChange, onBack, onNext }: { value: InfoForm; onC
             {(a) => <TextInput {...a} value={value.legalName} autoComplete="name" placeholder={t.legalNamePh} onChange={(e) => set('legalName', e.target.value)} />}
           </Field>
           <Field id="f-dob" label={t.dob} required error={errors.dob}>
-            {(a) => <TextInput {...a} value={value.dob} inputMode="numeric" autoComplete="bday" placeholder={t.dobPh} onChange={(e) => set('dob', maskDob(e.target.value))} dir="ltr" />}
+            {(a) => <DobSelect id={a.id} invalid={a['aria-invalid']} describedBy={a['aria-describedby']} value={value.dob} onChange={(v) => set('dob', v)} />}
           </Field>
           <Field id="f-phone" label={t.mobile} error={errors.phone}>
             {(a) => <TextInput {...a} value={value.phone} type="tel" inputMode="tel" autoComplete="tel" placeholder={t.mobilePh} onChange={(e) => set('phone', e.target.value)} dir="ltr" />}
@@ -89,9 +75,11 @@ export function Info({ value, onChange, onBack, onNext }: { value: InfoForm; onC
             <input type="checkbox" checked={value.insuranceDeferred} onChange={(e) => onChange({ ...value, insuranceDeferred: e.target.checked, insurance: e.target.checked ? '' : value.insurance })} />
             <span>{t.insuranceLater}</span>
           </label>
-          <Field id="f-access" label={t.accessibility}>
-            {(a) => <AccessibilitySelect id={a.id} value={value.accessibility} onChange={(v) => set('accessibility', v)} />}
-          </Field>
+          <fieldset className="field acc-field">
+            <legend id="f-access-lbl">{t.accessibility}</legend>
+            <p className="hint">{t.accessibilityHint}</p>
+            <AccessibilityChecklist id="f-access" value={value.accessibility} onChange={(v) => set('accessibility', v)} />
+          </fieldset>
         </div>
         <div className="actions">
           <PrimaryButton type="submit">{t.continue}</PrimaryButton>

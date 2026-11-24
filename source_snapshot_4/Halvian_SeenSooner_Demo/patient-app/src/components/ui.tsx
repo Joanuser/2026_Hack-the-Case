@@ -20,13 +20,38 @@ export function PatientHeader() {
         <BrandCross size={24} />
         <Wordmark />
       </div>
-      <button type="button" className="lang-pill" onClick={openLanguageSheet} aria-label={`${name} · ${t.change}`}>
-        <Globe size={16} />
-        <span>
-          {name} · {t.change}
-        </span>
-      </button>
+      <div className="p-tools">
+        <TextSizeButton />
+        <button type="button" className="lang-pill" onClick={openLanguageSheet} aria-label={`${name} · ${t.change}`}>
+          <Globe size={16} />
+          <span>
+            {name} · {t.change}
+          </span>
+        </button>
+        <EmergencyButton />
+      </div>
     </header>
+  );
+}
+
+/** A / A+ toggle beside the language choice. */
+export function TextSizeButton() {
+  const { t, bigText, toggleBigText } = useApp();
+  return (
+    <button type="button" className={`size-pill ${bigText ? 'on' : ''}`} onClick={toggleBigText} aria-pressed={bigText} aria-label={bigText ? t.textNormal : t.textLarger} title={t.textSize}>
+      <span className="a-pair" aria-hidden><span className="a-sm">A</span><span className="a-lg">A</span></span>
+    </button>
+  );
+}
+
+/** Red Emergency button, always at the top of the screen. */
+export function EmergencyButton() {
+  const { t, openEmergency } = useApp();
+  return (
+    <button type="button" className="sos-pill" onClick={openEmergency} data-testid="emergency-btn">
+      <Warning size={14} />
+      <span>{t.emergencyBtn}</span>
+    </button>
   );
 }
 

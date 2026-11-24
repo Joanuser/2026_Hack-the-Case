@@ -63,6 +63,7 @@ export function createMemoryApi(): SeenSoonerApi {
     createStaffPatient: (req) => run(() => store.createStaffPatient(req)),
     updatePatient: (id, patch) => run(() => store.updatePatient(id, patch)),
     recordContact: (id, body) => run(() => store.recordContact(id, body)),
+    ackAlert: () => Promise.resolve({}),
     getPublicQueue: () => run(() => store.publicQueue()),
     subscribe(_channel, _opts, onChange, onConnection) {
       const fn = (e: ChangeEvent) => onChange(e);

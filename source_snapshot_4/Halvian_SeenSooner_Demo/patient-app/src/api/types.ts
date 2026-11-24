@@ -228,6 +228,8 @@ export interface SeenSoonerApi {
   reportLocationExit(id: string, token: string, left: boolean, via?: 'phone' | 'tablet'): Promise<PatientStatusView>;
   // check-in tablet (identify with waiting number + date of birth)
   kioskLookup(waitingNumber: string, dateOfBirth: string): Promise<KioskLookup>;
+  /** Emergency button inside the hospital: alerts front desk and nurses. */
+  reportEmergency(req: { checkinId?: string; token?: string; device: 'phone' | 'tablet' }): Promise<{ ok: boolean }>;
   kioskRequest(req: KioskRequest): Promise<{ waitingNumber: string; case: 'call' | 'see_desk' | 'nurse' | 'desk' }>;
   // staff (nurse dashboard)
   listPatients(): Promise<StaffPatientList>;

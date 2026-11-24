@@ -106,6 +106,7 @@ export function createHttpApi(baseUrl: string, opts: { staffName?: string; staff
     reportLocationExit: (id, token, left, via) => request('POST', `/api/checkins/${enc(id)}/location-exit`, { left, via }, token),
     kioskLookup: (waitingNumber, dateOfBirth) => request('POST', '/api/kiosk/lookup', { waitingNumber, dateOfBirth }),
     kioskRequest: (req) => request('POST', '/api/kiosk/request', req),
+    reportEmergency: (req) => request('POST', '/api/emergency', { checkinId: req.checkinId, device: req.device }, req.token),
     listPatients: () => request('GET', '/api/staff/patients'),
     createStaffPatient: (req) => request('POST', '/api/staff/patients', req),
     updatePatient: (id, patch) => request('PATCH', `/api/staff/patients/${enc(id)}`, patch),
