@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { api, isMockMode, ApiRequestError, type ChangeEvent, type StaffPatient, type StaffPatientList } from './api';
 import { useLive } from './api/useLive';
+import { ROLE, ROLE_LABEL, type Role } from './lib/role';
 import { BrandCross, ChevronRight, Plus, Close, Warning } from './ui/icons';
 import { DataTable, type Column } from './components/Table';
 import { FilterPopover } from './components/FilterPopover';
@@ -28,18 +29,22 @@ const BACKEND_LABEL = import.meta.env.VITE_BACKEND_LABEL || 'SeenSooner API';
 
 interface Toast { id: number; kind: 'info' | 'ok' | 'alert' | 'error'; text: string; patientId?: string | null }
 
-const NAV_GROUPS: { title: string; items: { view: View; label: string }[] }[] = [
-  { title: 'NURSE', items: [
+const NAV_BY_ROLE: Record<Role, { title: string; items: { view: View; label: string }[] }[]> = {
+  nurse: [{ title: 'NURSE', items: [
     { view: 'assessment', label: 'Assessment queue' },
     { view: 'in_assessment', label: 'In assessment' },
     { view: 'completed', label: 'Completed today' },
-  ] },
-  { title: 'FRONT DESK', items: [
+    { view: 'callbacks', label: 'Nurse call-backs' },
+  ] }],
+  frontdesk: [{ title: 'FRONT DESK', items: [
     { view: 'followup', label: 'Tablet & no-phone' },
     { view: 'unseen', label: 'Not yet seen' },
     { view: 'callbacks', label: 'Call-backs & requests' },
-  ] },
-];
+  ] }],
+};
+const NAV_GROUPS = NAV_BY_ROLE[ROLE];
+const ROLE_VIEWS = NAV_GROUPS.flatMap((g) => g.items.map((i) => i.view));
+const VIEW_KEY = `ss.view.${ROLE}`;
 const NEED_LABEL = { symptoms_worse: 'Symptoms are worse', question: 'Question about the wait', need_help: 'Needs help' } as const;
 
 const VIEW_COPY: Record<View, { title: string; sub: string; listTitle: string; purpose: [string, string] }> = {
@@ -69,7 +74,7 @@ const VIEW_COPY: Record<View, { title: string; sub: string; listTitle: string; p
   },
   in_assessment: {
     title: 'In assessment',
-    sub: 'Patients currently with a triage nurse. Set a priority to complete the assessment and add them to the provider queue.',
+    sub: 'Patients currently with a triage nurse. Confirm the ESI in TriageGO and choose the room type to complete the assessment and add them to the provider queue.',
     listTitle: 'Patients in nurse assessment',
     purpose: ['NEXT STEP', 'Completing an assessment moves the patient to the provider queue and updates the waiting-room display.'],
   },
@@ -111,14 +116,15 @@ function ConnectionChip({ connection, lastSyncedAt, error, now }: { connection: 
 
 export default function App() {
   const clock = useNow();
-  const [view, setView] = useState<View>(() => (localStorage.getItem('ss.view') as View) || 'followup');
+  const [view, setView] = useState<View>(() => { const v = localStorage.getItem(VIEW_KEY) as View; return v && ROLE_VIEWS.includes(v) ? v : ROLE_VIEWS[0]; });
   const [filters, setFilters] = useState<Record<View, Filters>>(() => readLocal('ss.filters', DEFAULT_FILTERS));
   const [sorts, setSorts] = useState<Record<View, Sort>>(() => readLocal('ss.sorts', DEFAULT_SORT));
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [toasts, setToasts] = useState<Toast[]>([]);
   const [adding, setAdding] = useState(false);
 
-  useEffect(() => { localStorage.setItem('ss.view', view); }, [view]);
+  useEffect(() => { localStorage.setItem(VIEW_KEY, view); }, [view]);
+  useEffect(() => { document.title = `SeenSooner · ${ROLE_LABEL[ROLE]}`; }, []);
   useEffect(() => { localStorage.setItem('ss.filters', JSON.stringify(filters)); }, [filters]);
   useEffect(() => { localStorage.setItem('ss.sorts', JSON.stringify(sorts)); }, [sorts]);
 
@@ -179,7 +185,7 @@ export default function App() {
     if (!id) return;
     const p = all.find((x) => x.id === id);
     if (p) {
-      const v = (['assessment', 'in_assessment', 'followup', 'completed'] as View[]).find((vv) => inView(p, vv));
+      const v = ROLE_VIEWS.find((vv) => inView(p, vv));
       if (v && !inView(p, view)) setView(v);
     }
     setSelectedId(id);
@@ -204,9 +210,13 @@ export default function App() {
     }
     if (view === 'callbacks') {
       return [
-        ['NURSE · TODAY', base.filter((p) => p.callBack?.status === 'open' && p.callBack.priority === 'Today').length, 'call now'],
-        ['FRONT DESK · OFF-PEAK', base.filter((p) => p.callBack?.status === 'open' && p.callBack.priority !== 'Today').length, 'call later'],
-        ['CHECK ON ME', base.filter((p) => p.tabletRequest?.status === 'open').length, 'in the waiting room'],
+        ...(ROLE === 'nurse'
+          ? [['CALL TODAY', base.filter((p) => p.callBack?.status === 'open').length, 'left with higher risk'],
+             ['SYMPTOMS WORSE', base.filter((p) => p.tabletRequest?.status === 'open').length, 'in the waiting room'],
+             ['OFF-PEAK CALLS', all.filter((p) => p.callBack?.status === 'open' && p.callBack.priority !== 'Today').length, 'handled by front desk']]
+          : [['CALL OFF-PEAK', base.filter((p) => p.callBack?.status === 'open').length, 'lower risk'],
+             ['CHECK ON ME', base.filter((p) => p.tabletRequest?.status === 'open').length, 'in the waiting room'],
+             ['NO PHONE', base.filter((p) => p.callBack?.status === 'open' && p.callBack.noPhone).length, 'note at the desk']]) as [string, number, string][],
       ];
     }
     if (view === 'assessment') {
@@ -220,7 +230,7 @@ export default function App() {
     if (view === 'in_assessment') {
       return [
         ['IN ASSESSMENT', base.length, 'patients'],
-        ['PRIORITY SET', base.filter((p) => p.nursePriority).length, 'ready to complete'],
+        ['ESI RECEIVED', base.filter((p) => p.nursePriority).length, 'ready to complete'],
         ['SYMPTOM CHANGES', base.filter((p) => p.symptomsChanged).length, 'to review'],
       ];
     }
@@ -286,7 +296,9 @@ export default function App() {
     { key: 'go', label: '', width: '24px', render: () => <ChevronRight size={16} className="muted-icon" /> },
   ];
 
-  const copy = VIEW_COPY[view];
+  const copy = ROLE === 'nurse' && view === 'callbacks'
+    ? { title: 'Nurse call-backs', sub: 'Patients who left with warning symptoms or at ESI 1–3 (call them today), and patients whose symptoms got worse while waiting.', listTitle: 'Open nurse requests', purpose: ['WHO CALLS BACK', 'You call higher-risk patients today. The front desk calls everyone else at off-peak times.'] as [string, string] }
+    : VIEW_COPY[view];
   const sortNote = sort.key === 'wait' ? (sort.dir === 'desc' ? 'Ordered by longest wait' : 'Ordered by shortest wait') : sort.key === 'rank' ? 'Ordered by queue position' : `Sorted by ${sort.key} (${sort.dir === 'asc' ? 'A→Z / low→high' : 'Z→A / high→low'})`;
   const chips: { label: string; clear?: () => void }[] = [];
   if (view === 'followup') chips.push({ label: 'No mobile updates' });
@@ -299,13 +311,13 @@ export default function App() {
   return (
     <div className="app">
       <header className="top">
-        <div className="brand"><BrandCross size={28} /><span className="wordmark">Seen<span>Sooner</span></span></div>
+        <div className="brand"><BrandCross size={28} /><span className="wordmark">Seen<span>Sooner</span></span><span className={`role-chip ${ROLE}`} data-testid="role-chip">{ROLE_LABEL[ROLE]}</span></div>
         <div className="spacer" />
-        <button type="button" className="add-btn" onClick={() => setAdding(true)} data-testid="add-patient"><Plus size={16} /> Add in-person check-in</button>
+        {ROLE === 'frontdesk' && <button type="button" className="add-btn" onClick={() => setAdding(true)} data-testid="add-patient"><Plus size={16} /> Add in-person check-in</button>}
         <ConnectionChip connection={live.connection} lastSyncedAt={live.lastSyncedAt} error={live.error} now={Date.now()} />
         <div className="profile">
-          <span className="avatar">ED</span>
-          <div className="stack"><span className="name sm">{import.meta.env.VITE_STAFF_NAME || 'Demo ED staff'}</span><span className="meta">Emergency department</span></div>
+          <span className="avatar">{ROLE === 'nurse' ? 'RN' : 'FD'}</span>
+          <div className="stack"><span className="name sm">{ROLE === 'nurse' ? 'Demo triage nurse' : 'Demo front desk'}</span><span className="meta">Signed in · {ROLE === 'nurse' ? 'Nurse account' : 'Front desk account'}</span></div>
         </div>
       </header>
 

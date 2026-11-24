@@ -83,6 +83,10 @@ export function FollowUpPanel({ p, now, run, onClose }: { p: StaffPatient; now: 
       {p.careDue && (
         <div className="alert-red" role="alert" data-testid="care-due"><Warning size={16} /> 60-minute check due: waiting {Math.round(p.w2ElapsedMinutes)} min after triage.</div>
       )}
+      <dl className="kv fu-kv">
+        <dt>Concern</dt><dd>{p.symptoms.mainConcern}{p.symptoms.painLevel != null ? ` · pain ${p.symptoms.painLevel}/10` : ''}</dd>
+        <dt>ESI</dt><dd>{p.nursePriority ? `ESI ${p.nursePriority} (from TriageGO)` : 'Not triaged yet'}</dd>
+      </dl>
       <p className="panel-eyebrow">QUICK CHECK-IN</p>
       <ol className="checklist">
         {CHECKLIST.map((c, i) => (
@@ -192,8 +196,12 @@ export function PatientPanel({ p, now, run, onClose }: { p: StaffPatient; now: n
         </section>
 
         <section className="sec">
-          <p className="panel-eyebrow">NURSE TRIAGE</p>
-          <label className="lbl" htmlFor="prio">Priority (nurse decision)</label>
+          <p className="panel-eyebrow">TRIAGE IN TRIAGEGO</p>
+          <div className="tg-box" data-testid="triagego-box">
+            <p className="tg-head"><span className={`tg-dot ${p.nursePriority ? 'done' : ''}`} />{p.nursePriority ? `ESI ${p.nursePriority} received from TriageGO` : 'Waiting for the nurse to confirm the ESI in TriageGO'}</p>
+            <p className="tg-note">The nurse reviews TriageGO’s suggestion and confirms the ESI level in TriageGO. Only the confirmed level comes back to SeenSooner.</p>
+          </div>
+          <label className="lbl" htmlFor="prio">ESI confirmed in TriageGO <span className="tg-demo">demo: set here</span></label>
           <select id="prio" className={`inp ${prioErr ? 'invalid' : ''}`} value={priority} onChange={(e) => savePriority(e.target.value)} disabled={busy || ['completed', 'left'].includes(p.status)} data-testid="priority-select">
             <option value="">Not set</option>
             {PRIORITY.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}

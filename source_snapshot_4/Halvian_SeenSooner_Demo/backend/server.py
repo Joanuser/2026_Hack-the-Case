@@ -56,9 +56,9 @@ ALLOWED_ORIGINS.update(o.strip().rstrip("/") for o in os.getenv("SEENSOONER_EXTR
 # Optional folder of built frontends (see build-web.sh). When it exists, this server also
 # serves the landing page at / and the apps at /patient/, /nurse/, /display/, /oversight/.
 WEB_ROOT = Path(os.getenv("SEENSOONER_WEB_ROOT", str(DEMO_ROOT / "web-dist"))).resolve()
-WEB_APPS = {"patient", "nurse", "display", "oversight", "tablet"}
+WEB_APPS = {"patient", "nurse", "display", "oversight", "tablet", "frontdesk"}
 # The check-in tablet runs the patient app in kiosk mode at /tablet/.
-WEB_ALIASES = {"tablet": "patient"}
+WEB_ALIASES = {"tablet": "patient", "frontdesk": "nurse"}
 
 def has_red_flag(p: dict[str, Any]) -> bool:
     text = " ".join(str((p.get("symptoms") or {}).get(k) or "") for k in ("mainConcern", "otherSymptoms")).lower()

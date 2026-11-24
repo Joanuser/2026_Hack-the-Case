@@ -6,7 +6,8 @@ One Docker service runs the Python API **and** all four websites from one addres
 |---|---|
 | Landing page with links to all four apps | `/` |
 | Patient App | `/patient/` |
-| Staff Dashboard | `/nurse/` |
+| Nurse Dashboard | `/nurse/` |
+| Front Desk Dashboard | `/frontdesk/` |
 | Waiting Room Display | `/display/` |
 | AI Oversight Dashboard | `/oversight/` |
 | API health check | `/api/health` |
@@ -25,7 +26,7 @@ One Docker service runs the Python API **and** all four websites from one addres
 
 - Free Render services sleep after about 15 minutes without visitors. The next visit takes up to a minute to wake it. Open the link yourself shortly before judging.
 - Patient and queue data live in memory. They return to the synthetic starting data whenever the service restarts or wakes up.
-- The staff dashboard uses the demo staff token (`demo-staff-token`), which is built into the public page. Anyone with the link can use the staff view. That is fine for a synthetic demo, but do not put real patient data in it. To change the token, set the environment variable `SEENSOONER_STAFF_TOKEN` on Render; the Docker build reads it as well, so redeploy after changing it.
+- The nurse and front desk dashboards use the demo staff token (`demo-staff-token`), which is built into the public page. Anyone with the link can open them. That is fine for a synthetic demo, but do not put real patient data in it. To change the token, set the environment variable `SEENSOONER_STAFF_TOKEN` on Render; the Docker build reads it as well, so redeploy after changing it.
 
 ## Run the hosted build locally (optional)
 

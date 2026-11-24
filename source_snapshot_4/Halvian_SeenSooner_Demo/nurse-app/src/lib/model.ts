@@ -1,3 +1,4 @@
+import { ROLE } from './role';
 // View model helpers: labels, derived values, filtering and sorting for every dashboard area.
 import type { CheckInSource, Contact, PatientStatus, StaffPatient } from '../api';
 
@@ -97,7 +98,13 @@ export function inView(p: StaffPatient, v: View) {
     // front desk: everyone registered but not yet seen by a provider (not triaged, in triage, or waiting for a provider)
     case 'unseen': return ['waiting_nurse', 'in_assessment', 'waiting_provider'].includes(p.status);
     // front desk: open call-backs (left via the tablet) and "check on me" requests
-    case 'callbacks': return p.callBack?.status === 'open' || p.tabletRequest?.status === 'open';
+    case 'callbacks': {
+      // Each role sees only the call-backs and requests it owns.
+      const cb = p.callBack?.status === 'open' ? p.callBack : null;
+      const req = p.tabletRequest?.status === 'open' ? p.tabletRequest : null;
+      if (ROLE === 'nurse') return (!!cb && cb.priority === 'Today') || req?.need === 'symptoms_worse';
+      return (!!cb && cb.priority !== 'Today') || (!!req && req.need !== 'symptoms_worse');
+    }
   }
 }
 
