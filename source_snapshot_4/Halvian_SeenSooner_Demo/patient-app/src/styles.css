@@ -42,19 +42,27 @@ h1:focus { outline: none; }
 }
 
 /* ---------- tablet (kiosk) frame ----------
-   Same screens as the phone, scaled up 1.3x to fill a portrait tablet (iPad ~768-834 px wide).
-   On a real tablet it fills the screen; on a desktop it is shown as a 768x1024 tablet frame. */
+   Same screens as the phone. Fills the tablet in either orientation:
+   portrait = phone layout scaled up 1.3x; landscape = centred column on the wide screen.
+   On a desktop it is shown as a landscape 4:3 tablet frame. */
 .device.tablet { align-items: center; padding: 0; }
 .device.tablet .p-screen, .device.tablet .cover {
   zoom: 1.3; width: calc(100vw / 1.3); height: calc(100dvh / 1.3); min-height: 0;
   border-radius: 0; box-shadow: none; overflow: hidden;
 }
 .device.tablet .p-main { padding-left: 32px; padding-right: 32px; }
-@media (min-width: 1100px) {
-  /* Desktop preview: a 3:4 portrait tablet frame that always fits the window. */
+@media (orientation: landscape) {
+  .device.tablet .p-screen, .device.tablet .cover { zoom: 1.1; width: calc(100vw / 1.1); height: calc(100dvh / 1.1); }
+  .device.tablet .p-main { padding: 8px max(32px, calc(50% - 300px)) 12px; gap: 6px; }
+  .device.tablet .card { gap: 10px; padding-top: 10px; padding-bottom: 10px; }
+  .device.tablet .cover-center { max-width: 420px; }
+  .device.tablet .slip-card { width: 100%; max-width: 520px; align-self: center; }
+}
+@media (min-width: 1100px) and (pointer: fine) {
+  /* Desktop preview (mouse, not touch): a landscape 4:3 tablet frame that always fits the window. */
   .device.tablet { padding: 24px 0; }
   .device.tablet .p-screen, .device.tablet .cover {
-    zoom: 1; height: min(1024px, calc(100dvh - 48px)); width: calc(min(1024px, calc(100dvh - 48px)) * 0.75);
+    zoom: 1; height: min(768px, calc(100dvh - 48px)); width: calc(min(768px, calc(100dvh - 48px)) * 4 / 3);
     border-radius: 22px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.09);
   }
 }
