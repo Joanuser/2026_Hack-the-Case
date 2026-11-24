@@ -14,7 +14,7 @@ import { Waiting } from './screens/Waiting';
 import { SymptomUpdate } from './screens/SymptomUpdate';
 import { Details } from './screens/Details';
 import { Slip } from './screens/Slip';
-import { LeaveScan } from './screens/LeaveScan';
+import { TellUs } from './screens/TellUs';
 import { IS_TABLET } from './lib/device';
 import { dobToIso, emptyInfo, emptySymptoms, validateInfo, validateSymptoms, type InfoForm, type SymptomForm } from './lib/validation';
 import { DRAFT_KEY, LANG_KEY, SESSION_KEY, readJson, writeJson, type PatientSession } from './lib/storage';
@@ -132,6 +132,7 @@ export default function App() {
       symptoms: toSymptoms(draft.symptoms),
       summary: draft.summary.status === 'ready' ? { draft: draft.summary.draft, text: draft.summary.text, editedByPatient: draft.summary.editedByPatient } : undefined,
       locationAuthorization: draft.locationAuthorization ?? undefined,
+      device: IS_TABLET ? 'tablet' : 'phone',
     });
     setSession({ id: res.id, token: res.accessToken, waitingNumber: res.waitingNumber, locationAuthorization: draft.locationAuthorization });
     setLastStatus(res.status);
@@ -158,7 +159,7 @@ export default function App() {
       screen = session && <Slip session={session} onDone={newCheckIn} />;
       break;
     case 'leave':
-      screen = <LeaveScan onExit={() => go('cover', true)} />;
+      screen = <TellUs onExit={() => go('cover', true)} />;
       break;
     case 'scan':
       screen = (

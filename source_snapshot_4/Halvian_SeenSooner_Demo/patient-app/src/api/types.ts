@@ -42,6 +42,7 @@ export interface CheckInRequest {
   symptoms: Symptoms;
   summary?: SymptomSummary;
   locationAuthorization?: LocationAuthorization;
+  device?: 'phone' | 'tablet';
 }
 
 export interface PatientStatusView {
@@ -203,6 +204,18 @@ export class ApiRequestError extends Error {
   get isNetwork() { return this.status === 0; }
 }
 
+export interface KioskLookup { waitingNumber: string; phoneOnFile: string | null; triaged: boolean }
+export interface KioskRequest {
+  waitingNumber: string;
+  dateOfBirth: string;
+  action: 'leaving' | 'check_on_me';
+  reason?: string;
+  details?: string;
+  phoneStatus?: 'has_phone' | 'no_phone';
+  phone?: string;
+  need?: 'symptoms_worse' | 'question' | 'need_help';
+}
+
 export interface SeenSoonerApi {
   readonly mode: 'http' | 'memory';
   readonly baseUrl: string;
@@ -213,6 +226,9 @@ export interface SeenSoonerApi {
   updateSymptoms(id: string, token: string, body: { symptoms: Symptoms; summary?: SymptomSummary; note?: string }): Promise<PatientStatusView>;
   updateInsurance(id: string, token: string, insurance: string): Promise<PatientStatusView>;
   reportLocationExit(id: string, token: string, left: boolean, via?: 'phone' | 'tablet'): Promise<PatientStatusView>;
+  // check-in tablet (identify with waiting number + date of birth)
+  kioskLookup(waitingNumber: string, dateOfBirth: string): Promise<KioskLookup>;
+  kioskRequest(req: KioskRequest): Promise<{ waitingNumber: string; case: 'call' | 'see_desk' | 'nurse' | 'desk' }>;
   // staff (nurse dashboard)
   listPatients(): Promise<StaffPatientList>;
   createStaffPatient(req: StaffCreatePatientRequest): Promise<StaffPatient>;

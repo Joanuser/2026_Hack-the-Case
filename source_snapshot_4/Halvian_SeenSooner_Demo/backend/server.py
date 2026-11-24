@@ -60,6 +60,10 @@ WEB_APPS = {"patient", "nurse", "display", "oversight", "tablet"}
 # The check-in tablet runs the patient app in kiosk mode at /tablet/.
 WEB_ALIASES = {"tablet": "patient"}
 
+RED_FLAG_WORDS = ("chest pain", "chest tightness", "shortness of breath", "can't breathe", "trouble breathing", "fainted",
+                  "passed out", "confusion", "stroke", "face drooping", "slurred speech", "severe bleeding", "suicidal",
+                  "overdose", "seizure")
+
 PROJECT_LWBS_TARGET = {
     "baselineRatePct": 4.0,
     "targetRatePct": 3.5,
@@ -652,7 +656,7 @@ class DemoStore:
                 "insuranceMissing": not bool(body.get("insurance")),
                 "accessibilityNeeds": list(body.get("accessibilityNeeds") or []),
                 "language": body.get("language") or "en",
-                "source": "mobile",
+                "source": "ipad" if body.get("device") == "tablet" else "mobile",
                 "status": "waiting_nurse",
                 "symptoms": body.get("symptoms") or {"mainConcern": "Not recorded", "onset": "", "otherSymptoms": "", "painLevel": None},
                 "summary": body.get("summary"),
@@ -661,7 +665,8 @@ class DemoStore:
                 "requiredRoomType": None,
                 "symptomsChanged": False,
                 "symptomUpdates": [],
-                "contacts": [{"kind": "registration", "label": "Registration", "note": "Synthetic local demo", "at": iso(now)}],
+                # A tablet self check-in is not a staff contact, so the front desk still owes an in-person round.
+                "contacts": [{"kind": "self_check_in", "label": "Self check-in (tablet)", "note": "Checked in on the tablet", "at": iso(now)}] if body.get("device") == "tablet" else [{"kind": "registration", "label": "Registration", "note": "Synthetic local demo", "at": iso(now)}],
                 "checkedInAt": iso(now),
                 "updatedAt": iso(now),
                 "assessedAt": None,
@@ -685,7 +690,11 @@ class DemoStore:
                 "careCompletedAt": None,
                 "careDue": False,
                 "prediction": None,
-                "hasLiveUpdates": bool(body.get("phone")),
+                # Tablet check-ins never get live phone updates, so the front desk watches them.
+                "hasLiveUpdates": bool(body.get("phone")) and body.get("device") != "tablet",
+                "callBack": None,
+                "tabletRequest": None,
+                "leaveReason": None,
                 "lastSymptomUpdateAt": None,
                 "accessToken": token,
                 "lwbsStatus": "PENDING",
@@ -719,6 +728,12 @@ class DemoStore:
                 p["location"] = patch["location"]
             if patch.get("acknowledgeSymptomChange"):
                 p["symptomsChanged"] = False
+            if patch.get("closeRequest"):
+                done = patch.get("closeRequest")
+                for key in ("callBack", "tabletRequest"):
+                    if p.get(key) and p[key].get("status") == "open":
+                        p[key]["status"] = "done"; p[key]["closedAt"] = iso(now); p[key]["outcome"] = str(done)
+                p["contacts"].append({"kind": "front_desk", "label": "Front desk", "note": str(done), "at": iso(now)})
 
             status = patch.get("status")
             if status == "waiting_provider":
@@ -962,6 +977,55 @@ class ApiHandler(BaseHTTPRequestHandler):
         self.wfile.write(data)
         return True
 
+    def _kiosk(self, path: str, body: dict[str, Any]) -> None:
+        """Check-in tablet: a patient identifies with waiting number + date of birth (no slip, no token)
+        and either reports leaving (reason, call-back phone) or asks to be checked on."""
+        digits = re.sub(r"\D", "", str(body.get("waitingNumber") or ""))
+        dob = str(body.get("dateOfBirth") or "")
+        with STORE.lock:
+            p = next((x for x in STORE.patients.values()
+                      if re.sub(r"\D", "", x["waitingNumber"]).lstrip("0") == digits.lstrip("0") and digits
+                      and x.get("dateOfBirth") == dob and x.get("status") not in {"left", "completed", "inactive"}), None)
+            if not p:
+                self._error(404, "not_found", "We could not find that check-in. Please check your number and birth date, or ask the front desk.")
+                return
+            phone = p.get("phone") or ""
+            masked = ("••• " + phone[-4:]) if len(phone) >= 4 else None
+            if path == "/api/kiosk/lookup":
+                self._json(200, {"waitingNumber": p["waitingNumber"], "phoneOnFile": masked, "triaged": bool(p.get("triageCompletedAt"))})
+                return
+            now = STORE.now()
+            action = body.get("action")
+            text = " ".join(str((p.get("symptoms") or {}).get(k) or "") for k in ("mainConcern", "otherSymptoms")).lower()
+            red = any(w in text for w in RED_FLAG_WORDS)
+            if action == "leaving":
+                reason = str(body.get("reason") or "Prefer not to say")
+                details = str(body.get("details") or "").strip()
+                no_phone = body.get("phoneStatus") == "no_phone"
+                new_phone = re.sub(r"[^\d+]", "", str(body.get("phone") or ""))
+                if new_phone: p["phone"] = new_phone
+                p["status"] = "left"; p["departureAt"] = iso(now); p["departureVerified"] = True; p["lwbsStatus"] = "PENDING_LWBS_REVIEW"
+                p["leaveReason"] = {"reason": reason, "details": details, "source": "patient_tablet", "at": iso(now)}
+                p["callBack"] = {"status": "open", "noPhone": no_phone, "phone": "" if no_phone else p.get("phone", ""), "at": iso(now),
+                                 "priority": "Today" if (red and not p.get("triageCompletedAt")) else "Off-peak"}
+                note = f"Tablet: leaving · {reason}" + (f" ({details})" if details else "") + (" · no phone" if no_phone else " · call back requested")
+                p["contacts"].append({"kind": "tablet_request", "label": "Check-in tablet", "note": note, "at": iso(now)})
+                case = "see_desk" if (red and not p.get("triageCompletedAt")) or no_phone else "call"
+            elif action == "check_on_me":
+                need = str(body.get("need") or "question")
+                p["tabletRequest"] = {"status": "open", "need": need, "at": iso(now)}
+                if need == "symptoms_worse":
+                    p["symptomsChanged"] = True
+                p["contacts"].append({"kind": "tablet_request", "label": "Check-in tablet", "note": {"symptoms_worse": "Tablet: symptoms are worse", "question": "Tablet: question about the wait", "need_help": "Tablet: needs help (mobility, interpreter or other)"}.get(need, "Tablet: check on me"), "at": iso(now)})
+                case = "nurse" if need == "symptoms_worse" else "desk"
+            else:
+                self._error(422, "validation_error", "action must be leaving or check_on_me")
+                return
+            p["updatedAt"] = iso(now)
+            number = p["waitingNumber"]
+        STORE.publish("patient.tablet_request", p)
+        self._json(200, {"waitingNumber": number, "case": case})
+
     def _sse(self, channel: str, checkin_id: str | None) -> None:
         self.send_response(200)
         self.send_header("Content-Type", "text/event-stream")
@@ -993,6 +1057,9 @@ class ApiHandler(BaseHTTPRequestHandler):
                 symptoms = body.get("symptoms") or {}
                 draft = "; ".join(filter(None, [symptoms.get("mainConcern"), symptoms.get("onset"), symptoms.get("otherSymptoms")]))
                 self._json(200, {"draft": draft or "Patient-reported symptoms", "generatedBy": "local-template", "isDraft": True})
+                return
+            if path in ("/api/kiosk/lookup", "/api/kiosk/request"):
+                self._kiosk(path, body)
                 return
             if path == "/api/checkins":
                 _, response = STORE.create_checkin(body)

@@ -1,11 +1,11 @@
 // View model helpers: labels, derived values, filtering and sorting for every dashboard area.
 import type { CheckInSource, Contact, PatientStatus, StaffPatient } from '../api';
 
-export type View = 'assessment' | 'followup' | 'in_assessment' | 'completed';
+export type View = 'assessment' | 'followup' | 'in_assessment' | 'completed' | 'unseen' | 'callbacks';
 
 export const SOURCE_LABEL: Record<CheckInSource, string> = {
   mobile: 'Mobile check-in',
-  ipad: 'iPad check-in',
+  ipad: 'Tablet check-in',
   front_desk: 'Front desk check-in',
   staff_assisted: 'Staff-assisted',
   walk_in: 'Walk-in registration',
@@ -94,6 +94,10 @@ export function inView(p: StaffPatient, v: View) {
     case 'followup': return !p.hasLiveUpdates && ['waiting_nurse', 'waiting_provider'].includes(p.status);
     case 'in_assessment': return p.status === 'in_assessment';
     case 'completed': return ['waiting_provider', 'with_care_team', 'completed', 'left', 'inactive'].includes(p.status) && (!!p.assessedAt || ['left', 'inactive'].includes(p.status));
+    // front desk: everyone registered but not yet seen by a provider (not triaged, in triage, or waiting for a provider)
+    case 'unseen': return ['waiting_nurse', 'in_assessment', 'waiting_provider'].includes(p.status);
+    // front desk: open call-backs (left via the tablet) and "check on me" requests
+    case 'callbacks': return p.callBack?.status === 'open' || p.tabletRequest?.status === 'open';
   }
 }
 
@@ -114,6 +118,8 @@ export const DEFAULT_FILTERS: Record<View, Filters> = {
   followup: { method: 'all', wait: 'all', followUp: 'needs', status: 'all', changedOnly: false },
   in_assessment: { method: 'all', wait: 'all', followUp: 'all', status: 'all', changedOnly: false },
   completed: { method: 'all', wait: 'all', followUp: 'all', status: 'all', changedOnly: false },
+  unseen: { method: 'all', wait: 'all', followUp: 'all', status: 'all', changedOnly: false },
+  callbacks: { method: 'all', wait: 'all', followUp: 'all', status: 'all', changedOnly: false },
 };
 
 export function applyFilters(list: StaffPatient[], f: Filters, v: View, now: number) {
@@ -143,6 +149,8 @@ export const DEFAULT_SORT: Record<View, Sort> = {
   followup: { key: 'wait', dir: 'desc' },
   in_assessment: { key: 'wait', dir: 'desc' },
   completed: { key: 'rank', dir: 'asc' },
+  unseen: { key: 'wait', dir: 'desc' },
+  callbacks: { key: 'contact', dir: 'asc' },
 };
 
 const FU_ORDER = { symptoms_changed: 0, needs_follow_up: 1, recheck: 2, checked: 3 } as const;

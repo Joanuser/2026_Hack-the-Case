@@ -279,3 +279,15 @@ h1:focus { outline: none; }
 .demo-tools { align-self: stretch; border-top: 1px dashed #d8d2e2; padding-top: 10px; display: flex; flex-direction: column; align-items: center; gap: 2px; }
 .demo-tools p { margin: 0; font-size: 10px; color: var(--muted-2); text-transform: uppercase; letter-spacing: 0.5px; }
 .center-card { align-items: center; justify-content: center; text-align: center; }
+
+/* ---------- tablet: Already checked in? Tell us ---------- */
+.tell-card { gap: 14px; }
+.tell-option { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; width: 100%; padding: 16px 18px; border: 1px solid #d6cbe5; border-radius: 14px; background: #fff; text-align: left; color: var(--ink, #262130); }
+.tell-option b { font-size: 16px; color: var(--purple); }
+.tell-option span { font-size: 13px; color: var(--muted, #6b6477); }
+.tell-option.urgent b { color: #9a3028; }
+.tell-option:hover { background: #faf8ff; }
+.tell-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.tell-chip { height: 52px; border: 1px solid #d6cbe5; border-radius: 12px; background: #fff; font-size: 15px; font-weight: 600; color: var(--ink, #262130); }
+.tell-chip.on { background: var(--purple-tint, #f1ecf9); border-color: var(--purple); color: var(--purple); }
+.slip-number .number-value { font-size: 84px; }

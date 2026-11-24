@@ -59,6 +59,8 @@ export function createMemoryApi(): SeenSoonerApi {
     updateSymptoms: (id, token, body) => run(() => store.updateSymptoms(id, token, body)),
     updateInsurance: (id, token, insurance) => run(() => store.updateInsurance(id, token, { insurance })),
     reportLocationExit: (id, token, left) => run(() => store.reportLocationExit(id, token, { left })),
+    kioskLookup: () => Promise.reject(new Error('Tablet requests need the live API')),
+    kioskRequest: () => Promise.reject(new Error('Tablet requests need the live API')),
     listPatients: () => run(() => store.listPatients()),
     createStaffPatient: (req) => run(() => store.createStaffPatient(req)),
     updatePatient: (id, patch) => run(() => store.updatePatient(id, patch)),

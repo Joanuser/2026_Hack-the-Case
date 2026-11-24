@@ -82,7 +82,7 @@ export interface CheckInResponse {
 
 export interface DraftSummaryResponse { draft: string; generatedBy: string; isDraft: true }
 
-export type ContactKind = 'registration' | 'check_in' | 'symptoms_changed' | 'status' | 'location_exit' | 'location_check';
+export type ContactKind = 'registration' | 'check_in' | 'symptoms_changed' | 'status' | 'location_exit' | 'location_check' | 'tablet_request' | 'front_desk' | 'self_check_in';
 
 export interface Contact { kind: ContactKind; label: string; note: string; at: string; checklist?: string[] }
 
@@ -134,6 +134,11 @@ export interface StaffPatient {
   lastContact: Contact | null;
   followUpStatus: FollowUpStatus;
   hasLiveUpdates: boolean;
+  /** Set when a patient tells the check-in tablet they are leaving (front desk calls back). */
+  callBack?: { status: 'open' | 'done'; noPhone: boolean; phone: string; at: string; priority: 'Today' | 'Off-peak'; outcome?: string } | null;
+  /** Set when a patient asks the tablet to be checked on. */
+  tabletRequest?: { status: 'open' | 'done'; need: 'symptoms_worse' | 'question' | 'need_help'; at: string } | null;
+  leaveReason?: { reason: string; details: string; source: string; at: string } | null;
 }
 
 export interface StaffPatientList {
@@ -161,6 +166,8 @@ export interface StaffUpdatePatientRequest {
   acknowledgeSymptomChange?: boolean;
   requiredRoomType?: 'REGULAR_ED' | 'FAST_TRACK' | 'RESUSCITATION_TRAUMA' | 'BEHAVIORAL_HEALTH';
   roomEvent?: 'called' | 'no_response' | 'returned' | 'entered';
+  /** Front desk closes an open call-back or tablet request; the text is logged as a contact. */
+  closeRequest?: string;
 }
 
 export interface StaffContactRequest {

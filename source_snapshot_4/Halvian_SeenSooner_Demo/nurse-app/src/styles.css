@@ -255,3 +255,8 @@ p, h1, h2 { margin: 0; }
 .need-badges { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 3px; }
 .need-badge { padding: 2px 7px; border-radius: 10px; background: var(--amber-bg); color: var(--amber); font-size: 9px; font-weight: 700; white-space: nowrap; }
 .need-badge.lang { background: var(--purple-tint); color: var(--purple-ink); }
+
+/* front desk */
+.nav-group + .nav-group { margin-top: 14px; }
+.row-actions { display: flex; align-items: center; gap: 8px; }
+.row-actions .link { font-size: 11px; }

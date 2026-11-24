@@ -28,12 +28,19 @@ const BACKEND_LABEL = import.meta.env.VITE_BACKEND_LABEL || 'SeenSooner API';
 
 interface Toast { id: number; kind: 'info' | 'ok' | 'alert' | 'error'; text: string; patientId?: string | null }
 
-const NAV: { view: View; label: string }[] = [
-  { view: 'assessment', label: 'Assessment queue' },
-  { view: 'followup', label: 'Waiting-room' },
-  { view: 'in_assessment', label: 'In assessment' },
-  { view: 'completed', label: 'Completed today' },
+const NAV_GROUPS: { title: string; items: { view: View; label: string }[] }[] = [
+  { title: 'NURSE', items: [
+    { view: 'assessment', label: 'Assessment queue' },
+    { view: 'in_assessment', label: 'In assessment' },
+    { view: 'completed', label: 'Completed today' },
+  ] },
+  { title: 'FRONT DESK', items: [
+    { view: 'followup', label: 'Tablet & no-phone' },
+    { view: 'unseen', label: 'Not yet seen' },
+    { view: 'callbacks', label: 'Call-backs & requests' },
+  ] },
 ];
+const NEED_LABEL = { symptoms_worse: 'Symptoms are worse', question: 'Question about the wait', need_help: 'Needs help' } as const;
 
 const VIEW_COPY: Record<View, { title: string; sub: string; listTitle: string; purpose: [string, string] }> = {
   assessment: {
@@ -43,10 +50,22 @@ const VIEW_COPY: Record<View, { title: string; sub: string; listTitle: string; p
     purpose: ['HOW THIS LIST WORKS', 'AI summaries only organize what patients said. Triage priority is always set by a nurse.'],
   },
   followup: {
-    title: 'Waiting-room follow-up',
-    sub: 'Patients without live mobile updates need an in-person follow-up after the selected wait window.',
+    title: 'Tablet & no-phone watch list',
+    sub: 'Front desk rounds: patients who checked in on the tablet, at the desk, or with staff get no phone updates, so staff update them in person.',
     listTitle: 'Patients needing an in-person update',
-    purpose: ['WHY THIS LIST EXISTS', 'Includes iPad, front desk, and staff-assisted check-ins when patients cannot receive live mobile updates.'],
+    purpose: ['WHY THIS LIST EXISTS', 'Patients without live phone updates are more likely to leave unseen. Round on them about every 30 minutes.'],
+  },
+  unseen: {
+    title: 'Not yet seen',
+    sub: 'Everyone registered but not yet seen by a provider — not triaged, in triage, or waiting for a provider. Check they are still here; call anyone you cannot find.',
+    listTitle: 'Registered patients not yet seen',
+    purpose: ['WHO DOES WHAT', 'Front desk checks presence and calls back at off-peak times. Red-flag symptoms or worse symptoms go to a nurse right away.'],
+  },
+  callbacks: {
+    title: 'Call-backs & tablet requests',
+    sub: 'Patients who told the tablet they are leaving, and patients who asked to be checked on.',
+    listTitle: 'Open requests',
+    purpose: ['FOLLOW-UP', 'Call patients who left. “Today” means they left before triage with warning symptoms: a nurse should call them now.'],
   },
   in_assessment: {
     title: 'In assessment',
@@ -129,12 +148,14 @@ export default function App() {
   }, [toast, live]);
 
   const counts = useMemo(() => {
-    const c = { assessment: 0, followup: 0, in_assessment: 0, completed: 0 } as Record<View, number>;
+    const c = { assessment: 0, followup: 0, in_assessment: 0, completed: 0, unseen: 0, callbacks: 0 } as Record<View, number>;
     for (const p of all) {
       if (inView(p, 'assessment')) c.assessment++;
       if (inView(p, 'followup') && p.followUpStatus && p.followUpStatus !== 'checked') c.followup++;
       if (inView(p, 'in_assessment')) c.in_assessment++;
       if (inView(p, 'completed')) c.completed++;
+      if (inView(p, 'unseen')) c.unseen++;
+      if (inView(p, 'callbacks')) c.callbacks++;
     }
     return c;
   }, [all]);
@@ -167,6 +188,20 @@ export default function App() {
         ['NEED IN-PERSON UPDATE', fu.length, 'patients'],
         [`W2 ${LONG_WAIT}+ MIN`, fu.filter((p) => p.careDue).length, 'care reminders'],
         ['NO STAFF CONTACT', fu.filter((p) => !lastStaffContact(p)).length, 'since arrival'],
+      ];
+    }
+    if (view === 'unseen') {
+      return [
+        ['NOT TRIAGED', base.filter((p) => p.status !== 'waiting_provider').length, 'patients'],
+        ['WAITING FOR PROVIDER', base.filter((p) => p.status === 'waiting_provider').length, 'patients'],
+        ['NO PHONE ON FILE', base.filter((p) => !p.phone).length, 'check in person'],
+      ];
+    }
+    if (view === 'callbacks') {
+      return [
+        ['CALL BACK TODAY', base.filter((p) => p.callBack?.status === 'open' && p.callBack.priority === 'Today').length, 'nurse call'],
+        ['CALL BACK OFF-PEAK', base.filter((p) => p.callBack?.status === 'open' && p.callBack.priority !== 'Today').length, 'front desk'],
+        ['CHECK ON ME', base.filter((p) => p.tabletRequest?.status === 'open').length, 'in the waiting room'],
       ];
     }
     if (view === 'assessment') {
@@ -204,6 +239,29 @@ export default function App() {
     { key: 'contact', label: 'LAST CONTACT', sortKey: 'contact', width: compact ? 'minmax(110px,1.1fr)' : 'minmax(140px,1.5fr)', render: (p) => { const c = lastStaffContact(p); return c ? <div className="stack"><span className="contact">{c.label}</span><span className="meta">{ago(c.at, now)}</span></div> : <div className="stack"><span className="contact">No staff update</span><span className="meta">Since arrival</span></div>; } },
     { key: 'status', label: 'STATUS', sortKey: 'status', width: compact ? '116px' : '150px', render: (p) => <span className={`fu-chip ${p.followUpStatus}`}>{p.followUpStatus ? FOLLOW_UP_LABEL[p.followUpStatus] : '—'}</span> },
     { key: 'action', label: 'ACTION', width: compact ? '116px' : '163px', render: (p) => (<button type="button" className="checkin-btn" onClick={(e) => { e.stopPropagation(); setSelectedId(p.id); }}>Check in <ChevronRight size={16} /></button>) },
+  ];
+
+  const patientCol: Column<StaffPatient> = { key: 'patient', label: 'PATIENT', sortKey: 'patient', width: 'minmax(170px,1.4fr)', render: (p) => (<div className="stack"><span className="name">{p.legalName}</span><span className="meta">{SOURCE_LABEL[p.source]}</span><NeedBadges p={p} /></div>) };
+  const unseenCols: Column<StaffPatient>[] = [
+    numberCol, patientCol,
+    { key: 'status', label: 'STAGE', sortKey: 'status', width: '170px', render: (p) => <span className={`stage-chip ${p.status}`}>{p.status === 'waiting_provider' ? 'Triaged · waiting for provider' : p.status === 'in_assessment' ? 'In triage' : 'Not triaged yet'}</span> },
+    { key: 'wait', label: 'SINCE CHECK-IN', sortKey: 'wait', width: '110px', render: (p) => <span className="bold">{Math.max(0, Math.floor((now - Date.parse(p.checkedInAt)) / 60000))} min</span> },
+    { key: 'contact', label: 'LAST STAFF CHECK', sortKey: 'contact', width: 'minmax(130px,1fr)', render: (p) => { const c = lastStaffContact(p); return c ? <div className="stack"><span className="contact">{c.label}</span><span className="meta">{ago(c.at, now)}</span></div> : <span className="meta">None since arrival</span>; } },
+    { key: 'loc', label: 'PHONE', width: '120px', render: (p) => (p.phone ? <span className="meta">On file</span> : <span className="fu-chip needs_follow_up">No phone</span>) },
+  ];
+  const close = (p: StaffPatient, text: string) => run(`${p.waitingNumber}: ${text}`, () => api.updatePatient(p.id, { closeRequest: text }));
+  const callbackCols: Column<StaffPatient>[] = [
+    numberCol, patientCol,
+    { key: 'concern', label: 'REQUEST', sortKey: 'concern', width: 'minmax(200px,1.6fr)', render: (p) => p.callBack?.status === 'open'
+      ? <div className="stack"><span className="concern"><b>Left via tablet</b> · {p.leaveReason?.reason || 'No reason given'}{p.leaveReason?.details ? ` — ${p.leaveReason.details}` : ''}</span><span className="meta">{p.triageCompletedAt ? 'Left after triage' : 'Left before triage'} · {ago(p.callBack.at, now)}</span></div>
+      : <div className="stack"><span className="concern"><b>Check on me</b> · {p.tabletRequest ? NEED_LABEL[p.tabletRequest.need] : ''}</span><span className="meta">Still in the waiting room · {p.tabletRequest ? ago(p.tabletRequest.at, now) : ''}</span></div> },
+    { key: 'loc', label: 'CONTACT', width: '150px', render: (p) => (p.callBack?.status === 'open' ? (p.callBack.noPhone ? <span className="fu-chip needs_follow_up">No phone</span> : <span className="bold">{p.callBack.phone || p.phone}</span>) : <span className="meta">In person</span>) },
+    { key: 'prio', label: 'WHEN', width: '96px', render: (p) => (p.callBack?.status === 'open' ? <span className={`prio ${p.callBack.priority === 'Today' ? 'p2' : 'none'}`}>{p.callBack.priority}</span> : p.tabletRequest?.need === 'symptoms_worse' ? <span className="prio p1">Now · nurse</span> : <span className="prio p4">Soon</span>) },
+    { key: 'action', label: 'ACTION', width: '190px', render: (p) => (<div className="row-actions">
+      {p.callBack?.status === 'open' && !p.callBack.noPhone && <><button type="button" className="checkin-btn" data-testid="callback-reached" onClick={(e) => { e.stopPropagation(); void close(p, 'Front desk called back: reached'); }}>Called · reached</button><button type="button" className="link" onClick={(e) => { e.stopPropagation(); void close(p, 'Front desk called back: no answer'); }}>No answer</button></>}
+      {p.callBack?.status === 'open' && p.callBack.noPhone && <button type="button" className="checkin-btn" onClick={(e) => { e.stopPropagation(); void close(p, 'No phone: departure noted at desk'); }}>Noted</button>}
+      {p.callBack?.status !== 'open' && p.tabletRequest?.status === 'open' && <button type="button" className="checkin-btn" data-testid="request-done" onClick={(e) => { e.stopPropagation(); void close(p, 'Front desk checked on patient'); }}>Done · checked on</button>}
+    </div>) },
   ];
 
   const priorityChip = (p: StaffPatient) => (p.nursePriority ? <span className={`prio p${p.nursePriority}`} title={PRIORITY[p.nursePriority - 1].label}>ESI {p.nursePriority}</span> : <span className="prio none">Not set</span>);
@@ -247,13 +305,17 @@ export default function App() {
 
       <div className="content">
         <nav className="sidebar" aria-label="Workspace">
-          <p className="side-title">WORKSPACE</p>
-          {NAV.map((n) => (
-            <button key={n.view} type="button" className={`nav ${view === n.view ? 'active' : ''}`} onClick={() => switchView(n.view)} aria-current={view === n.view ? 'page' : undefined} data-testid={`nav-${n.view}`}>
-              {view === n.view ? <span className="bar" /> : <span className="navdot" />}
-              <span className="nav-label">{n.label}</span>
-              <span className="nav-count">{live.data ? counts[n.view] : '…'}</span>
-            </button>
+          {NAV_GROUPS.map((g) => (
+            <div key={g.title} className="nav-group">
+              <p className="side-title">{g.title}</p>
+              {g.items.map((n) => (
+                <button key={n.view} type="button" className={`nav ${view === n.view ? 'active' : ''}`} onClick={() => switchView(n.view)} aria-current={view === n.view ? 'page' : undefined} data-testid={`nav-${n.view}`}>
+                  {view === n.view ? <span className="bar" /> : <span className="navdot" />}
+                  <span className="nav-label">{n.label}</span>
+                  <span className="nav-count">{live.data ? counts[n.view] : '…'}</span>
+                </button>
+              ))}
+            </div>
           ))}
           <div className="grow" />
           <div className="purpose"><p className="p-t">{copy.purpose[0]}</p><p className="p-b">{copy.purpose[1]}</p></div>
@@ -306,19 +368,19 @@ export default function App() {
               {live.data && (
                 <DataTable
                   testId={`table-${view}`}
-                  columns={view === 'followup' ? followCols : queueCols}
+                  columns={view === 'followup' ? followCols : view === 'unseen' ? unseenCols : view === 'callbacks' ? callbackCols : queueCols}
                   rows={rows}
                   sort={sort}
                   onSort={setSort}
                   selectedId={selectedId}
-                  onSelect={(p) => setSelectedId(p.id === selectedId ? null : p.id)}
+                  onSelect={(p) => { if (view !== 'callbacks') setSelectedId(p.id === selectedId ? null : p.id); }}
                   marker={(p) => (p.symptomsChanged ? 'urgent' : p.careDue ? 'overdue' : null)}
                   rowClass={(p) => (p.symptomsChanged ? 'changed' : '')}
                   empty={base.length === 0 ? (view === 'followup' ? 'No patients need an in-person update right now.' : 'No patients in this area right now.') : 'No patients match these filters.'}
                 />
               )}
             </section>
-            {selected && (view === 'followup'
+            {selected && view !== 'callbacks' && ((view === 'followup' || view === 'unseen')
               ? <FollowUpPanel p={selected} now={now} run={run} onClose={() => setSelectedId(null)} />
               : <PatientPanel p={selected} now={now} run={run} onClose={() => setSelectedId(null)} />)}
           </div>
