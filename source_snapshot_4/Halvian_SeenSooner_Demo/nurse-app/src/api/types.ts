@@ -131,6 +131,8 @@ export interface StaffPatient {
   recallDeadlineAt: string | null;
   reassessmentRequired: boolean;
   careDue: boolean;
+  /** Phone left the 150 m area and "Still here?" has gone unanswered for 10+ minutes. */
+  locationNoReply?: boolean;
   lastContact: Contact | null;
   followUpStatus: FollowUpStatus;
   hasLiveUpdates: boolean;

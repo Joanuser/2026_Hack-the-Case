@@ -205,7 +205,7 @@ export default function App() {
       return [
         ['NOT TRIAGED', base.filter((p) => p.status !== 'waiting_provider').length, 'patients'],
         [`${LONG_WAIT}-MIN CHECK DUE`, base.filter((p) => p.careDue).length, 'front desk'],
-        ['NO PHONE ON FILE', base.filter((p) => !p.phone).length, 'check in person'],
+        ['LEFT AREA · NO REPLY', base.filter((p) => p.locationNoReply).length, 'check waiting room'],
       ];
     }
     if (view === 'callbacks') {
@@ -259,7 +259,7 @@ export default function App() {
   const patientCol: Column<StaffPatient> = { key: 'patient', label: 'PATIENT', sortKey: 'patient', width: 'minmax(170px,1.4fr)', render: (p) => (<div className="stack"><span className="name">{p.legalName}</span><span className="meta">{SOURCE_LABEL[p.source]}</span><NeedBadges p={p} /></div>) };
   const unseenCols: Column<StaffPatient>[] = [
     numberCol, patientCol,
-    { key: 'status', label: 'STAGE', sortKey: 'status', width: '170px', render: (p) => <span className={`stage-chip ${p.status}`}>{p.status === 'waiting_provider' ? 'Triaged · waiting for provider' : p.status === 'in_assessment' ? 'In triage' : 'Not triaged yet'}</span> },
+    { key: 'status', label: 'STAGE', sortKey: 'status', width: '170px', render: (p) => <div className="stack"><span className={`stage-chip ${p.status}`}>{p.status === 'waiting_provider' ? 'Triaged · waiting for provider' : p.status === 'in_assessment' ? 'In triage' : 'Not triaged yet'}</span>{p.locationNoReply && <span className="fu-chip needs_follow_up" data-testid="no-reply-chip">Left area · no reply</span>}</div> },
     { key: 'wait', label: 'SINCE CHECK-IN', sortKey: 'wait', width: '110px', render: (p) => <span className="bold">{Math.max(0, Math.floor((now - Date.parse(p.checkedInAt)) / 60000))} min</span> },
     { key: 'contact', label: 'LAST STAFF CHECK', sortKey: 'contact', width: 'minmax(130px,1fr)', render: (p) => { const c = lastStaffContact(p); return c ? <div className="stack"><span className="contact">{c.label}</span><span className="meta">{ago(c.at, now)}</span></div> : <span className="meta">None since arrival</span>; } },
     { key: 'loc', label: 'PHONE', width: '120px', render: (p) => (p.phone ? <span className="meta">On file</span> : <span className="fu-chip needs_follow_up">No phone</span>) },
@@ -269,7 +269,7 @@ export default function App() {
   const callbackCols: Column<StaffPatient>[] = [
     numberCol, patientCol,
     { key: 'concern', label: 'REQUEST', sortKey: 'concern', width: 'minmax(200px,1.6fr)', render: (p) => p.callBack?.status === 'open'
-      ? <div className="stack"><span className="concern"><b>{p.callBack.via === 'phone' ? 'Left (phone)' : 'Left via tablet'}</b>{p.callBack.via === 'phone' ? '' : ` · ${p.leaveReason?.reason || 'No reason given'}`}{p.leaveReason?.details ? ` — ${p.leaveReason.details}` : ''}</span><span className="meta">{p.callBack.basis || (p.triageCompletedAt ? 'Left after triage' : 'Left before triage')} · {ago(p.callBack.at, now)}</span></div>
+      ? <div className="stack"><span className="concern"><b>{p.callBack.via === 'phone' ? 'Left the area (phone)' : 'Left via tablet'}</b>{` · ${p.leaveReason?.reason || 'No reason given'}`}{p.leaveReason?.details ? ` — ${p.leaveReason.details}` : ''}</span><span className="meta">{p.callBack.basis || (p.triageCompletedAt ? 'Left after triage' : 'Left before triage')} · {ago(p.callBack.at, now)}</span></div>
       : <div className="stack"><span className="concern"><b>Check on me</b> · {p.tabletRequest ? NEED_LABEL[p.tabletRequest.need] : ''}</span><span className="meta">Still in the waiting room · {p.tabletRequest ? ago(p.tabletRequest.at, now) : ''}</span></div> },
     { key: 'loc', label: 'CONTACT', width: '150px', render: (p) => (p.callBack?.status === 'open' ? (p.callBack.noPhone ? <span className="fu-chip needs_follow_up">No phone</span> : <span className="bold">{p.callBack.phone || p.phone}</span>) : <span className="meta">In person</span>) },
     { key: 'prio', label: 'WHO · WHEN', width: '150px', render: (p) => (p.callBack?.status === 'open' ? <span className={`prio ${p.callBack.priority === 'Today' ? 'p2' : 'none'}`}>{p.callBack.priority === 'Today' ? 'Nurse · today' : 'Front desk · off-peak'}</span> : p.tabletRequest?.need === 'symptoms_worse' ? <span className="prio p1">Now · nurse</span> : <span className="prio p4">Soon</span>) },

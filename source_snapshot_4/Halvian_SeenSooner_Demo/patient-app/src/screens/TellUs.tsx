@@ -8,8 +8,8 @@ import { dobToIso } from '../lib/validation';
 import { DobSelect } from '../components/DobSelect';
 
 type Step = 'identify' | 'choose' | 'reason' | 'phone' | 'need' | 'done';
-const REASONS = ['reasonWait', 'reasonBetter', 'reasonPersonal', 'reasonFamily', 'reasonOther', 'reasonNoSay'] as const;
-const REASON_VALUE: Record<(typeof REASONS)[number], string> = {
+export const REASONS = ['reasonWait', 'reasonBetter', 'reasonPersonal', 'reasonFamily', 'reasonOther', 'reasonNoSay'] as const;
+export const REASON_VALUE: Record<(typeof REASONS)[number], string> = {
   reasonWait: 'Wait too long', reasonBetter: 'Feeling better', reasonPersonal: 'Personal stuff',
   reasonFamily: 'Family / work', reasonOther: 'Other', reasonNoSay: 'Prefer not to say',
 };

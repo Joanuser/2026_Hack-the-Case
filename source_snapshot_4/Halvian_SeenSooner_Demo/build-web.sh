@@ -20,7 +20,8 @@ build_app() {
   (cd "$ROOT/$dir" && { [[ -d node_modules ]] || npm ci --no-audit --no-fund; } && npm run build -- --base="/$base/" --outDir="$OUT/$base" --emptyOutDir)
 }
 
-VITE_SITE_CODES=ED-MAIN build_app patient-app patient
+# Synthetic demo hospital location for the 150 m "Still here?" check (override for a real site).
+VITE_SITE_CODES=ED-MAIN VITE_HOSPITAL_LAT="${VITE_HOSPITAL_LAT:-42.2830}" VITE_HOSPITAL_LNG="${VITE_HOSPITAL_LNG:--83.7300}" build_app patient-app patient
 VITE_STAFF_API_TOKEN="${SEENSOONER_STAFF_TOKEN:-demo-staff-token}" \
 VITE_STAFF_NAME="Demo ED staff" VITE_BACKEND_LABEL="Hosted W2 API" build_app nurse-app nurse
 VITE_DEPARTMENT_NAME="Treatment-room waiting queue" build_app display-app display

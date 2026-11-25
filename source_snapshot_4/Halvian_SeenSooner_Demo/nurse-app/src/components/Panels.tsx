@@ -80,6 +80,9 @@ export function FollowUpPanel({ p, now, run, onClose }: { p: StaffPatient; now: 
       {p.symptomsChanged && (
         <div className="alert-red"><Warning size={16} /> Symptom change reported — review in the assessment queue.</div>
       )}
+      {p.locationNoReply && (
+        <div className="alert-red" role="alert" data-testid="no-reply">Phone left the 150 m area and “Still here?” has had no reply for 10+ minutes. Check the waiting room; if they are not here, call them.</div>
+      )}
       {p.careDue && (
         <div className="alert-red" role="alert" data-testid="care-due"><Warning size={16} /> 60-minute check due: waiting {Math.round(p.w2ElapsedMinutes)} min after triage.</div>
       )}

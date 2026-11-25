@@ -67,6 +67,7 @@ export default function App() {
   });
   const [lastStatus, setLastStatus] = useState<PatientStatusView | null>(null);
   const [flash, setFlash] = useState<string | null>(null);
+  const [locDenied, setLocDenied] = useState(false);
   // Larger text: remembered on a personal phone; the shared tablet resets for each patient.
   const [bigText, setBigText] = useState<boolean>(() => !IS_TABLET && readJson<boolean>(localStorage, TEXT_KEY, false));
   const [emergency, setEmergency] = useState<null | 'sending' | 'sent' | 'failed' | 'outside'>(null);
@@ -190,7 +191,26 @@ export default function App() {
       screen = <Language onBack={() => go('scan')} onNext={() => go('info')} />;
       break;
     case 'info':
-      screen = <Info value={draft.info} onChange={(info) => setDraft((d) => ({ ...d, info }))} onBack={() => go('cover')} onNext={() => go('symptoms')} />;
+      screen = (
+        <Info
+          value={draft.info}
+          onChange={(info) => setDraft((d) => ({ ...d, info }))}
+          onBack={() => go('cover')}
+          onNext={() => go('symptoms')}
+          location={IS_TABLET ? undefined : {
+            on: !!draft.locationAuthorization?.granted,
+            denied: locDenied,
+            onToggle: (on) => {
+              setLocDenied(false);
+              if (!on) { setDraft((d) => ({ ...d, locationDecided: true, locationAuthorization: { granted: false, recordedAt: new Date().toISOString() } })); return; }
+              // Opt-in: ask the browser for permission now; the position itself is not kept.
+              setDraft((d) => ({ ...d, locationDecided: true, locationAuthorization: { granted: true, recordedAt: new Date().toISOString() } }));
+              getPosition(10000)
+                .catch(() => { setLocDenied(true); setDraft((d) => ({ ...d, locationDecided: true, locationAuthorization: { granted: false, recordedAt: new Date().toISOString() } })); });
+            },
+          }}
+        />
+      );
       break;
     case 'symptoms':
       screen = <Symptoms value={draft.symptoms} onChange={(symptoms) => setDraft((d) => ({ ...d, symptoms }))} onBack={() => go('info')} onNext={() => go('review')} />;

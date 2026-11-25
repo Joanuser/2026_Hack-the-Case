@@ -67,6 +67,7 @@ export interface PatientStatusView {
   recallDeadlineAt: string | null;
   reassessmentRequired: boolean;
   careDue: boolean;
+  phoneOnFile?: string | null;
   insuranceMissing: boolean;
   symptoms: Symptoms;
   summary: SymptomSummary | null;
@@ -225,7 +226,9 @@ export interface SeenSoonerApi {
   getCheckIn(id: string, token: string): Promise<PatientStatusView>;
   updateSymptoms(id: string, token: string, body: { symptoms: Symptoms; summary?: SymptomSummary; note?: string }): Promise<PatientStatusView>;
   updateInsurance(id: string, token: string, insurance: string): Promise<PatientStatusView>;
-  reportLocationExit(id: string, token: string, left: boolean, via?: 'phone' | 'tablet'): Promise<PatientStatusView>;
+  reportLocationExit(id: string, token: string, left: boolean, via?: 'phone' | 'tablet', extra?: { reason?: string; details?: string; phone?: string }): Promise<PatientStatusView>;
+  /** The phone (location opted in) is outside the 150 m area and is asking "Still here?". No coordinates are sent. */
+  reportLocationPrompt(id: string, token: string): Promise<PatientStatusView>;
   // check-in tablet (identify with waiting number + date of birth)
   kioskLookup(waitingNumber: string, dateOfBirth: string): Promise<KioskLookup>;
   /** Emergency button inside the hospital: alerts front desk and nurses. */

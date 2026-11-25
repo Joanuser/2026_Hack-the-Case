@@ -348,6 +348,14 @@ class DemoStore:
                 p["w2ElapsedMinutes"] = 0.0
                 p["careDue"] = False
 
+            # Phone left the 150 m area and the patient has not answered "Still here?" for 10 minutes.
+            lc = p.get("locationCheck") or {}
+            p["locationNoReply"] = bool(
+                lc.get("status") == "pending"
+                and p.get("status") not in {"left", "completed", "inactive"}
+                and minutes_between(parse_dt(lc.get("promptedAt")), now) >= 10
+            )
+
             if self._queue_eligible(p):
                 try:
                     p["prediction"] = self.predictor.predict(
@@ -445,7 +453,8 @@ class DemoStore:
                     "roomEnteredAt", "w2ActualMinutes", "callStatus", "recallDeadlineAt",
                     "reassessmentRequired", "careDue",
                 )
-            } | {"peopleAhead": ranks.get(patient_id) if patient_id in ranks else None}
+            } | {"peopleAhead": ranks.get(patient_id) if patient_id in ranks else None,
+                 "phoneOnFile": ("••• " + p["phone"][-4:]) if p.get("phone") else None}
 
     def public_queue(self) -> dict[str, Any]:
         with self.lock:
@@ -1140,9 +1149,24 @@ class ApiHandler(BaseHTTPRequestHandler):
                     return
                 with STORE.lock:
                     now = STORE.now()
+                    if body.get("prompted"):
+                        # The phone (opted in to location) is outside the area and is showing "Still here?".
+                        # Only the fact that a check is pending is recorded; no coordinates.
+                        p["locationCheck"] = {"status": "pending", "promptedAt": iso(now)}
+                        p["updatedAt"] = iso(now)
+                        result = STORE.patient_view(p["id"])
+                        STORE.publish("patient.location_prompt", p)
+                        self._json(200, result)
+                        return
+                    p["locationCheck"] = {"status": "answered", "answer": "left" if body.get("left") else "here", "at": iso(now)}
+                    p["locationNoReply"] = False
+                    if body.get("left") and body.get("reason"):
+                        p["leaveReason"] = {"reason": str(body.get("reason"))[:60], "details": str(body.get("details") or "")[:300], "at": iso(now)}
+                    if body.get("left") and body.get("phone"):
+                        p["phone"] = re.sub(r"[^0-9+]", "", str(body.get("phone")))[:20]
                     via_tablet = body.get("via") == "tablet"
-                    note = ("Patient scanned slip at check-in tablet: leaving" if via_tablet else "Patient reported left") if body.get("left") else "Patient confirmed still present"
-                    p["contacts"].append({"kind": "location_exit", "label": "Check-in tablet" if via_tablet else "Location check", "note": note, "at": iso(now)})
+                    note = ("Patient scanned slip at check-in tablet: leaving" if via_tablet else "Phone: left the area" + (f" · {p['leaveReason']['reason']}" if p.get("leaveReason") else "") + " · call back requested") if body.get("left") else "Phone: still here"
+                    p["contacts"].append({"kind": "location_exit", "label": "Check-in tablet" if via_tablet else "Still here? (150 m)", "note": note, "at": iso(now)})
                     if body.get("left"):
                         if p.get("status") not in {"left", "completed", "inactive"}:
                             p["callBack"] = {"status": "open", "noPhone": not p.get("phone"), "phone": p.get("phone", ""), "at": iso(now),

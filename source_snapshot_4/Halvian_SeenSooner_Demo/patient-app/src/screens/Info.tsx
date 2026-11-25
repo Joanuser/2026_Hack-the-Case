@@ -1,3 +1,5 @@
+import { fmt } from '../i18n';
+import { EXIT_RADIUS_M } from '../lib/geo';
 import { useState } from 'react';
 import { useApp } from '../context';
 import { BackLink, EmergencyWarning, Field, PrimaryButton, Progress, Screen, TextInput } from '../components/ui';
@@ -29,7 +31,7 @@ function AccessibilityChecklist({ value, onChange, id }: { value: string[]; onCh
   );
 }
 
-export function Info({ value, onChange, onBack, onNext }: { value: InfoForm; onChange: (v: InfoForm) => void; onBack: () => void; onNext: () => void }) {
+export function Info({ value, onChange, onBack, onNext, location }: { value: InfoForm; onChange: (v: InfoForm) => void; onBack: () => void; onNext: () => void; location?: { on: boolean; denied: boolean; onToggle: (on: boolean) => void } }) {
   const { t } = useApp();
   const [submitted, setSubmitted] = useState(false);
   const errors = submitted ? validateInfo(value, t) : {};
@@ -80,6 +82,16 @@ export function Info({ value, onChange, onBack, onNext }: { value: InfoForm; onC
             <p className="hint">{t.accessibilityHint}</p>
             <AccessibilityChecklist id="f-access" value={value.accessibility} onChange={(v) => set('accessibility', v)} />
           </fieldset>
+          {location && (
+            <div className="loc-optin">
+              <label className={`acc-row ${location.on ? 'on' : ''}`}>
+                <input type="checkbox" checked={location.on} onChange={(e) => location.onToggle(e.target.checked)} data-testid="share-location" />
+                <span>{t.shareLocation}</span>
+              </label>
+              <p className="hint">{fmt(t.shareLocationHint, { m: EXIT_RADIUS_M })}</p>
+              {location.denied && <p className="hint warn" role="alert">{t.shareLocationDenied}</p>}
+            </div>
+          )}
         </div>
         <div className="actions">
           <PrimaryButton type="submit">{t.continue}</PrimaryButton>

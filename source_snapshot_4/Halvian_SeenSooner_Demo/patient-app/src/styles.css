@@ -391,3 +391,10 @@ h1:focus { outline: none; }
   .device.tablet .p-main { padding-left: 20px; padding-right: 20px; }
   .device.tablet .p-brand .wordmark { display: none; }
 }
+
+/* Location opt-in and "Still here?" follow-up */
+.loc-optin { display: grid; gap: 4px; }
+.loc-optin .hint { margin: 0; }
+.loc-optin .hint.warn { color: #9a3412; }
+.exit-reasons { display: grid; gap: 6px; text-align: left; }
+.exit-phone { margin: 0; padding: 10px 12px; border-radius: 12px; background: #f3effb; color: #3b2f6b; font-weight: 600; font-size: 15px; }

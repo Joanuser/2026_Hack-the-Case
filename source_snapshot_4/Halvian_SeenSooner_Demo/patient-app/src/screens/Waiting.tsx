@@ -7,6 +7,7 @@ import { Pin } from '../ui/icons';
 import { Banner, BackLink, EmergencyWarning, Field, Modal, PrimaryButton, Screen, TextInput } from '../components/ui';
 import { distanceMeters, EXIT_RADIUS_M, hospitalPoint } from '../lib/geo';
 import type { PatientSession } from '../lib/storage';
+import { REASONS, REASON_VALUE } from './TellUs';
 
 const EXIT_SNOOZE_MS = 10 * 60 * 1000;
 
@@ -105,14 +106,24 @@ export function Waiting({
   useEffect(() => { if (!flash) return; const id = setTimeout(clearFlash, 5000); return () => clearTimeout(id); }, [flash, clearFlash]);
 
   const activeStatus = !!data && !['left', 'completed', 'inactive'].includes(data.status);
-  const triggerExit = useCallback(() => setExitOpen(true), []);
+  const [exitStep, setExitStep] = useState<'ask' | 'reason' | 'phone'>('ask');
+  const [exitReason, setExitReason] = useState<(typeof REASONS)[number] | null>(null);
+  const [exitDetails, setExitDetails] = useState('');
+  const [otherPhone, setOtherPhone] = useState<string | null>(null);
+  const triggerExit = useCallback(() => {
+    setExitStep('ask');
+    setExitOpen(true);
+    // Tell staff a "Still here?" check is pending (no coordinates). No answer in 10 min flags the front desk.
+    api.reportLocationPrompt(session.id, session.token).catch(() => undefined);
+  }, [session.id, session.token]);
   const exit = useExitDetection(session, activeStatus && !exitOpen, triggerExit);
 
   const answerExit = async (left: boolean) => {
     setExitBusy(true);
     setExitErr(null);
     try {
-      const s = await api.reportLocationExit(session.id, session.token, left);
+      const extra = left ? { reason: exitReason ? REASON_VALUE[exitReason] : undefined, details: exitDetails.trim() || undefined, phone: otherPhone?.trim() || undefined } : undefined;
+      const s = await api.reportLocationExit(session.id, session.token, left, 'phone', extra);
       setOverride(s);
       if (!left) exit.snooze();
       setExitOpen(false);
@@ -230,14 +241,52 @@ export function Waiting({
 
       {exitOpen && (
         <Modal labelledBy="exit-title" className="exit-modal">
-          <div className="loc-icon round"><Pin size={22} /></div>
-          <p className="eyebrow accent">{t.locationCheck}</p>
-          <h2 id="exit-title">{t.leavingTitle}</h2>
-          <p className="loc-body">{fmt(t.leavingBody, { m: EXIT_RADIUS_M })}</p>
-          <p className="loc-note">{t.leavingNote}</p>
-          {exitErr && <Banner kind="error">{exitErr}</Banner>}
-          <button type="button" className="btn-primary wide" onClick={() => answerExit(false)} disabled={exitBusy}>{t.stillHere}</button>
-          <button type="button" className="btn-danger-outline wide" onClick={() => answerExit(true)} disabled={exitBusy}>{t.yesLeft}</button>
+          {exitStep === 'ask' && (
+            <>
+              <div className="loc-icon round"><Pin size={22} /></div>
+              <p className="eyebrow accent">{t.locationCheck}</p>
+              <h2 id="exit-title">{t.leavingTitle}</h2>
+              <p className="loc-body">{fmt(t.leavingBody, { m: EXIT_RADIUS_M })}</p>
+              <p className="loc-note">{t.leavingNote}</p>
+              {exitErr && <Banner kind="error">{exitErr}</Banner>}
+              <button type="button" className="btn-primary wide" onClick={() => answerExit(false)} disabled={exitBusy} data-testid="still-here">{t.stillHere}</button>
+              <button type="button" className="btn-danger-outline wide" onClick={() => setExitStep('reason')} disabled={exitBusy} data-testid="i-left">{t.yesLeft}</button>
+            </>
+          )}
+          {exitStep === 'reason' && (
+            <>
+              <h2 id="exit-title">{t.exitReasonTitle}</h2>
+              <div className="exit-reasons" role="radiogroup" aria-labelledby="exit-title">
+                {REASONS.map((r) => (
+                  <label key={r} className={`acc-row ${exitReason === r ? 'on' : ''}`}>
+                    <input type="radio" name="exit-reason" checked={exitReason === r} onChange={() => setExitReason(r)} data-testid={`exit-${r}`} />
+                    <span>{t[r]}</span>
+                  </label>
+                ))}
+              </div>
+              {exitReason === 'reasonOther' && (
+                <TextInput value={exitDetails} onChange={(e) => setExitDetails(e.target.value)} placeholder={t.reasonOtherPh} aria-label={t.reasonOtherPh} />
+              )}
+              <PrimaryButton wide onClick={() => setExitStep('phone')} disabled={!exitReason}>{t.continue}</PrimaryButton>
+            </>
+          )}
+          {exitStep === 'phone' && (
+            <>
+              <h2 id="exit-title">{t.exitPhoneTitle}</h2>
+              <p className="loc-body">{t.exitPhoneBody}</p>
+              {data?.phoneOnFile && otherPhone === null && (
+                <p className="exit-phone" data-testid="phone-on-file">{fmt(t.exitCallMe, { p: data.phoneOnFile })}</p>
+              )}
+              {(otherPhone !== null || !data?.phoneOnFile) && (
+                <TextInput value={otherPhone ?? ''} onChange={(e) => setOtherPhone(e.target.value)} inputMode="tel" placeholder={t.mobilePh} aria-label={t.mobilePh} />
+              )}
+              {data?.phoneOnFile && otherPhone === null && (
+                <button type="button" className="link-btn" onClick={() => setOtherPhone('')}>{t.exitOtherNumber}</button>
+              )}
+              {exitErr && <Banner kind="error">{exitErr}</Banner>}
+              <PrimaryButton wide onClick={() => answerExit(true)} disabled={exitBusy} data-testid="exit-send">{t.exitSend}</PrimaryButton>
+            </>
+          )}
         </Modal>
       )}
     </Screen>
