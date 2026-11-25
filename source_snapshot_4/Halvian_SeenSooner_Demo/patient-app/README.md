@@ -1,7 +1,7 @@
 # SeenSooner — Patient phone check-in
 
-Mobile web app patients open by scanning the hospital QR code. Screens (from the Figma file, latest versions):
-cover → QR scan (camera + manual hospital code) with location-permission dialog → language → information →
+Mobile web app patients open from the SeenSooner app link on the check-in sign (or the tablet by the counter). Screens (from the Figma file, latest versions):
+cover → information (with the opt-in location pop-up and accessibility dropdown) →
 symptoms → review (AI-organized **draft** summary the patient can edit) → waiting status (nurse assessment /
 provider stage with people-ahead + estimate) → "My symptoms have changed" update → location-exit confirmation.
 Reviewer build: English-language patient portal (original multilingual prototype archived separately).
@@ -31,7 +31,7 @@ cd seensooner-patient-phone        && npm run demo   # starts mock API :4000 + h
 cd seensooner-nurse-dashboard      && npm run demo   # reuses mock API     + http://localhost:5175
 cd seensooner-waiting-room-display && npm run demo   # reuses mock API     + http://localhost:5174
 ```
-Then: check in on the phone app (use hospital code `ED-MAIN`, or open `http://localhost:5173/?site=ED-MAIN`) →
+Then: check in on the phone app (open `http://localhost:5173/`; Start goes straight to your information) →
 the new number appears on the dashboard (toast + Assessment queue) and on the TV → in the dashboard **Start
 assessment**, set a priority, **Complete assessment** → the phone shows "Waiting to see a provider" and the TV lists
 the number → **Call to care team** → TV "Now seeing", phone "It's your turn". Reset demo data with

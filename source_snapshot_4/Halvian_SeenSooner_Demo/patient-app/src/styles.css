@@ -398,3 +398,21 @@ h1:focus { outline: none; }
 .loc-optin .hint.warn { color: #9a3412; }
 .exit-reasons { display: grid; gap: 6px; text-align: left; }
 .exit-phone { margin: 0; padding: 10px 12px; border-radius: 12px; background: #f3effb; color: #3b2f6b; font-weight: 600; font-size: 15px; }
+
+/* Accessibility multi-select dropdown */
+.ms { position: relative; }
+.ms-btn { width: 100%; display: flex; align-items: center; gap: 8px; min-height: 48px; padding: 10px 14px; border: 1px solid var(--border); border-radius: 12px; background: #fff; font: inherit; font-size: 15px; color: #2c2635; text-align: left; cursor: pointer; }
+.ms-btn.empty .ms-val { color: #8a8494; }
+.ms-btn:focus-visible { outline: 3px solid rgba(110,74,178,.35); outline-offset: 1px; }
+.ms.open .ms-btn { border-color: var(--purple); }
+.ms-val { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ms-count { flex: none; min-width: 22px; height: 22px; padding: 0 6px; border-radius: 11px; background: var(--purple); color: #fff; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; }
+.ms-chev { flex: none; color: #5b5566; transition: transform .15s; }
+.ms.open .ms-chev { transform: rotate(180deg); }
+.ms-panel { position: absolute; z-index: 30; left: 0; right: 0; top: calc(100% + 6px); display: grid; gap: 2px; padding: 6px; background: #fff; border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 12px 28px rgba(40,24,80,.16); }
+.ms-opt { display: flex; align-items: center; gap: 10px; min-height: 40px; padding: 6px 10px; border-radius: 8px; font-size: 14px; color: #2c2635; cursor: pointer; }
+.ms-opt:hover { background: #f7f3ff; }
+.ms-opt.on { background: #f1ebff; font-weight: 600; }
+.ms-opt input { width: 18px; height: 18px; accent-color: var(--purple); flex: none; }
+.ms-done { margin-top: 4px; justify-self: end; padding: 6px 16px; border: 0; border-radius: 999px; background: var(--purple); color: #fff; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; }
+.loc-title { margin: 4px 0 2px; font-size: 12px; font-weight: 600; color: var(--ink); }

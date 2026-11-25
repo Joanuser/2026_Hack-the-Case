@@ -5,8 +5,8 @@ import { api, type LocationAuthorization, type PatientStatusView } from './api';
 import { Banner, Modal } from './components/ui';
 import { Close, Warning } from './ui/icons';
 import { Cover } from './screens/Cover';
-import { Scan, parseSiteCode } from './screens/Scan';
-import { Language, LanguageList } from './screens/Language';
+import { parseSiteCode } from './lib/site';
+import { LanguageList } from './screens/Language';
 import { Info } from './screens/Info';
 import { Symptoms } from './screens/Symptoms';
 import { Review, emptySummary, toSymptoms, type SummaryState } from './screens/Review';
@@ -20,9 +20,9 @@ import { dobToIso, emptyInfo, emptySymptoms, validateInfo, validateSymptoms, typ
 import { DRAFT_KEY, LANG_KEY, SESSION_KEY, TEXT_KEY, readJson, writeJson, type PatientSession } from './lib/storage';
 import { getPosition } from './lib/geo';
 
-type Route = 'cover' | 'scan' | 'language' | 'info' | 'symptoms' | 'review' | 'waiting' | 'details' | 'update' | 'slip' | 'leave';
-const ROUTES: Route[] = ['cover', 'scan', 'language', 'info', 'symptoms', 'review', 'waiting', 'details', 'update', 'slip', 'leave'];
-const PRE_SUBMIT: Route[] = ['cover', 'scan', 'language', 'info', 'symptoms', 'review'];
+type Route = 'cover' | 'info' | 'symptoms' | 'review' | 'waiting' | 'details' | 'update' | 'slip' | 'leave';
+const ROUTES: Route[] = ['cover', 'info', 'symptoms', 'review', 'waiting', 'details', 'update', 'slip', 'leave'];
+const PRE_SUBMIT: Route[] = ['cover', 'info', 'symptoms', 'review'];
 
 interface Draft {
   siteCode: string | null;
@@ -106,23 +106,12 @@ export default function App() {
   else if (IS_TABLET && !session && route === 'slip') effective = 'cover';
   else if (session && PRE_SUBMIT.includes(route) && !sessionClosed) effective = 'waiting';
   else if (!session && ['waiting', 'details', 'update'].includes(route)) effective = 'cover';
-  else if (!session && ['scan', 'language'].includes(route)) effective = 'info';
   else if (route === 'symptoms' && Object.keys(validateInfo(draft.info, t)).length) effective = 'info';
   else if (route === 'review') {
     if (Object.keys(validateInfo(draft.info, t)).length) effective = 'info';
     else if (Object.keys(validateSymptoms(draft.symptoms, t)).length) effective = 'symptoms';
   }
   useEffect(() => { if (effective !== route) go(effective, true); }, [effective, route, go]);
-
-  const onLocationDecision = async (allow: boolean) => {
-    let granted = false;
-    if (allow) {
-      try { await getPosition(); granted = true; } catch { granted = false; }
-    }
-    const locationAuthorization = { granted, recordedAt: new Date().toISOString() };
-    setDraft((d) => ({ ...d, locationDecided: true, locationAuthorization }));
-    if (draft.siteCode) go('language');
-  };
 
   const submit = async () => {
     const iso = dobToIso(draft.info.dob)!;
@@ -177,19 +166,6 @@ export default function App() {
     case 'leave':
       screen = <TellUs onExit={() => go('cover', true)} />;
       break;
-    case 'scan':
-      screen = (
-        <Scan
-          locationDecided={draft.locationDecided}
-          onLocationDecision={onLocationDecision}
-          siteCode={draft.siteCode}
-          onSite={(c) => { setDraft((d) => ({ ...d, siteCode: c })); go('language'); }}
-        />
-      );
-      break;
-    case 'language':
-      screen = <Language onBack={() => go('scan')} onNext={() => go('info')} />;
-      break;
     case 'info':
       screen = (
         <Info
@@ -202,11 +178,10 @@ export default function App() {
             denied: locDenied,
             onToggle: (on) => {
               setLocDenied(false);
-              if (!on) { setDraft((d) => ({ ...d, locationDecided: true, locationAuthorization: { granted: false, recordedAt: new Date().toISOString() } })); return; }
-              // Opt-in: ask the browser for permission now; the position itself is not kept.
-              setDraft((d) => ({ ...d, locationDecided: true, locationAuthorization: { granted: true, recordedAt: new Date().toISOString() } }));
-              getPosition(10000)
-                .catch(() => { setLocDenied(true); setDraft((d) => ({ ...d, locationDecided: true, locationAuthorization: { granted: false, recordedAt: new Date().toISOString() } })); });
+              // Phone opt-in, confirmed in a pop-up; only used for the 150 m "Still here?" check. The position itself is not kept.
+              setDraft((d) => ({ ...d, locationDecided: true, locationAuthorization: { granted: on, recordedAt: new Date().toISOString() } }));
+              if (on) getPosition(10000)
+                .catch(() => { setLocDenied(true); setDraft((d) => ({ ...d, locationAuthorization: { granted: false, recordedAt: new Date().toISOString() } })); });
             },
           }}
         />
